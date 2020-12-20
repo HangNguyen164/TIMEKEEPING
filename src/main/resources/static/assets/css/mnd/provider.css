@@ -1,0 +1,95 @@
+#provider tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#provider tr td .view {
+    background-color: #3bac47;
+}
+
+#provider tr td .view:hover {
+    color: #fff;
+    background-color: #308e3a;
+    text-decoration: none;
+}
+
+#provider tr td .edit {
+    background-color: #ffc107;
+}
+
+#provider tr td .edit:hover {
+    color: #fff;
+    background-color: #e0a800;
+    text-decoration: none;
+}
+
+#provider tr td .remove {
+    background-color: #dc3545;
+}
+
+#provider tr td .remove:hover {
+    color: #fff;
+    background-color: #c82333;
+    text-decoration: none;
+}
+
+.tab-content .table td,
+.tab-content .table th{
+    padding: .5rem;
+}
+#bankInfo tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#bankInfo tr td .remove {
+    background-color: #dc3545;
+}
+
+#bankInfo tr td .remove:hover {
+    color: #fff;
+    background-color: #c82333;
+    text-decoration: none;
+}
+
+#updatePersonWork tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#updatePersonWork tr td .edit {
+    background-color: #ffc107;
+}
+
+#updatePersonWork tr td .edit:hover {
+    color: #fff;
+    background-color: #e0a800;
+    text-decoration: none;
+}
+
+#listOrder tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#listOrder tr td .edit {
+    background-color: #ffc107;
+}
+
+#listOrder tr td .edit:hover {
+    color: #fff;
+    background-color: #e0a800;
+    text-decoration: none;
+}
+
+
+/* Button tab */
+
+.provider-more-info a {
+    color: #28a745;
+}
+

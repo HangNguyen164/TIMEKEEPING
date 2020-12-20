@@ -1,0 +1,44 @@
+div.dataTables_wrapper {
+    width: max-content;
+    margin: 0 0;
+}
+#custom-table tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#custom-table tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#custom-table tr td .view {
+    background-color: #3bac47;
+}
+
+#custom-table tr td .view:hover {
+    color: #fff;
+    background-color: #308e3a;
+    text-decoration: none;
+}
+
+#custom-table tr td .edit {
+    background-color: #ffc107;
+}
+
+#custom-table tr td .edit:hover {
+    color: #fff;
+    background-color: #e0a800;
+}
+
+#custom-table tr td .remove {
+    background-color: #dc3545;
+}
+
+#custom-table tr td .remove:hover {
+    color: #fff;
+    background-color: #c82333;
+}
+

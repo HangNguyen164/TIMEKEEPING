@@ -1,0 +1,40 @@
+
+.sidebar {
+    background: linear-gradient(to top, deeppink 0%, #a18cd1 100%);
+}
+
+.paddingMenuLeft {
+    padding-left: 8px;
+}
+
+
+.fresh-table .fixed-table-toolbar .dropdown-menu {
+    overflow: overlay;
+}
+
+.navbar{
+    margin-bottom: 0px;
+}
+
+.navbar-nav .nav-item .nav-link .badge {
+    position: absolute;
+    margin-left: 0.75rem;
+    top: 0.3rem;
+    font-weight: 400;
+    font-size: 9px;
+}
+
+.badge {
+    display: inline-block;
+    min-width: 23px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff; 
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: red; 
+    border-radius: 10px;
+}

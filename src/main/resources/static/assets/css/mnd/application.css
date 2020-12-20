@@ -1,0 +1,29 @@
+.info p {
+    margin-bottom: .15rem;
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: 1px solid #666;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #666;
+}
+
+.w-stt {
+    width: 60px;
+}
+
+.w-size {
+    width: 60px;
+}
+
+.w-min-size {
+    min-width: 100px;
+}
+
+.w-quantity {
+    width: 100px;
+}

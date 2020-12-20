@@ -1,0 +1,118 @@
+#materials {
+    min-width: 1638px;
+}
+
+#materials tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#materials tr td .view {
+    background-color: #3bac47;
+}
+
+#materials tr td .view:hover {
+    color: #fff;
+    background-color: #308e3a;
+    text-decoration: none;
+}
+
+#materials tr td .edit {
+    background-color: #ffc107;
+}
+
+#materials tr td .edit:hover {
+    color: #fff;
+    background-color: #e0a800;
+}
+
+#materials tr td .remove {
+    background-color: #dc3545;
+}
+
+#materials tr td .remove:hover {
+    color: #fff;
+    background-color: #c82333;
+}
+
+.select-materials .form-control {
+    width: 250px;
+    height: 35px;
+    display: inline-block;
+}
+
+
+.btn-select {
+    position: absolute;
+}
+
+
+#type-of-material tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#type-of-material tr td .view {
+    background-color: #3bac47;
+}
+
+#type-of-material tr td .view:hover {
+    color: #fff;
+    background-color: #308e3a;
+    text-decoration: none;
+}
+
+#type-of-material tr td .edit {
+    background-color: #ffc107;
+}
+
+#type-of-material tr td .edit:hover {
+    color: #fff;
+    background-color: #e0a800;
+}
+
+#type-of-material tr td .remove {
+    background-color: #dc3545;
+}
+
+#type-of-material tr td .remove:hover {
+    color: #fff;
+    background-color: #c82333;
+}
+
+
+#unit-of-material tr td a {
+    padding: 5px;
+    color: #fff;
+    border-radius: .15rem;
+}
+
+#unit-of-material tr td .view {
+    background-color: #3bac47;
+}
+
+#unit-of-material tr td .view:hover {
+    color: #fff;
+    background-color: #308e3a;
+    text-decoration: none;
+}
+
+#unit-of-material tr td .edit {
+    background-color: #ffc107;
+}
+
+#unit-of-material tr td .edit:hover {
+    color: #fff;
+    background-color: #e0a800;
+}
+
+#unit-of-material tr td .remove {
+    background-color: #dc3545;
+}
+
+#unit-of-material tr td .remove:hover {
+    color: #fff;
+    background-color: #c82333;
+}
