@@ -45,7 +45,12 @@ public class Helper {
         for (AccountDetailVo accountDetailVo : lists) {
             int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
             if (month == currentMonth && accountDetailVo.getSendEmail() != 0) {
-                total++;
+                if (!accountDetailVo.getHour().isEmpty()) {
+                    long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
+                    if (hour == 0) {
+                        total++;
+                    }
+                }
             }
         }
         return total;
@@ -65,5 +70,21 @@ public class Helper {
             }
         }
         return formatNumber.format(hour + minutes / 60);
+    }
+
+    public static String listDayWorkNotFull(List<AccountDetailVo> lists, int currentMonth) {
+        String listDayNotFull = "";
+        for (AccountDetailVo accountDetailVo : lists) {
+            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
+            if (month == currentMonth) {
+                if (!accountDetailVo.getHour().isEmpty()) {
+                    long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
+                    if (hour < 8) {
+                        listDayNotFull += accountDetailVo.getWorkDateStr() + ",";
+                    }
+                }
+            }
+        }
+        return listDayNotFull.substring(0, listDayNotFull.length() - 1);
     }
 }

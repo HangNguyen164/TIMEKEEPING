@@ -22,12 +22,16 @@ public class HomeUserController {
     public String getAllInfo(Model model) {
         // current month
         int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
-        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAllByUsername("TDAV0006");
+
+        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAllByUsername("TDAV0036");
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
         String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, currentMonth);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, currentMonth);
+
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
         model.addAttribute("totalWorkInMonth", totalWorkInMonth);
+        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         return "home";
     }
 }
