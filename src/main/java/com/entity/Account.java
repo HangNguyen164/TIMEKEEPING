@@ -11,18 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = AccountConstant.TABLE_NAME)
+@Table
 @Getter
 @Setter
 @ToString
 public class Account {
     @Id
-    @Column(name = AccountConstant.USERNAME)
     private String username;
 
     @Column(name = AccountConstant.ROLE_ID)
     private int roleID;
 
-    @Column(name = AccountConstant.PASSWORD)
     private String password;
 }
