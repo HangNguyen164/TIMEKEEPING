@@ -25,14 +25,4 @@ public class Account {
 
     @Column(name = AccountConstant.PASSWORD)
     private String password;
-
-    public Account() {
-    }
-
-    public Account(String username, int roleID, String password) {
-        this.username = username;
-        this.roleID = roleID;
-        this.password = password;
-    }
-
 }

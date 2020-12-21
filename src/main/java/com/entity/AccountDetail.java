@@ -43,7 +43,4 @@ public class AccountDetail {
 
     @Column(name = AccountDetailConstant.SEND_MAIL)
     private int checkEmail;
-
-    public AccountDetail() {
-    }
 }
