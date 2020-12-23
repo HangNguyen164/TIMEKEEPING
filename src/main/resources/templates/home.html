@@ -102,36 +102,38 @@
                                             <th>Email</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:each="accountShow,i : ${listAccountShow}">
-                                        <tr>
-                                            <td th:text="${i.count}"></td>
-                                            <td th:text="${accountShow.username}"></td>
-                                            <td th:text="${accountShow.name}"></td>
-                                            <td th:text="${accountShow.department}"></td>
-                                            <td th:text="${accountShow.position}"></td>
-                                            <td th:text="${accountShow.workDateStr}"></td>
+                                        <tbody>
+                                        <th:block th:each="accountShow,i : ${listAccountShow}">
+                                            <tr>
+                                                <td th:text="${i.count}"></td>
+                                                <td th:text="${accountShow.username}"></td>
+                                                <td th:text="${accountShow.name}"></td>
+                                                <td th:text="${accountShow.department}"></td>
+                                                <td th:text="${accountShow.position}"></td>
+                                                <td th:text="${accountShow.workDateStr}"></td>
 
-                                            <td th:switch="${accountShow.day}">
-                                                <h7 th:case="2">Monday</h7>
-                                                <h7 th:case="3">Tuesday</h7>
-                                                <h7 th:case="4">Wednesday</h7>
-                                                <h7 th:case="5">Thursday</h7>
-                                                <h7 th:case="6">Friday</h7>
-                                                <h7 th:case="7">Saturday</h7>
-                                                <h7 th:case="1">Sunday</h7>
-                                            </td>
+                                                <td th:switch="${accountShow.day}">
+                                                    <h7 th:case="2">Monday</h7>
+                                                    <h7 th:case="3">Tuesday</h7>
+                                                    <h7 th:case="4">Wednesday</h7>
+                                                    <h7 th:case="5">Thursday</h7>
+                                                    <h7 th:case="6">Friday</h7>
+                                                    <h7 th:case="7">Saturday</h7>
+                                                    <h7 th:case="1">Sunday</h7>
+                                                </td>
 
-                                            <td th:text="${accountShow.startTimeStr}"></td>
-                                            <td th:text="${accountShow.endTimeStr}"></td>
-                                            <td th:text="${accountShow.hour}"></td>
-                                            <td th:text="${accountShow.note}"></td>
+                                                <td th:text="${accountShow.startTimeStr}"></td>
+                                                <td th:text="${accountShow.endTimeStr}"></td>
+                                                <td th:text="${accountShow.hour}"></td>
+                                                <td th:text="${accountShow.note}"></td>
 
-                                            <td th:switch="${accountShow.sendEmail}">
-                                                <h7 th:case="0"></h7>
-                                                <h7 th:case="1">Chưa mail</h7>
-                                                <h7 th:case="2">Đã mail</h7>
-                                            </td>
-                                        </tr>
+                                                <td th:switch="${accountShow.sendEmail}">
+                                                    <h7 th:case="0"></h7>
+                                                    <h7 th:case="1">Chưa mail</h7>
+                                                    <h7 th:case="2">Đã mail</h7>
+                                                </td>
+                                            </tr>
+                                        </th:block>
                                         </tbody>
                                     </table>
                                 </div>

@@ -15,4 +15,8 @@ public class AccountDetailService {
     public List<AccountDetailVo> getAllByUsername(String username) {
         return accountDetailRepository.getAllByUsername(username);
     }
+
+    public List<AccountDetailVo> getAll() {
+        return accountDetailRepository.getAll();
+    }
 }

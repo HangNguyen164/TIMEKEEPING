@@ -16,7 +16,7 @@
     --green: #28a745;
     --teal: #20c997;
     --cyan: #17a2b8;
-    --white: #fff;
+    --white: #fff;1px solid rgba(0, 0, 0, .125)
     --gray: #6c757d;
     --gray-dark: #343a40;
     --primary: #007bff;
@@ -4787,7 +4787,6 @@ input[type=submit].btn-block {
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem
 }
 

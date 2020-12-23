@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="assets/css/mnd/materials.css">
+    <link rel="stylesheet" href="assets/css/mnd/common.css">
+    <link rel="stylesheet" href="assets/css/mnd/tables.css">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/tb-admin.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+
+    <title>Home | TDA Corporation</title>
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand navbar-dark  static-top" style="background-color:#3bac47" id="header-home">
+
+    <a class="navbar-brand mr-1" href="#">Admin </a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Search -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+
+            </button>
+        </div>
+        </div>
+    </form>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="login.html">
+                <img src="images/avatar.jpg" style="width:32px;height:32px;border-radius: 50%;" class="mr-3">
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Start wrapper -->
+<div>
+    <!-- Sidebar -->
+
+    <div id="content-wrapper">
+        <!-- Navbar -->
+
+        <div class="container">
+            <!-- Page Title -->
+            <div class="row title">
+                <div class="col-12">
+                    <p>
+                        <strong> Timekeeping</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-3">
+                <div class="col-12 btn-add">
+                    <form>
+                        <input id="fileinput" type="file" style="display:none;"/>
+                    </form>
+                    <button type="button" class="btn btn-success collapsed" id="falseinput">Add data</button>
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-3">
+                <div class="col-sm-2">
+                    <form>
+                        <select id="select-month" class="form-control" data-role="select-dropdown">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+
+            <table id="custom-table" class="table table-bordered w-100" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>EmployeeCode</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>In</th>
+                    <th>Out</th>
+                    <th>Hour</th>
+                    <th>Note</th>
+                    <th>Email</th>
+                    <th class="w-action-3">Function</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <th:block th:each="accountShow,i : ${listAccountShow}">
+                    <tr>
+                        <td th:text="${i.count}"></td>
+                        <td th:text="${accountShow.username}"></td>
+                        <td th:text="${accountShow.name}"></td>
+                        <td th:text="${accountShow.department}"></td>
+                        <td th:text="${accountShow.position}"></td>
+                        <td th:text="${accountShow.workDateStr}"></td>
+
+                        <td th:switch="${accountShow.day}">
+                            <h7 th:case="2">Monday</h7>
+                            <h7 th:case="3">Tuesday</h7>
+                            <h7 th:case="4">Wednesday</h7>
+                            <h7 th:case="5">Thursday</h7>
+                            <h7 th:case="6">Friday</h7>
+                            <h7 th:case="7">Saturday</h7>
+                            <h7 th:case="1">Sunday</h7>
+                        </td>
+
+                        <td th:text="${accountShow.startTimeStr}"></td>
+                        <td th:text="${accountShow.endTimeStr}"></td>
+                        <td th:text="${accountShow.hour}"></td>
+                        <td th:text="${accountShow.note}"></td>
+
+                        <td th:switch="${accountShow.sendEmail}">
+                            <h7 th:case="0"></h7>
+                            <h7 th:case="1">Chưa mail</h7>
+                            <h7 th:case="2">Đã mail</h7>
+                        </td>
+                        <td style="text-align: center">
+                            <div class="container">
+                                <div class="row">
+                                    <a href="#" class="view mr-1" title="Quick Detail" data-target="#detail"
+                                       data-toggle="modal" th:attr="data-target='#detail'+${accountShow.id}">
+                                        <i class="fas fa-eye fa-fw"></i></a>
+                                    <a href="#" class="edit mr-1" data-target="#update${accountShow.id}"
+                                       data-toggle="modal"
+                                       title="Update">
+                                        <i class="fas fa-pen fa-fw"></i></a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Detail-->
+                    <div class="modal fade detail" tabindex="-1" role="dialog" th:id="detail+${accountShow.id}">
+                        aria-hidden="true">
+                        <div class="modal-dialog  modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="mb-3">Detail user</h5>
+                                        <div class="row">
+                                            <div class="col-6 pr-4">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Employee Code</label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.username}"> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Name </label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.name}"> </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Department </label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.department}"> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Position </label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.position}"> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Date</label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.workDateStr}"> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 pl-4">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Day</label>
+                                                        <span class="form-control" th:switch="${accountShow.day}">
+                                                            <h7 th:case="2">Monday</h7>
+                                                            <h7 th:case="3">Tuesday</h7>
+                                                            <h7 th:case="4">Wednesday</h7>
+                                                            <h7 th:case="5">Thursday</h7>
+                                                            <h7 th:case="6">Friday</h7>
+                                                            <h7 th:case="7">Saturday</h7>
+                                                            <h7 th:case="1">Sunday</h7>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Check-in</label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.startTimeStr}"> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Check-out</label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.endTimeStr}"> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Hour</label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.hour}"> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Note</label>
+                                                        <span class="form-control"
+                                                              th:text="${accountShow.note}"> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Email</label>
+                                                        <span class="form-control" th:switch="${accountShow.sendEmail}">
+                                                            <h7 th:case="0"></h7>
+                                                            <h7 th:case="1">Chưa mail</h7>
+                                                            <h7 th:case="2">Đã mail</h7>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-md btn-white" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>
+        © 2020 TDA Corporation
+    </p>
+</footer>
+
+<!-- End wrapper -->
+<!-- Bootstrap core JavaScript-->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="assets/js/bootstrap/popper.min.js"></script>
+<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="assets/js/mnd/mnd.min.js"></script>
+<!-- Data Tables -->
+<script src="assets/js/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/js/datatables/datatables.vietnamese.js"></script>
+<script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="js/table.js"></script>
+</body>
+
+</html>

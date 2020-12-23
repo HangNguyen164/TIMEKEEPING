@@ -13,6 +13,7 @@ import static com.util.Helper.*;
 @Setter
 @ToString
 public class AccountDetailVo {
+    private int id;
     private String username;
     private String name;
     private String department;
@@ -28,7 +29,8 @@ public class AccountDetailVo {
     private String note;
     private int sendEmail;
 
-    public AccountDetailVo(String username, String name, String department, String position, Date workDate, Date startTime, Date endTime, String note, int sendEmail) {
+    public AccountDetailVo(int id, String username, String name, String department, String position, Date workDate, Date startTime, Date endTime, String note, int sendEmail) {
+        this.id = id;
         this.username = username;
         this.name = name;
         this.department = department;

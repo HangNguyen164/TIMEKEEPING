@@ -5,6 +5,7 @@ import com.vo.AccountDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Calendar;
@@ -18,7 +19,7 @@ public class HomeUserController {
     @Autowired
     private AccountDetailService accountDetailService;
 
-    @RequestMapping(value = "/home-user")
+    @GetMapping(value = "/home-user")
     public String getAllInfo(Model model) {
         // current month
         int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
@@ -33,5 +34,13 @@ public class HomeUserController {
         model.addAttribute("totalWorkInMonth", totalWorkInMonth);
         model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         return "home";
+    }
+    @GetMapping(value = "/home-admin")
+    public String getAll(Model model) {
+        // current month
+        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
+        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
+        model.addAttribute("listAccountShow", accountDetailVoList);
+        return "homeAdmin";
     }
 }
