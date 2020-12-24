@@ -1,13 +1,17 @@
 package com.controller;
 
+import com.entity.Account;
 import com.service.AccountDetailService;
 import com.vo.AccountDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,12 +39,16 @@ public class HomeUserController {
         model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         return "home";
     }
+
     @GetMapping(value = "/home-admin")
     public String getAll(Model model) {
-        // current month
-        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
         List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
         model.addAttribute("listAccountShow", accountDetailVoList);
         return "homeAdmin";
+    }
+
+    @PostMapping("/update/edituser")
+    public String save(@Valid Account account, BindingResult result, RedirectAttributes redirect, Model model) {
+        return "redirect:/home-admin";
     }
 }

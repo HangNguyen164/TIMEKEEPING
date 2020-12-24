@@ -295,7 +295,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="mb-3">Update</h5>
-                                        <form action="update-product?idP=${p.id}" method="post"
+                                        <form action="#" method="post" th:action="@{/update/edituser}"
                                               enctype="multipart/form-data" acceptcharset="UTF-8">
                                             <div class="row">
                                                 <div class="col-6 pr-4">
@@ -313,7 +313,26 @@
                                                                   th:text="${accountShow.name}"> </span>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Date</label>
+                                                            <input type='date'
+                                                                   class="form-control"
+                                                                   th:value="${accountShow.workDateStr}"/>
 
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12"><label>Check-in</label>
+                                                        </div>
+                                                        <input type='time'
+                                                               class="form-control"
+                                                               style="margin-left: 15px;"
+                                                               th:value="${accountShow.startTimeStr}"/>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6 pr-4">
                                                     <div class="form-group row">
                                                         <div class="col-sm-12">
                                                             <label>Department </label>
@@ -329,38 +348,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <div class="col-sm-12">
-                                                            <label>Date</label>
-                                                            <input type='date'
-                                                                   class="form-control"
-                                                                   th:value="${accountShow.workDateStr}"/>
-
+                                                        <div class="col-sm-12"><label>Check-out</label>
                                                         </div>
+                                                        <input type='time'
+                                                               class="form-control"
+                                                               style="margin-left: 15px;"
+                                                               th:value="${accountShow.endTimeStr}"/>
                                                     </div>
-                                                </div>
-                                                <div class="col-6 pr-4">
-                                                    <div class="form-group row">
-                                                        <div class="col-4"><label style="margin: 4px;">Check-in</label>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <input type='time'
-                                                                   class="form-control"
-                                                                   th:value="${accountShow.startTimeStr}"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-4"><label style="margin: 4px;">Check-out</label>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <input type='time'
-                                                                   class="form-control"
-                                                                   th:value="${accountShow.endTimeStr}"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
                                                     <div class="form-group row">
                                                         <div class="col-sm-12">
                                                             <label>Note</label>
@@ -371,6 +365,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group row">
@@ -434,9 +429,9 @@
                                                                             style="margin-left: 5px;margin-right: 20px;">Chưa
                                                                         Mail</label>
                                                                         <input type="radio"
-                                                                                name="sendMail" th:checked="true"
-                                                                                value="2"
-                                                                                style="margin-left: 5px;"/><label>Đã
+                                                                               name="sendMail" th:checked="true"
+                                                                               value="2"
+                                                                               style="margin-left: 5px;"/><label>Đã
                                                                         Mail</label>
                                                                     </div>
                                                                 </div>
