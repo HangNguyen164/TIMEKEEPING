@@ -19,6 +19,7 @@ import static com.tda.timekeeping.util.Helper.setTimeWorkInDay;
 @AllArgsConstructor
 @ToString
 public class AccountDetailVo {
+    private int id;
     private String username;
     private String name;
     private String department;

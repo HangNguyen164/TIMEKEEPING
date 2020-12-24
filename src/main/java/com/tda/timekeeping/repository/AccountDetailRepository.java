@@ -11,8 +11,11 @@ import java.util.List;
 
 @Repository
 public interface AccountDetailRepository extends JpaRepository<AccountDetail, Integer> {
-    String query = "select new com.tda.timekeeping.vo.AccountDetailVo(ad.username,ad.name,ad.department,ad.position,ad.workDate,ad.startTime,ad.endTime ,ad.note,ad.checkEmail) FROM AccountDetail ad";
+    String query = "select new com.tda.timekeeping.vo.AccountDetailVo(ad.id,ad.username,ad.name,ad.department,ad.position,ad.workDate,ad.startTime,ad.endTime ,ad.note,ad.checkEmail) FROM AccountDetail ad";
 
     @Query(value = query + " Where  ad.username=:username")
     List<AccountDetailVo> getAllByUsername(@Param("username") String username);
+
+    @Query(value = query)
+    List<AccountDetailVo> getAll();
 }
