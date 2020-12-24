@@ -41,8 +41,8 @@ public class AccountDetailVo {
         this.day = getTypeOfDate(workDate, Calendar.DAY_OF_WEEK);
         this.startTime = startTime;
         this.endTime = endTime;
-        this.startTimeStr = formatDate(startTime, "hh:mm");
-        this.endTimeStr = formatDate(endTime, "hh:mm");
+        this.startTimeStr = formatDate(startTime, "hh:mm aa");
+        this.endTimeStr = formatDate(endTime, "hh:mm aa");
         this.hour = setTImeWorkInDay(startTime, endTime);
         this.note = note;
         this.sendEmail = sendEmail;
