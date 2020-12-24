@@ -1,4 +1,4 @@
-package com.vo;
+package com.tda.timekeeping.vo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,10 @@ import lombok.ToString;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.util.Helper.*;
+import static com.tda.timekeeping.util.Helper.formatDate;
+import static com.tda.timekeeping.util.Helper.getTypeOfDate;
+import static com.tda.timekeeping.util.Helper.setTimeWorkInDay;
+
 
 @Getter
 @Setter
@@ -40,7 +43,7 @@ public class AccountDetailVo {
         this.endTime = endTime;
         this.startTimeStr = formatDate(startTime, "hh:mm");
         this.endTimeStr = formatDate(endTime, "hh:mm");
-        this.hour = setTImeWorkInDay(startTime, endTime);
+        this.hour = setTimeWorkInDay(startTime, endTime);
         this.note = note;
         this.sendEmail = sendEmail;
     }

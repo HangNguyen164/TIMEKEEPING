@@ -45,9 +45,6 @@
     <!-- Navbar Search -->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
-
-            </button>
-        </div>
         </div>
     </form>
 
@@ -61,115 +58,106 @@
     </ul>
 </nav>
 
-<!-- Start wrapper -->
-<div>
-    <!-- Sidebar -->
+<div class="container" style="padding-bottom: 100px;">
+    <!-- Page Title -->
+    <div class="row title">
+        <div class="col-12">
+            <p id="title-content">
+                <strong> Timekeeping</strong>
+            </p>
+        </div>
+    </div>
 
-    <div id="content-wrapper">
-        <!-- Navbar -->
+    <div class="container">
 
-        <div class="container" style="padding-bottom: 100px;">
-            <!-- Page Title -->
-            <div class="row title">
-                <div class="col-12">
-                    <p id="title-content">
-                        <strong> Timekeeping</strong>
-                    </p>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <table id="type-of-material" class="table table-bordered w-100" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>EmployeeCode</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Position</th>
+                                    <th>Date</th>
+                                    <th>Day</th>
+                                    <th>In</th>
+                                    <th>Out</th>
+                                    <th>Hour</th>
+                                    <th>Note</th>
+                                    <th>Email</th>
+                                </tr>
+                                </thead>
+                                <tbody th:each="accountShow,i : ${listAccountShow}">
+                                <tr>
+                                    <td th:text="${i.count}"></td>
+                                    <td th:text="${accountShow.username}"></td>
+                                    <td th:text="${accountShow.name}"></td>
+                                    <td th:text="${accountShow.department}"></td>
+                                    <td th:text="${accountShow.position}"></td>
+                                    <td th:text="${accountShow.workDateStr}"></td>
+
+                                    <td th:switch="${accountShow.day}">
+                                        <h7 th:case="2">Monday</h7>
+                                        <h7 th:case="3">Tuesday</h7>
+                                        <h7 th:case="4">Wednesday</h7>
+                                        <h7 th:case="5">Thursday</h7>
+                                        <h7 th:case="6">Friday</h7>
+                                        <h7 th:case="7">Saturday</h7>
+                                        <h7 th:case="1">Sunday</h7>
+                                    </td>
+
+                                    <td th:text="${accountShow.startTimeStr}"></td>
+                                    <td th:text="${accountShow.endTimeStr}"></td>
+                                    <td th:text="${accountShow.hour}"></td>
+                                    <td th:text="${accountShow.note}"></td>
+
+                                    <td th:switch="${accountShow.sendEmail}">
+                                        <h7 th:case="0"></h7>
+                                        <h7 th:case="1">Chưa mail</h7>
+                                        <h7 th:case="2">Đã mail</h7>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <h7 style="font-size: 25px;color: #1e7e34;margin-bottom:20px;">Information in current month:
+                </h7>
+            </div>
+
+            <div class="row">
+                <h7>Summarize the working hours of 1 employee in the month:</h7>&ensp;
+                <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
+                <h7>hours</h7>
+            </div>
+
+            <div class="row">
+                <h7>Summarize the number of non-attendance days at the company of 1 employee in the month:</h7>&ensp;
+                <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
+                <h7>day(s)</h7>
+            </div>
+
+            <div class="row">
+                <h7>Statistics of less than 8 hours workdays per employee:</h7>&ensp;
+                <div th:if="${listDayWorkNotFull.isEmpty()}">
+                    <h7>0 day</h7>
+                </div>
+                <div th:if="${listDayWorkNotFull.length()>0}">
+                    <h7 th:text="${listDayWorkNotFull}"></h7>
                 </div>
             </div>
 
-            <div class="container">
-
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <table id="type-of-material" class="table table-bordered w-100" cellspacing="0">
-                                        <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>EmployeeCode</th>
-                                            <th>Name</th>
-                                            <th>Department</th>
-                                            <th>Position</th>
-                                            <th>Date</th>
-                                            <th>Day</th>
-                                            <th>In</th>
-                                            <th>Out</th>
-                                            <th>Hour</th>
-                                            <th>Note</th>
-                                            <th>Email</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody th:each="accountShow,i : ${listAccountShow}">
-                                        <tr>
-                                            <td th:text="${i.count}"></td>
-                                            <td th:text="${accountShow.username}"></td>
-                                            <td th:text="${accountShow.name}"></td>
-                                            <td th:text="${accountShow.department}"></td>
-                                            <td th:text="${accountShow.position}"></td>
-                                            <td th:text="${accountShow.workDateStr}"></td>
-
-                                            <td th:switch="${accountShow.day}">
-                                                <h7 th:case="2">Monday</h7>
-                                                <h7 th:case="3">Tuesday</h7>
-                                                <h7 th:case="4">Wednesday</h7>
-                                                <h7 th:case="5">Thursday</h7>
-                                                <h7 th:case="6">Friday</h7>
-                                                <h7 th:case="7">Saturday</h7>
-                                                <h7 th:case="1">Sunday</h7>
-                                            </td>
-
-                                            <td th:text="${accountShow.startTimeStr}"></td>
-                                            <td th:text="${accountShow.endTimeStr}"></td>
-                                            <td th:text="${accountShow.hour}"></td>
-                                            <td th:text="${accountShow.note}"></td>
-
-                                            <td th:switch="${accountShow.sendEmail}">
-                                                <h7 th:case="0"></h7>
-                                                <h7 th:case="1">Chưa mail</h7>
-                                                <h7 th:case="2">Đã mail</h7>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container">
-                    <div class="row">
-                        <h7 style="font-size: 25px;color: #1e7e34;margin-bottom:20px;">Information in current month:
-                        </h7>
-                    </div>
-
-                    <div class="row">
-                        <h7>Summarize the working hours of 1 employee in the month:</h7>&ensp;
-                        <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
-                        <h7>hours</h7>
-                    </div>
-
-                    <div class="row">
-                        <h7>Summarize the number of non-attendance days at the company of 1 employee in the month:</h7>&ensp;
-                        <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
-                        <h7>day(s)</h7>
-                    </div>
-
-                    <div class="row">
-                        <h7>Statistics of less than 8 hours workdays per employee:</h7>&ensp;
-                        <div th:if="${listDayWorkNotFull.isEmpty()}">
-                            <h7>0 day</h7>
-                        </div>
-                        <div th:if="${listDayWorkNotFull.length()>0}">
-                            <h7 th:text="${listDayWorkNotFull}"></h7>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
     </div>
 </div>

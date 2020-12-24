@@ -1,7 +1,7 @@
-package com.service;
+package com.tda.timekeeping.service;
 
-import com.entity.Account;
-import com.repository.AccountRepository;
+import com.tda.timekeeping.entity.Account;
+import com.tda.timekeeping.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

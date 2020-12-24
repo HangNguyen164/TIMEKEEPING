@@ -1,4 +1,4 @@
-package com.entity;
+package com.tda.timekeeping.entity;
 
 import lombok.Getter;
 import lombok.Setter;
