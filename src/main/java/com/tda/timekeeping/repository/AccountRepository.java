@@ -1,6 +1,6 @@
-package com.repository;
+package com.tda.timekeeping.repository;
 
-import com.entity.Account;
+import com.tda.timekeeping.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

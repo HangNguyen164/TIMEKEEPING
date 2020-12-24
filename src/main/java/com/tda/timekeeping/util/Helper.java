@@ -1,6 +1,6 @@
-package com.util;
+package com.tda.timekeeping.util;
 
-import com.vo.AccountDetailVo;
+import com.tda.timekeeping.vo.AccountDetailVo;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Helper {
+    private static final int HOUR_LUNCH = 1;
+    private static final int MINUTES_LUNCH = 30;
+    private static final int MINUTES_TO_HOUR = 60;
+
     public static int getTypeOfDate(Date date, int type) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -25,14 +29,21 @@ public class Helper {
         return "";
     }
 
-    public static String setTImeWorkInDay(Date startTime, Date endTime) {
+    /**
+     * Calculate the employee's working time of the day.
+     *
+     * @param startTime: Time start work in day in live office.
+     * @param endTime:   Time stop work in day in live office.
+     * @return String by format of time of of employee's working.
+     */
+    public static String setTimeWorkInDay(Date startTime, Date endTime) {
         if (startTime != null && endTime != null) {
             long diff = endTime.getTime() - startTime.getTime();
-            long hour = TimeUnit.MILLISECONDS.toHours(diff) - 1;
-            long minutes = (TimeUnit.MILLISECONDS.toMinutes(diff) % 60) - 30;
+            long hour = TimeUnit.MILLISECONDS.toHours(diff) - HOUR_LUNCH;
+            long minutes = (TimeUnit.MILLISECONDS.toMinutes(diff) % MINUTES_TO_HOUR) - MINUTES_LUNCH;
             if (minutes < 0) {
                 hour--;
-                minutes = 60 - Math.abs(minutes);
+                minutes = MINUTES_TO_HOUR - Math.abs(minutes);
             }
             return String.format("%02d:%02d", hour, minutes);
         }
@@ -68,22 +79,26 @@ public class Helper {
                 }
             }
         }
-        return formatNumber.format(hour + minutes / 60);
+        return formatNumber.format(hour + minutes / MINUTES_TO_HOUR);
     }
 
     public static String listDayWorkNotFull(List<AccountDetailVo> lists, int currentMonth) {
         String listDayNotFull = "";
-        for (AccountDetailVo accountDetailVo : lists) {
-            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
-            if (month == currentMonth) {
-                if (!accountDetailVo.getHour().isEmpty()) {
-                    long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
-                    if (hour < 8) {
-                        listDayNotFull += accountDetailVo.getWorkDateStr() + ",";
+        if (lists.isEmpty()) {
+            return listDayNotFull;
+        } else {
+            for (AccountDetailVo accountDetailVo : lists) {
+                int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
+                if (month == currentMonth) {
+                    if (!accountDetailVo.getHour().isEmpty()) {
+                        long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
+                        if (hour < 8) {
+                            listDayNotFull += accountDetailVo.getWorkDateStr() + ",";
+                        }
                     }
                 }
             }
         }
-        return listDayNotFull.substring(0, listDayNotFull.length() - 1);
+        return listDayNotFull.length() > 0 ? listDayNotFull.substring(0, listDayNotFull.length() - 1) : "";
     }
 }
