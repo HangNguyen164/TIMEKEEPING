@@ -1,8 +1,6 @@
 package com.tda.timekeeping.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,6 +8,8 @@ import javax.persistence.*;
 @Table
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Role {
     @Id

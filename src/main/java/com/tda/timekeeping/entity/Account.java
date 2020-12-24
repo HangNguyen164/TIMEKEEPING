@@ -1,8 +1,6 @@
 package com.tda.timekeeping.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,6 +11,8 @@ import javax.persistence.Column;
 @Table
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Account {
     @Id

@@ -75,7 +75,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <table id="type-of-material" class="table table-bordered w-100" cellspacing="0">
+                            <table id="type-of-material" class="table table-bordered w-100" cellspacing="0"
+                                   width="100%">
                                 <thead>
                                 <tr>
                                     <th>No</th>
@@ -101,7 +102,7 @@
                                     <td th:text="${accountShow.position}"></td>
                                     <td th:text="${accountShow.workDateStr}"></td>
 
-                                    <td th:switch="${accountShow.day}">
+                                    <td th:switch="${accountShow.getDay()}">
                                         <h7 th:case="2">Monday</h7>
                                         <h7 th:case="3">Tuesday</h7>
                                         <h7 th:case="4">Wednesday</h7>
@@ -111,9 +112,9 @@
                                         <h7 th:case="1">Sunday</h7>
                                     </td>
 
-                                    <td th:text="${accountShow.startTimeStr}"></td>
-                                    <td th:text="${accountShow.endTimeStr}"></td>
-                                    <td th:text="${accountShow.hour}"></td>
+                                    <td th:text="${accountShow.getStartTimeStr()}"></td>
+                                    <td th:text="${accountShow.getEndTimeStr()}"></td>
+                                    <td th:text="${accountShow.getHour()}"></td>
                                     <td th:text="${accountShow.note}"></td>
 
                                     <td th:switch="${accountShow.sendEmail}">
