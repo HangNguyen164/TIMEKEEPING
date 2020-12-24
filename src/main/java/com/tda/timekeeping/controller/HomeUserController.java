@@ -11,7 +11,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.tda.timekeeping.util.Helper.*;
+import static com.tda.timekeeping.util.Helper.getTypeOfDate;
+import static com.tda.timekeeping.util.Helper.totalNotWorkInOffice;
+import static com.tda.timekeeping.util.Helper.totalWorkInMonth;
+import static com.tda.timekeeping.util.Helper.listDayWorkNotFull;
 
 @Controller
 public class HomeUserController {
