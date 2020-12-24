@@ -28,14 +28,12 @@
 
     <link rel="icon" href="images/logo.png" type="image/x-icon">
 
-    <title>Home | TDA Corporation</title>
+    <title>Home-Admin | TDA Corporation</title>
 
 </head>
 
 <body>
 <nav class="navbar navbar-expand navbar-dark  static-top" style="background-color:#3bac47" id="header-home">
-
-    <a class="navbar-brand mr-1" href="#">Admin </a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -71,14 +69,11 @@
             <!-- Page Title -->
             <div class="row title">
                 <div class="col-12">
-                    <p>
-                        <strong> Timekeeping</strong>
-                    </p>
                 </div>
             </div>
 
             <div class="row mt-3 mb-3">
-                <div class="col-12 btn-add">
+                <div class="col-12 btn-add" style="margin-top:100px;">
                     <form>
                         <input id="fileinput" type="file" style="display:none;"/>
                     </form>
@@ -156,14 +151,14 @@
                             <h7 th:case="1">Chưa mail</h7>
                             <h7 th:case="2">Đã mail</h7>
                         </td>
-                        <td style="text-align: center">
-                            <div class="container">
+                        <td style="text-align: center;">
+                            <div class="container" style="margin-left: 35px;">
                                 <div class="row">
                                     <a href="#" class="view mr-1" title="Quick Detail" data-target="#detail"
                                        data-toggle="modal" th:attr="data-target='#detail'+${accountShow.id}">
                                         <i class="fas fa-eye fa-fw"></i></a>
-                                    <a href="#" class="edit mr-1" data-target="#update${accountShow.id}"
-                                       data-toggle="modal"
+                                    <a href="#" class="edit mr-1" data-target="#update"
+                                       data-toggle="modal" th:attr="data-target='#update'+${accountShow.id}"
                                        title="Update">
                                         <i class="fas fa-pen fa-fw"></i></a>
                                 </div>
@@ -271,7 +266,7 @@
                                             <div class="col-12">
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
-                                                        <label>Email</label>
+                                                        <label>Send mail</label>
                                                         <span class="form-control" th:switch="${accountShow.sendEmail}">
                                                             <h7 th:case="0"></h7>
                                                             <h7 th:case="1">Chưa mail</h7>
@@ -286,6 +281,179 @@
                                                 Close
                                             </button>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Update-->
+                    <div class="modal fade detail" tabindex="-1" role="dialog" th:id="update+${accountShow.id}">
+                        aria-hidden="true">
+                        <div class="modal-dialog  modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="mb-3">Update</h5>
+                                        <form action="update-product?idP=${p.id}" method="post"
+                                              enctype="multipart/form-data" acceptcharset="UTF-8">
+                                            <div class="row">
+                                                <div class="col-6 pr-4">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Employee Code</label>
+                                                            <span class="form-control"
+                                                                  th:text="${accountShow.username}"> </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Name </label>
+                                                            <span class="form-control"
+                                                                  th:text="${accountShow.name}"> </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Department </label>
+                                                            <span class="form-control"
+                                                                  th:text="${accountShow.department}"> </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Position </label>
+                                                            <span class="form-control"
+                                                                  th:text="${accountShow.position}"> </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Date</label>
+                                                            <input type='date'
+                                                                   class="form-control"
+                                                                   th:value="${accountShow.workDateStr}"/>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 pr-4">
+                                                    <div class="form-group row">
+                                                        <div class="col-4"><label style="margin: 4px;">Check-in</label>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <input type='time'
+                                                                   class="form-control"
+                                                                   th:value="${accountShow.startTimeStr}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-4"><label style="margin: 4px;">Check-out</label>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <input type='time'
+                                                                   class="form-control"
+                                                                   th:value="${accountShow.endTimeStr}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Note</label>
+                                                            <input type='text'
+                                                                   class="form-control"
+                                                                   th:value="${accountShow.note}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label>Send Mail</label>
+                                                            <th:block th:switch="${accountShow.sendEmail}">
+                                                                <div th:case="0">
+                                                                    <div style="color:black;" class="sendMail">
+
+                                                                        <input type="radio"
+                                                                               name="sendMail"
+                                                                               value="0"
+                                                                               th:checked="true"
+                                                                               style="margin-left: 5px;"/>
+                                                                        <label style="margin-left: 5px;margin-right: 20px;">Working</label>
+                                                                        <input type="radio"
+                                                                               name="sendMail"
+                                                                               value="1"
+                                                                               style="margin-left: 5px;"/>
+                                                                        <label style="margin-left: 5px;margin-right: 20px;">Chưa
+                                                                            Mail</label>
+                                                                        <input type="radio"
+                                                                               name="sendMail"
+                                                                               value="2"
+                                                                               style="margin-left: 5px;"/>
+                                                                        <label>Đã Mail</label></div>
+                                                                </div>
+                                                                <div th:case="1">
+                                                                    <div style="color:black;" class="sendMail">
+                                                                        <input type="radio"
+                                                                               name="sendMail"
+                                                                               value="0"
+                                                                               style="margin-left: 5px;"/><label
+                                                                            style="margin-left: 5px;margin-right: 20px;">Working</label>
+                                                                        <input
+                                                                                type="radio"
+                                                                                name="sendMail"
+                                                                                value="1" th:checked="true"
+                                                                                style="margin-left: 5px;"/><label
+                                                                            style="margin-left: 5px;margin-right: 20px;">Chưa
+                                                                        Mail</label>
+                                                                        <input
+                                                                                type="radio"
+                                                                                name="sendMail"
+                                                                                value="2"
+                                                                                style="margin-left: 5px;"/><label>Đã
+                                                                        Mail</label></div>
+                                                                </div>
+                                                                <div th:case="2">
+                                                                    <div style="color:black;" class="sendMail">
+                                                                        <input type="radio"
+                                                                               name="sendMail"
+                                                                               value="0"
+                                                                               style="margin-left: 5px;"/><label
+                                                                            style="margin-left: 5px;margin-right: 20px;">Working</label>
+                                                                        <input
+                                                                                type="radio"
+                                                                                name="sendMail"
+                                                                                value="1"
+                                                                                style="margin-left: 5px;"/><label
+                                                                            style="margin-left: 5px;margin-right: 20px;">Chưa
+                                                                        Mail</label>
+                                                                        <input type="radio"
+                                                                                name="sendMail" th:checked="true"
+                                                                                value="2"
+                                                                                style="margin-left: 5px;"/><label>Đã
+                                                                        Mail</label>
+                                                                    </div>
+                                                                </div>
+                                                            </th:block>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-md btn-info mr-2"><i
+                                                        class="fas fa-check fa-fw mr-1"></i>Update
+                                                </button>
+                                                <button type="button" class="btn btn-md btn-white" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
