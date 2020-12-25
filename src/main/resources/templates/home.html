@@ -100,7 +100,7 @@
                                     <td th:text="${accountShow.name}"></td>
                                     <td th:text="${accountShow.department}"></td>
                                     <td th:text="${accountShow.position}"></td>
-                                    <td th:text="${accountShow.workDateStr}"></td>
+                                    <td th:text="${accountShow.workDate}"></td>
 
                                     <td th:switch="${accountShow.getDay()}">
                                         <h7 th:case="2">Monday</h7>
@@ -112,8 +112,8 @@
                                         <h7 th:case="1">Sunday</h7>
                                     </td>
 
-                                    <td th:text="${accountShow.getStartTimeStr()}"></td>
-                                    <td th:text="${accountShow.getEndTimeStr()}"></td>
+                                    <td th:text="${accountShow.getStartTime()}"></td>
+                                    <td th:text="${accountShow.getEndTime()}"></td>
                                     <td th:text="${accountShow.getHour()}"></td>
                                     <td th:text="${accountShow.note}"></td>
 
