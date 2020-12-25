@@ -4,7 +4,6 @@ import com.tda.timekeeping.vo.AccountDetailVo;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,14 +18,6 @@ public class Helper {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal.get(type);
-    }
-
-    public static String formatDate(Date date, String typeFormat) {
-        if (date != null) {
-            SimpleDateFormat sdfDate = new SimpleDateFormat(typeFormat);
-            return sdfDate.format(date);
-        }
-        return "";
     }
 
     /**
@@ -93,7 +84,7 @@ public class Helper {
                     if (!accountDetailVo.getHour().isEmpty()) {
                         long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                         if (hour < 8) {
-                            listDayNotFull += accountDetailVo.getWorkDateStr() + ",";
+                            listDayNotFull += accountDetailVo.getWorkDate() + ",";
                         }
                     }
                 }
