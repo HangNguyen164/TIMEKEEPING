@@ -46,7 +46,7 @@ public class Helper {
         for (AccountDetailVo accountDetailVo : lists) {
             int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
             if (month == currentMonth && accountDetailVo.getSendEmail() != 0) {
-                if (!accountDetailVo.getHour().isEmpty()) {
+                if (accountDetailVo.hourIsEmpty()) {
                     long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                     if (hour == 0) {
                         total++;
@@ -64,7 +64,7 @@ public class Helper {
         for (AccountDetailVo accountDetailVo : lists) {
             int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
             if (month == currentMonth) {
-                if (!accountDetailVo.getHour().isEmpty()) {
+                if (accountDetailVo.hourIsEmpty()) {
                     hour += Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                     minutes += Long.valueOf(accountDetailVo.getHour().split(":")[1]);
                 }
@@ -81,7 +81,7 @@ public class Helper {
             for (AccountDetailVo accountDetailVo : lists) {
                 int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
                 if (month == currentMonth) {
-                    if (!accountDetailVo.getHour().isEmpty()) {
+                    if (accountDetailVo.hourIsEmpty()) {
                         long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                         if (hour < 8) {
                             listDayNotFull += accountDetailVo.getWorkDate() + ",";

@@ -1,11 +1,6 @@
 package com.tda.timekeeping.vo;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
@@ -50,4 +45,7 @@ public class AccountDetailVo {
         return setTimeWorkInDay(startTime, endTime);
     }
 
+    public boolean hourIsEmpty() {
+        return getHour().isEmpty() || getHour() == null;
+    }
 }
