@@ -33,7 +33,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand navbar-dark  static-top" style="background-color:#3bac47" id="header-home">
+<nav class="navbar navbar-expand navbar-dark  static-top" style="background-color:#3bac47;" id="header-home">
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -122,7 +122,7 @@
                 <td th:text="${accountShow.name}"></td>
                 <td th:text="${accountShow.department}"></td>
                 <td th:text="${accountShow.position}"></td>
-                <td th:text="${accountShow.getWorkDateStr()}"></td>
+                <td th:text="${accountShow.workDate}"></td>
 
                 <td th:switch="${accountShow.getDay()}">
                     <h7 th:case="2">Monday</h7>
@@ -134,8 +134,8 @@
                     <h7 th:case="1">Sunday</h7>
                 </td>
 
-                <td th:text="${accountShow.getStartTimeStr()}"></td>
-                <td th:text="${accountShow.getEndTimeStr()}"></td>
+                <td th:text="${accountShow.startTime}"></td>
+                <td th:text="${accountShow.endTime}"></td>
                 <td th:text="${accountShow.getHour()}"></td>
                 <td th:text="${accountShow.note}"></td>
 
@@ -184,7 +184,7 @@
                                                     <label>Date</label>
                                                     <input type='date'
                                                            class="form-control"
-                                                           th:value="${accountShow.workDateStr}"/>
+                                                           th:value="${accountShow.workDate}"/>
 
                                                 </div>
                                             </div>
@@ -194,7 +194,7 @@
                                                 <input type='time'
                                                        class="form-control"
                                                        style="margin-left: 15px;"
-                                                       th:value="${accountShow.startTimeStr}"/>
+                                                       th:value="${accountShow.startTime}"/>
                                             </div>
 
                                         </div>
@@ -219,7 +219,7 @@
                                                 <input type='time'
                                                        class="form-control"
                                                        style="margin-left: 15px;"
-                                                       th:value="${accountShow.endTimeStr}"/>
+                                                       th:value="${accountShow.endTime}"/>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-12">
