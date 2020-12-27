@@ -10,6 +10,7 @@ $(document).ready(function () {
 })
 
 $('#custom-table').dataTable({
-    "scrollY": "450px",
+    "scrollY": "480",
+    "scrollX": true
 });
 

@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "account_detail")
@@ -59,4 +60,5 @@ public class AccountDetail {
 
     @Column(name = "send_mail")
     private int checkEmail;
+
 }

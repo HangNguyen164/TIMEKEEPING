@@ -1,5 +1,4 @@
 div.dataTables_wrapper {
-    width: max-content;
     margin: 0 0;
 }
 #custom-table tr td a {
@@ -42,3 +41,7 @@ div.dataTables_wrapper {
     background-color: #c82333;
 }
 
+#custom-table td {
+    min-width: min-content;
+    width: max-content;
+}

@@ -3,6 +3,7 @@ package com.tda.timekeeping.vo;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import static com.tda.timekeeping.util.Helper.setTimeWorkInDay;
 @ToString
 public class AccountDetailVo {
     private int id;
+
     private String username;
 
     private String name;
@@ -23,6 +25,7 @@ public class AccountDetailVo {
     private String department;
 
     private String position;
+
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date workDate;

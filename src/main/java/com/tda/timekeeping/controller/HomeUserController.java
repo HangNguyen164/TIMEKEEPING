@@ -1,6 +1,7 @@
 package com.tda.timekeeping.controller;
 
 import com.tda.timekeeping.entity.Account;
+import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.service.AccountDetailService;
 import com.tda.timekeeping.vo.AccountDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,13 @@ public class HomeUserController {
     public String getAll(Model model) {
         List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
         model.addAttribute("listAccountShow", accountDetailVoList);
+        model.addAttribute("accountDetail", new AccountDetail());
         return "homeAdmin";
     }
 
     @PostMapping("/update/edituser")
-    public String save(@Valid Account account, BindingResult result, RedirectAttributes redirect, Model model) {
+    public String save(@Valid AccountDetail accountDetail, BindingResult result, RedirectAttributes redirect, Model model) {
+        System.out.println(accountDetail.getStartTime());
         return "redirect:/home-admin";
     }
 }
