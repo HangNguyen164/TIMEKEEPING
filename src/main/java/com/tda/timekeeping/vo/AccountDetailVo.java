@@ -1,12 +1,18 @@
 package com.tda.timekeeping.vo;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.tda.timekeeping.util.Helper.TIME_FORMAT;
+import static com.tda.timekeeping.util.Helper.DATE_FORMAT;
 import static com.tda.timekeeping.util.Helper.getTypeOfDate;
 import static com.tda.timekeeping.util.Helper.setTimeWorkInDay;
 
@@ -26,16 +32,13 @@ public class AccountDetailVo {
 
     private String position;
 
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = DATE_FORMAT)
     private Date workDate;
 
-    @DateTimeFormat(pattern = "hh:mm:ss")
-    @Column(name = "start_time")
+    @DateTimeFormat(pattern = TIME_FORMAT)
     private Date startTime;
 
-    @DateTimeFormat(pattern = "hh:mm:ss")
-    @Column(name = "end_time")
+    @DateTimeFormat(pattern = TIME_FORMAT)
     private Date endTime;
 
     private String note;

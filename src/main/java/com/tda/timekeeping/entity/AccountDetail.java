@@ -1,11 +1,24 @@
 package com.tda.timekeeping.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.sql.Date;
 import java.sql.Time;
+
+import static com.tda.timekeeping.util.Helper.DATE_FORMAT;
+import static com.tda.timekeeping.util.Helper.TIME_FORMAT;
 
 @Entity
 @Table(name = "account_detail")
@@ -17,7 +30,6 @@ import java.sql.Time;
 public class AccountDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
     private int id;
 
     @Column
@@ -32,15 +44,15 @@ public class AccountDetail {
     @Column
     private String position;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = DATE_FORMAT)
     @Column(name = "work_date")
     private Date workDate;
 
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = TIME_FORMAT)
     @Column(name = "start_time")
     private Time startTime;
 
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = TIME_FORMAT)
     @Column(name = "end_time")
     private Time endTime;
 
