@@ -17,7 +17,7 @@ import static com.tda.timekeeping.util.Helper.totalWorkInMonth;
 import static com.tda.timekeeping.util.Helper.listDayWorkNotFull;
 
 @Controller
-public class HomeUserController {
+public class HomeController {
     @Autowired
     private AccountDetailService accountDetailService;
 
