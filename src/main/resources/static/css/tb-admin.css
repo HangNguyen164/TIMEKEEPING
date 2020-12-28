@@ -1,6 +1,7 @@
 div.dataTables_wrapper {
     margin: 0 0;
 }
+
 #custom-table tr td a {
     padding: 5px;
     color: #fff;
@@ -44,4 +45,29 @@ div.dataTables_wrapper {
 #custom-table td {
     min-width: min-content;
     width: max-content;
+}
+
+.content-body {
+    width: 80%;
+    margin: auto;
+}
+
+h7 {
+    font-size: 15px;
+}
+
+#fileinput {
+    display: none;
+}
+
+#btn-add {
+    padding-top: 100px;
+}
+
+#startTime {
+    margin-left: 15px;
+}
+
+#endTime {
+    margin-left: 15px;
 }
