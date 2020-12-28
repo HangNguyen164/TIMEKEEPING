@@ -3,10 +3,12 @@ package com.tda.timekeeping.repository;
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.vo.AccountDetailVo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Time;
 import java.util.List;
 
 @Repository
@@ -18,4 +20,9 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
 
     @Query(value = query)
     List<AccountDetailVo> getAll();
+
+    @Modifying
+    @Query(value = "update  AccountDetail  a set a.startTime=:start_time, a.endTime=:end_time, a.note=:note, a.checkEmail=:send_mail WHERE a.id=:id")
+    void update(@Param("start_time") Time startTime, @Param("end_time") Time endTime, @Param("note") String note, @Param("send_mail") int sendMail, @Param("id") int id);
+
 }

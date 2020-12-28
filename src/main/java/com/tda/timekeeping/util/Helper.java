@@ -2,8 +2,10 @@ package com.tda.timekeeping.util;
 
 import com.tda.timekeeping.vo.AccountDetailVo;
 
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,8 @@ public class Helper {
     private static final int HOUR_LUNCH = 1;
     private static final int MINUTES_LUNCH = 30;
     private static final int MINUTES_TO_HOUR = 60;
+    private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
+    private static final int TIME_PATTERN_LEN = "hh:mm:ss".length();
 
     public static int getTypeOfDate(Date date, int type) {
         Calendar cal = Calendar.getInstance();
@@ -91,5 +95,16 @@ public class Helper {
             }
         }
         return listDayNotFull.length() > 0 ? listDayNotFull.substring(0, listDayNotFull.length() - 1) : "";
+    }
+
+    public static Time convert(String s) throws ParseException {
+        int len = s.length();
+        if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
+            s = s + ":00";
+        }
+        if (len > TIME_PATTERN_LEN) {
+            s = s.substring(0, TIME_PATTERN_LEN);
+        }
+        return java.sql.Time.valueOf(s);
     }
 }

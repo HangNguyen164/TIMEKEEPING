@@ -1,23 +1,11 @@
 package com.tda.timekeeping.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-
+import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "account_detail")
@@ -29,6 +17,7 @@ import java.text.SimpleDateFormat;
 public class AccountDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private int id;
 
     @Column
@@ -60,5 +49,4 @@ public class AccountDetail {
 
     @Column(name = "send_mail")
     private int checkEmail;
-
 }

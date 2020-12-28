@@ -3,7 +3,7 @@ package com.tda.timekeeping.vo;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.text.SimpleDateFormat;
+import javax.persistence.Column;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,10 +30,12 @@ public class AccountDetailVo {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date workDate;
 
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = "hh:mm:ss")
+    @Column(name = "start_time")
     private Date startTime;
 
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = "hh:mm:ss")
+    @Column(name = "end_time")
     private Date endTime;
 
     private String note;
