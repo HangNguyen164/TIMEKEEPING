@@ -50,4 +50,7 @@ public class AccountDetailVo {
         return setTimeWorkInDay(startTime, endTime);
     }
 
+    public boolean hourIsEmpty() {
+        return getHour().isEmpty() || getHour() == null;
+    }
 }
