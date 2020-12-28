@@ -111,13 +111,13 @@ public class Helper {
                     if (!accountDetailVo.hourIsEmpty()) {
                         long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                         if (hour < 8) {
-                            listDayNotFull += accountDetailVo.getWorkDate() + ",";
+                            listDayNotFull += accountDetailVo.getWorkDate() + ", ";
                         }
                     }
                 }
             }
         }
-        return listDayNotFull.length() > 0 ? listDayNotFull.substring(0, listDayNotFull.length() - 1) : "";
+        return listDayNotFull.length() > 0 ? listDayNotFull.substring(0, listDayNotFull.length() - 2) : "";
     }
 
     public static Time convert(String s) throws ParseException {

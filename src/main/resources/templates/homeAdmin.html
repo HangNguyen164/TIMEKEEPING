@@ -316,6 +316,35 @@
             </th:block>
             </tbody>
         </table>
+        <br/><br/><br/>
+        <div class="container-fluid">
+            <div class="row">
+                <h5>Information in current month:
+                </h5>
+            </div>
+            <br/>
+            <div class="row">
+                <h7>Summarize the working hours of all employees in the month:</h7>&ensp;
+                <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
+                <h7>hours</h7>
+            </div>
+            <br/>
+            <div class="row">
+                <h7>Summarize the number of non-attendance days at the company of all employees in the month:</h7>&ensp;
+                <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
+                <h7>day(s)</h7>
+            </div>
+            <br/>
+            <div class="row">
+                <h7>Statistics of less than 8 hours workdays per employeea:</h7>&ensp;
+                <div th:if="${listDayWorkNotFull.isEmpty()}">
+                    <h7>0 day</h7>
+                </div>
+                <div th:if="${listDayWorkNotFull.length()>0}">
+                    <h7 th:text="${listDayWorkNotFull}"></h7>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

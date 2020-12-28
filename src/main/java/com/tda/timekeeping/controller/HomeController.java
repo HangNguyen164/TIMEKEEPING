@@ -26,7 +26,6 @@ public class HomeController {
 
     @GetMapping(value = "/home-user")
     public String getAllInfo(Model model) {
-        // current month
         int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
 
         List<AccountDetailVo> accountDetailVoList = accountDetailService.getAllByUsername("TDAV0037");
@@ -43,8 +42,15 @@ public class HomeController {
 
     @GetMapping(value = "/home-admin")
     public String getAll(Model model) {
+        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
         List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, currentMonth);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, currentMonth);
         model.addAttribute("listAccountShow", accountDetailVoList);
+        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
+        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
+        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         return "homeAdmin";
     }
 
