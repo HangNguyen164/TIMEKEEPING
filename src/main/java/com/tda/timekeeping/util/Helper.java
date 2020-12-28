@@ -13,6 +13,8 @@ public class Helper {
     private static final int HOUR_LUNCH = 1;
     private static final int MINUTES_LUNCH = 30;
     private static final int MINUTES_TO_HOUR = 60;
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String TIME_FORMAT = "hh:mm:ss";
 
     public static int getTypeOfDate(Date date, int type) {
         Calendar cal = Calendar.getInstance();
@@ -41,6 +43,13 @@ public class Helper {
         return "";
     }
 
+    /**
+     * Total not work in office of employee in current month.
+     *
+     * @param lists:        List time work of employee in current month.
+     * @param currentMonth: current month in year.
+     * @return number is total not work in office of employee.
+     */
     public static int totalNotWorkInOffice(List<AccountDetailVo> lists, int currentMonth) {
         int total = 0;
         for (AccountDetailVo accountDetailVo : lists) {
@@ -57,6 +66,13 @@ public class Helper {
         return total;
     }
 
+    /**
+     * Total  work in office of employee in current month.
+     *
+     * @param lists:        List time work of employee in current month.
+     * @param currentMonth: current month in year.
+     * @return number is total  work in office of employee.
+     */
     public static String totalWorkInMonth(List<AccountDetailVo> lists, int currentMonth) {
         double hour = 0;
         double minutes = 0;
@@ -73,6 +89,13 @@ public class Helper {
         return formatNumber.format(hour + minutes / MINUTES_TO_HOUR);
     }
 
+    /**
+     * List Day Work but full 8 hour in current month.
+     *
+     * @param lists:        List time work of employee in current month.
+     * @param currentMonth: current month in year.
+     * @return String is list day work not full of employee.
+     */
     public static String listDayWorkNotFull(List<AccountDetailVo> lists, int currentMonth) {
         String listDayNotFull = "";
         if (lists.isEmpty()) {
