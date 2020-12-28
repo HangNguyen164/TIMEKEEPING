@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,6 +43,25 @@ public class HomeController {
 
     @GetMapping(value = "/home-admin")
     public String getAll(Model model) {
+        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
+        String monthChoose = "";
+        List<String> getAllMonth = getAllMonth();
+        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, currentMonth);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, currentMonth);
+        model.addAttribute("listAccountShow", accountDetailVoList);
+        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
+        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
+        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
+        model.addAttribute("getAllMonth", getAllMonth);
+        model.addAttribute("monthChoose", monthChoose);
+        return "homeAdmin";
+    }
+
+    @PostMapping(value = "/home-admin/month")
+    public String getAllByMonth(@PathVariable("id") int id, Model model) {
+        System.out.println(id);
         int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
         List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);

@@ -6,6 +6,7 @@ import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -129,5 +130,22 @@ public class Helper {
             s = s.substring(0, TIME_PATTERN_LEN);
         }
         return java.sql.Time.valueOf(s);
+    }
+
+    public static List<String> getAllMonth() {
+        List<String> lists = new ArrayList<>();
+        lists.add("January");
+        lists.add("February");
+        lists.add("March");
+        lists.add("April");
+        lists.add("May");
+        lists.add("June");
+        lists.add("July");
+        lists.add("August");
+        lists.add("September");
+        lists.add("October");
+        lists.add("November");
+        lists.add("December");
+        return lists;
     }
 }
