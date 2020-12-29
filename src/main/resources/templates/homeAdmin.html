@@ -65,19 +65,18 @@
         <div class="row mt-3 mb-3">
             <div class="col-12 btn-add" id="btn-add">
                 <form>
-                    <input id="fileinput" type="file"/>
+                    <input id="file-input" type="file"/>
                 </form>
-                <button type="button" class="btn btn-success collapsed" id="falseinput">Add data</button>
+                <button type="button" class="btn btn-success collapsed" id="false-input">Add data</button>
             </div>
         </div>
 
         <div class="row mt-3 mb-3">
             <div class="col-sm-2">
-                <form th:action="@{/home-admin/month}" action="#" method="post">
+                <form th:action="@{/home-admin}" action="#">
                     <select name="month" class="form-control" data-role="select-dropdown" id="month"
                             onchange="this.form.submit()">
-                        <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
-                                th:text="${month}"></option>
+                        <option th:each="month,i : ${getAllMonth}" th:value="${i.count}" th:text="${month}"></option>
                     </select>
                 </form>
             </div>
@@ -132,12 +131,10 @@
                         <h7 th:case="2">Đã mail</h7>
                     </td>
                     <td>
-                        <div class="container">
-                            <a href="#" class="edit mr-1" data-target="#update"
-                               data-toggle="modal" th:attr="data-target='#update'+${accountShow.id}"
-                               title="Update">
-                                <i class="fas fa-pen fa-fw"></i></a>
-                        </div>
+                        <a href="#" class="edit mr-1" data-target="#update"
+                           data-toggle="modal" th:attr="data-target='#update'+${accountShow.id}"
+                           title="Update">
+                            <i class="fas fa-pen fa-fw"></i></a>
                     </td>
                 </tr>
                 <!--  Update-->
@@ -360,5 +357,4 @@
 <script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="js/table.js"></script>
 </body>
-
 </html>

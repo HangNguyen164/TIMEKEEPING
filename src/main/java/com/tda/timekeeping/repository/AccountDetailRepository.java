@@ -13,16 +13,18 @@ import java.util.List;
 
 @Repository
 public interface AccountDetailRepository extends JpaRepository<AccountDetail, Integer> {
-    String query = "select new com.tda.timekeeping.vo.AccountDetailVo(ad.id,ad.username,ad.name,ad.department,ad.position,ad.workDate,ad.startTime,ad.endTime ,ad.note,ad.checkEmail) FROM AccountDetail ad";
+    String query = "SELECT new com.tda.timekeeping.vo.AccountDetailVo(ad.id,ad.username,ad.name,ad.department,ad.position," +
+            "ad.workDate,ad.startTime,ad.endTime ,ad.note,ad.checkEmail) FROM AccountDetail ad";
 
     @Query(value = query + " Where  ad.username=:username")
     List<AccountDetailVo> getAllByUsername(@Param("username") String username);
 
-    @Query(value = query)
-    List<AccountDetailVo> getAll();
+    @Modifying
+    @Query(value = query + " WHERE extract(month from ad.workDate)=:monthChoose")
+    List<AccountDetailVo> getAll(@Param("monthChoose") int monthChoose);
 
     @Modifying
-    @Query(value = "update  AccountDetail  a set a.startTime=:start_time, a.endTime=:end_time, a.note=:note, a.checkEmail=:send_mail WHERE a.id=:id")
+    @Query(value = "UPDATE  AccountDetail  a set a.startTime=:start_time, a.endTime=:end_time, a.note=:note, a.checkEmail=:send_mail WHERE a.id=:id")
     void update(@Param("start_time") Time startTime, @Param("end_time") Time endTime, @Param("note") String note, @Param("send_mail") int sendMail, @Param("id") int id);
 
 }

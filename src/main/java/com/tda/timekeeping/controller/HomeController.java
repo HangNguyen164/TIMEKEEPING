@@ -6,10 +6,7 @@ import com.tda.timekeeping.vo.AccountDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Time;
@@ -26,7 +23,7 @@ public class HomeController {
 
     @GetMapping(value = "/home-user")
     public String getAllInfo(Model model) {
-        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
+        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
 
         List<AccountDetailVo> accountDetailVoList = accountDetailService.getAllByUsername("TDAV0037");
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
@@ -40,36 +37,27 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping(value = "/home-admin")
-    public String getAll(Model model) {
-        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
+    @RequestMapping(value = "/home-admin")
+    public String getAll(@RequestParam(value = "month", required = false) String monthChoose, Model model) {
         List<String> getAllMonth = getAllMonth();
-        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
-        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
-        String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, currentMonth);
-        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, currentMonth);
+        List<AccountDetailVo> accountDetailVoList;
+        int totalNotWorkInOffice;
+        String totalWorkInMonth, listDayWorkNotFull;
+        int month;
+        if (monthChoose == null) {
+            month = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
+        } else {
+            month = Integer.valueOf(monthChoose);
+        }
+        accountDetailVoList = accountDetailService.getAll(month);
+        totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, month);
+        totalWorkInMonth = totalWorkInMonth(accountDetailVoList, month);
+        listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, month);
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
         model.addAttribute("totalWorkInMonth", totalWorkInMonth);
         model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         model.addAttribute("getAllMonth", getAllMonth);
-        return "homeAdmin";
-    }
-
-    @PostMapping(value = "/home-admin/month")
-    public String getAlByMonth(@RequestParam("month") String monthChoose, Model model) {
-        int month = Integer.valueOf(monthChoose) - 1;
-        List<String> getAllMonth = getAllMonth();
-        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
-        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, month);
-        String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, month);
-        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, month);
-        model.addAttribute("listAccountShow", accountDetailVoList);
-        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
-        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
-        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
-        model.addAttribute("getAllMonth", getAllMonth);
-        System.out.println(accountDetailVoList.size());
         return "homeAdmin";
     }
 

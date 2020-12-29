@@ -58,7 +58,7 @@ public class Helper {
     public static int totalNotWorkInOffice(List<AccountDetailVo> lists, int currentMonth) {
         int total = 0;
         for (AccountDetailVo accountDetailVo : lists) {
-            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
+            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
             if (month == currentMonth && accountDetailVo.getSendEmail() != 0) {
                 if (!accountDetailVo.hourIsEmpty()) {
                     long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
@@ -83,7 +83,7 @@ public class Helper {
         double minutes = 0;
         NumberFormat formatNumber = new DecimalFormat("#0.00");
         for (AccountDetailVo accountDetailVo : lists) {
-            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
+            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
             if (month == currentMonth) {
                 if (!accountDetailVo.hourIsEmpty()) {
                     hour += Long.valueOf(accountDetailVo.getHour().split(":")[0]);
@@ -107,7 +107,7 @@ public class Helper {
             return listDayNotFull;
         } else {
             for (AccountDetailVo accountDetailVo : lists) {
-                int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH);
+                int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
                 if (month == currentMonth) {
                     if (!accountDetailVo.hourIsEmpty()) {
                         long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);

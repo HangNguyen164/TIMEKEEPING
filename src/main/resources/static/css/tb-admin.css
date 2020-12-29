@@ -8,6 +8,10 @@ div.dataTables_wrapper {
     border-radius: .15rem;
 }
 
+#custom-table tr td {
+    margin: auto;
+}
+
 #custom-table tr td a {
     padding: 5px;
     color: #fff;
@@ -56,7 +60,7 @@ h7 {
     font-size: 15px;
 }
 
-#fileinput {
+#file-input {
     display: none;
 }
 

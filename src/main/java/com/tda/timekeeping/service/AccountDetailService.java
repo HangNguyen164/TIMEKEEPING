@@ -19,8 +19,9 @@ public class AccountDetailService {
         return accountDetailRepository.getAllByUsername(username);
     }
 
-    public List<AccountDetailVo> getAll() {
-        return accountDetailRepository.getAll();
+    @Transactional
+    public List<AccountDetailVo> getAll(int month) {
+        return accountDetailRepository.getAll(month);
     }
 
     public AccountDetail getOne(int id) {
@@ -31,7 +32,4 @@ public class AccountDetailService {
     public void update(Time startTime, Time endTime, String note, int sendMail, int id) {
         accountDetailRepository.update(startTime, endTime, note, sendMail, id);
     }
-//    public void update(AccountDetail accountDetail) {
-//         accountDetailRepository.update(accountDetail);
-//    }
 }
