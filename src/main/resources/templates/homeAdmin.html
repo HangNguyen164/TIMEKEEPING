@@ -73,12 +73,13 @@
 
         <div class="row mt-3 mb-3">
             <div class="col-sm-2">
-                <form action="#" method="post" th:action="@{/home-admin/month}" th:field="*{monthChoose}"
-                      enctype="multipart/form-data" acceptcharset="UTF-8">
-                    <select id="select-month" class="form-control" data-role="select-dropdown">
-                        <option th:each="month,i : ${getAllMonth}" th:value="${i.count}" th:text="${month}"></option>
-                    </select>
-                </form>
+                <select name="month" class="form-control" data-role="select-dropdown"
+                        onchange="doSubmit()">
+                    <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
+                            ${param.month==i.count:"th:selected":""}
+                            th:selected="${month1}!=${currentMonth}?${currentMonth}:${month1}"
+                            th:text="${month}"></option>
+                </select>
             </div>
         </div>
         <table id="custom-table" class="table table-bordered w-100" cellspacing="0">
@@ -358,7 +359,6 @@
 <script src="assets/js/datatables/datatables.vietnamese.js"></script>
 <script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="js/table.js"></script>
-
 </body>
 
 </html>
