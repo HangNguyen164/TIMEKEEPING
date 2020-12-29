@@ -41,31 +41,37 @@ public class HomeController {
     }
 
     @GetMapping(value = "/home-admin")
-    public String getAll(@RequestParam(value = "month", required = false) String month, Model model) {
-        if (month != null) {
-            System.out.println(month);
-        } else {
-            int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
-            List<String> getAllMonth = getAllMonth();
-            List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
-            int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
-            String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, currentMonth);
-            String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, currentMonth);
-            model.addAttribute("listAccountShow", accountDetailVoList);
-            model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
-            model.addAttribute("totalWorkInMonth", totalWorkInMonth);
-            model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
-            model.addAttribute("getAllMonth", getAllMonth);
-            model.addAttribute("currentMonth", currentMonth);
-        }
+    public String getAll(Model model) {
+        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH);
+        List<String> getAllMonth = getAllMonth();
+        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, currentMonth);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, currentMonth);
+        model.addAttribute("listAccountShow", accountDetailVoList);
+        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
+        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
+        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
+        model.addAttribute("getAllMonth", getAllMonth);
         return "homeAdmin";
     }
 
-//    @GetMapping(value = "/home-admin/month")
-//    public String getAllByMonth(@RequestParam("month") String month, Model model) {
-//        System.out.println("aaaaa" + month);
-//        return "redirect:/home-admin";
-//    }
+    @PostMapping(value = "/home-admin/month")
+    public String getAlByMonth(@RequestParam("month") String monthChoose, Model model) {
+        int month = Integer.valueOf(monthChoose) - 1;
+        List<String> getAllMonth = getAllMonth();
+        List<AccountDetailVo> accountDetailVoList = accountDetailService.getAll();
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, month);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoList, month);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoList, month);
+        model.addAttribute("listAccountShow", accountDetailVoList);
+        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
+        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
+        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
+        model.addAttribute("getAllMonth", getAllMonth);
+        System.out.println(accountDetailVoList.size());
+        return "homeAdmin";
+    }
 
     @PostMapping("/update/{id}")
     public String save(@PathVariable("id") int id, @RequestParam("startTime") String startTimeStr, @RequestParam("endTime") String endTimeStr, @RequestParam("note") String note, RedirectAttributes redirect, Model model) {

@@ -73,13 +73,13 @@
 
         <div class="row mt-3 mb-3">
             <div class="col-sm-2">
-                <select name="month" class="form-control" data-role="select-dropdown"
-                        onchange="doSubmit()">
-                    <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
-                            ${param.month==i.count:"th:selected":""}
-                            th:selected="${month1}!=${currentMonth}?${currentMonth}:${month1}"
-                            th:text="${month}"></option>
-                </select>
+                <form th:action="@{/home-admin/month}" action="#" method="post">
+                    <select name="month" class="form-control" data-role="select-dropdown" id="month"
+                            onchange="this.form.submit()">
+                        <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
+                                th:text="${month}"></option>
+                    </select>
+                </form>
             </div>
         </div>
         <table id="custom-table" class="table table-bordered w-100" cellspacing="0">

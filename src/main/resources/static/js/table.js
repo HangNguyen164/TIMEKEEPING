@@ -13,9 +13,3 @@ $('#custom-table').dataTable({
     "scrollY": "310",
     "scrollX": true
 });
-
-function doSubmit() {
-    var opt = document.getElementsByName("month")[0];
-    var v = opt.options[opt.selectedIndex].value;
-    document.forms[0].submit();
-}
