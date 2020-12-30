@@ -46,7 +46,6 @@ public class HomeController {
         int month;
         if (monthChoose == null) {
             month = currentMonth;
-            model.addAttribute("monthChoose",month);
         } else {
             month = Integer.valueOf(monthChoose);
         }
@@ -59,7 +58,6 @@ public class HomeController {
         model.addAttribute("totalWorkInMonth", totalWorkInMonth);
         model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         model.addAttribute("getAllMonth", getAllMonth);
-        model.addAttribute("monthChoose1",monthChoose);
         return "homeAdmin";
     }
 

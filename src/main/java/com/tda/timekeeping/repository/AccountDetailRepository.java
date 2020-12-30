@@ -16,11 +16,11 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
     String query = "SELECT new com.tda.timekeeping.vo.AccountDetailVo(ad.id,ad.username,ad.name,ad.department,ad.position," +
             "ad.workDate,ad.startTime,ad.endTime ,ad.note,ad.checkEmail) FROM AccountDetail ad";
 
-    @Query(value = query + " Where  ad.username=:username")
+    @Query(value = query + " Where  ad.username=:username ORDER BY ad.id")
     List<AccountDetailVo> getAllByUsername(@Param("username") String username);
 
     @Modifying
-    @Query(value = query + " WHERE extract(month from ad.workDate)=:monthChoose")
+    @Query(value = query + " WHERE extract(month from ad.workDate)=:monthChoose ORDER BY ad.id")
     List<AccountDetailVo> getAll(@Param("monthChoose") int monthChoose);
 
     @Modifying
