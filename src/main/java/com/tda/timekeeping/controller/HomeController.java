@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Time;
 import java.util.Calendar;
@@ -62,7 +61,9 @@ public class HomeController {
     }
 
     @PostMapping("/update/{id}")
-    public String save(@PathVariable("id") int id, @RequestParam("startTime") String startTimeStr, @RequestParam("endTime") String endTimeStr, @RequestParam("note") String note, RedirectAttributes redirect, Model model) {
+    public String save(@PathVariable("id") int id, @RequestParam("startTime") String startTimeStr, @RequestParam("endTime") String endTimeStr,
+                       @RequestParam("sendMail") String sendMail,
+                       @RequestParam("note") String note) {
         AccountDetail accountDetail = accountDetailService.getOne(id);
         if (startTimeStr.length() > 0 && endTimeStr.length() > 0) {
             try {
@@ -70,7 +71,8 @@ public class HomeController {
                 Time endTime = convert(endTimeStr);
                 accountDetail.setStartTime(startTime);
                 accountDetail.setEndTime(endTime);
-                accountDetailService.update(startTime, endTime, note, 0, id);
+                accountDetail.setCheckEmail(Integer.valueOf(sendMail));
+                accountDetailService.update(startTime, endTime, note, accountDetail.getCheckEmail(), id);
                 return "redirect:/home-admin";
             } catch (Exception e) {
                 System.out.println(e);
