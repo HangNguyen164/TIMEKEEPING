@@ -18,5 +18,10 @@ $(document).ready(function () {
     const url = new URL(document.location);
     const params = url.searchParams;
     const month = params.get("month");
-    $("#month").val(month);
+    const currentMonth = new Date().getMonth() + 1;
+    if (month !== null) {
+        $("#month").val(month);
+    } else {
+        $("#month").val(currentMonth);
+    }
 });

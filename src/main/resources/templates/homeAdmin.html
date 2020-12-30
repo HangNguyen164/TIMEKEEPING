@@ -76,7 +76,8 @@
                 <form th:action="@{/home-admin}" action="#">
                     <select name="month" class="form-control" data-role="select-dropdown" id="month"
                             onchange="this.form.submit()">
-                        <option th:each="month,i : ${getAllMonth}" th:value="${i.count}" th:text="${month}"></option>
+                        <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
+                                th:text="${month}"></option>
                     </select>
                 </form>
             </div>

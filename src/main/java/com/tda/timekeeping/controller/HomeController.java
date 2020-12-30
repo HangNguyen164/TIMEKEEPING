@@ -20,10 +20,10 @@ import static com.tda.timekeeping.util.Helper.*;
 public class HomeController {
     @Autowired
     private AccountDetailService accountDetailService;
+    int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
 
     @GetMapping(value = "/home-user")
     public String getAllInfo(Model model) {
-        int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
 
         List<AccountDetailVo> accountDetailVoList = accountDetailService.getAllByUsername("TDAV0037");
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoList, currentMonth);
@@ -45,7 +45,8 @@ public class HomeController {
         String totalWorkInMonth, listDayWorkNotFull;
         int month;
         if (monthChoose == null) {
-            month = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
+            month = currentMonth;
+            model.addAttribute("monthChoose",month);
         } else {
             month = Integer.valueOf(monthChoose);
         }
@@ -58,6 +59,7 @@ public class HomeController {
         model.addAttribute("totalWorkInMonth", totalWorkInMonth);
         model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         model.addAttribute("getAllMonth", getAllMonth);
+        model.addAttribute("monthChoose1",monthChoose);
         return "homeAdmin";
     }
 
