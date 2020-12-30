@@ -225,64 +225,58 @@
                                                         <label>Send Mail</label>
                                                         <th:block th:switch="${accountShow.sendEmail}">
                                                             <div th:case="0">
-                                                                <div style="color:black;" class="sendMail">
-                                                                    <input type="radio"
+                                                                <div class="sendMail">
+                                                                    <input type="radio" class="radio-choose"
                                                                            name="sendMail"
                                                                            value="0"
-                                                                           th:checked="true"
-                                                                           style="margin-left: 5px;"/>
-                                                                    <label style="margin-left: 5px;margin-right: 20px;">Working</label>
-                                                                    <input type="radio"
+                                                                           th:checked="true"/>
+                                                                    <label class="label-radio">Working</label>
+
+                                                                    <input type="radio" class="radio-choose"
                                                                            name="sendMail"
-                                                                           value="1"
-                                                                           style="margin-left: 5px;"/>
-                                                                    <label style="margin-left: 5px;margin-right: 20px;">Chưa
-                                                                        Mail</label>
-                                                                    <input type="radio"
+                                                                           value="1"/>
+                                                                    <label class="label-radio">Chưa Mail</label>
+
+                                                                    <input type="radio" class="radio-choose"
                                                                            name="sendMail"
-                                                                           value="2"
-                                                                           style="margin-left: 5px;"/>
+                                                                           value="2"/>
                                                                     <label>Đã Mail</label></div>
                                                             </div>
+
                                                             <div th:case="1">
-                                                                <div style="color:black;" class="sendMail">
-                                                                    <input type="radio"
+                                                                <div class="sendMail">
+                                                                    <input type="radio" class="radio-choose"
                                                                            name="sendMail"
-                                                                           value="0"
-                                                                           style="margin-left: 5px;"/><label
-                                                                        style="margin-left: 5px;margin-right: 20px;">Working</label>
+                                                                           value="0"/>
+                                                                    <label class="label-radio">Working</label>
+
                                                                     <input
-                                                                            type="radio"
+                                                                            type="radio" class="radio-choose"
                                                                             name="sendMail"
-                                                                            value="1" th:checked="true"
-                                                                            style="margin-left: 5px;"/><label
-                                                                        style="margin-left: 5px;margin-right: 20px;">Chưa
-                                                                    Mail</label>
-                                                                    <input
-                                                                            type="radio"
-                                                                            name="sendMail"
-                                                                            value="2"
-                                                                            style="margin-left: 5px;"/><label>Đã
-                                                                    Mail</label></div>
+                                                                            value="1" th:checked="true"/>
+                                                                    <label class="label-radio">Chưa Mail</label>
+
+                                                                    <input class="radio-choose"
+                                                                           type="radio"
+                                                                           name="sendMail"
+                                                                           value="2"/>
+                                                                    <label>Đã Mail</label></div>
                                                             </div>
+
                                                             <div th:case="2">
-                                                                <div style="color:black;" class="sendMail">
-                                                                    <input type="radio"
+                                                                <div class="sendMail">
+                                                                    <input type="radio" class="radio-choose"
                                                                            name="sendMail"
-                                                                           value="0"
-                                                                           style="margin-left: 5px;"/><label
-                                                                        style="margin-left: 5px;margin-right: 20px;">Working</label>
-                                                                    <input
-                                                                            type="radio"
-                                                                            name="sendMail"
-                                                                            value="1"
-                                                                            style="margin-left: 5px;"/><label
-                                                                        style="margin-left: 5px;margin-right: 20px;">Chưa
+                                                                           value="0"/>
+                                                                    <label class="label-radio">Working</label>
+                                                                    <input class="radio-choose"
+                                                                           type="radio"
+                                                                           name="sendMail"
+                                                                           value="1"/><label class="label-radio">Chưa
                                                                     Mail</label>
-                                                                    <input type="radio"
+                                                                    <input type="radio" class="radio-choose"
                                                                            name="sendMail" th:checked="true"
-                                                                           value="2"
-                                                                           style="margin-left: 5px;"/><label>Đã
+                                                                           value="2"/><label>Đã
                                                                     Mail</label>
                                                                 </div>
                                                             </div>

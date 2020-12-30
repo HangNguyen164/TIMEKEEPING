@@ -82,3 +82,16 @@ h7 {
     vertical-align: middle;
     margin: auto;
 }
+
+.radio-first {
+    margin-left: 5px;
+}
+
+.label-radio {
+    margin-left: 5px;
+    margin-right: 20px;
+}
+
+.sendMail {
+    color: black;
+}

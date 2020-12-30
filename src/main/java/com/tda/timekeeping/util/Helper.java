@@ -121,6 +121,12 @@ public class Helper {
         return listDayNotFull.length() > 0 ? listDayNotFull.substring(0, listDayNotFull.length() - 2) : "";
     }
 
+    /**
+     * Covert String to Time.
+     * @param s: String to covert
+     * @return Time with format: hh:mm:ss
+     * @throws ParseException: When string not right format
+     */
     public static Time convert(String s) throws ParseException {
         int len = s.length();
         if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
