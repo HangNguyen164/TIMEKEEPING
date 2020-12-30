@@ -75,7 +75,7 @@ public class HomeController {
                 accountDetailService.update(startTime, endTime, note, accountDetail.getCheckEmail(), id);
                 return "redirect:/home-admin";
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace(System.out);
             }
         } else if (startTimeStr.length() == 0 && endTimeStr.length() == 0) {
             System.out.println("Nghi");
