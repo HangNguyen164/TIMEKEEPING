@@ -10,6 +10,7 @@ div.dataTables_wrapper {
 
 #custom-table tr td {
     margin: auto;
+    vertical-align: middle;
 }
 
 #custom-table tr td a {
@@ -74,4 +75,10 @@ h7 {
 
 #endTime {
     margin-left: 15px;
+}
+
+.function {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
 }
