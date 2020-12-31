@@ -16,10 +16,10 @@ public class Helper {
     private static final int HOUR_LUNCH = 1;
     private static final int MINUTES_LUNCH = 30;
     private static final int MINUTES_TO_HOUR = 60;
+    private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
+    private static int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "hh:mm:ss";
-    private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
-    private static final int TIME_PATTERN_LEN = "hh:mm:ss".length();
 
     public static int getTypeOfDate(Date date, int type) {
         Calendar cal = Calendar.getInstance();
@@ -123,6 +123,7 @@ public class Helper {
 
     /**
      * Covert String to Time.
+     *
      * @param s: String to covert
      * @return Time with format: hh:mm:ss
      * @throws ParseException: When string not right format
@@ -132,8 +133,8 @@ public class Helper {
         if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
             s = s + ":00";
         }
-        if (len > TIME_PATTERN_LEN) {
-            s = s.substring(0, TIME_PATTERN_LEN);
+        if (len > TIME_FORMAT.length()) {
+            s = s.substring(0, TIME_FORMAT.length());
         }
         return java.sql.Time.valueOf(s);
     }
@@ -153,5 +154,12 @@ public class Helper {
         lists.add("November");
         lists.add("December");
         return lists;
+    }
+
+    public static int checkMonthChoose(String monthChoose) {
+        if (monthChoose == null) {
+            return currentMonth;
+        }
+        return Integer.valueOf(monthChoose);
     }
 }

@@ -2,32 +2,41 @@ package com.tda.timekeeping.service;
 
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.repository.AccountDetailRepository;
+import com.tda.timekeeping.service.impl.AccountDetailImpl;
 import com.tda.timekeeping.vo.AccountDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import static com.tda.timekeeping.util.Helper.checkMonthChoose;
+import static com.tda.timekeeping.util.Helper.getTypeOfDate;
+
 @Service
-public class AccountDetailService {
+public class AccountDetailService implements AccountDetailImpl {
     @Autowired
     private AccountDetailRepository accountDetailRepository;
 
-    public List<AccountDetailVo> getAllByUsername(String username) {
-        return accountDetailRepository.getAllByUsername(username);
+    @Override
+    public List<AccountDetailVo> getAccountDetailVosByUsername(String username) {
+        return accountDetailRepository.getAccountDetailVosByUsername(username);
     }
 
-    @Transactional
-    public List<AccountDetailVo> getAll(int month) {
-        return accountDetailRepository.getAll(month);
+    @Override
+    public List<AccountDetailVo> getAccountDetailVosInMonth(String monthChoose) {
+        return accountDetailRepository.getAccountDetailVosInMonth(checkMonthChoose(monthChoose));
     }
 
+    @Override
     public AccountDetail getOne(int id) {
         return accountDetailRepository.getOne(id);
     }
 
+    @Override
     @Transactional
     public void update(Time startTime, Time endTime, String note, int sendMail, int id) {
         accountDetailRepository.update(startTime, endTime, note, sendMail, id);

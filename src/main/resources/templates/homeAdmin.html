@@ -73,7 +73,7 @@
 
         <div class="row mt-3 mb-3">
             <div class="col-sm-2">
-                <form th:action="@{/home-admin}" action="#">
+                <form th:action="@{/home-admin}">
                     <select name="month" class="form-control" data-role="select-dropdown" id="month"
                             onchange="this.form.submit()">
                         <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
@@ -105,7 +105,10 @@
             <th:block th:each="accountShow,i : ${listAccountShow}">
                 <tr>
                     <td th:text="${i.count}"></td>
-                    <td th:text="${accountShow.username}"></td>
+                    <td><a href="#" data-target="#detail" class="total-user" data-toggle="modal"
+                           th:attr="data-target='#detail'+${accountShow.id}">
+                        <th:block th:text="${accountShow.username}"></th:block>
+                    </a></td>
                     <td th:text="${accountShow.name}"></td>
                     <td th:text="${accountShow.department}"></td>
                     <td th:text="${accountShow.position}"></td>
@@ -142,7 +145,7 @@
                     </td>
                 </tr>
                 <!--  Update-->
-                <div class="modal fade detail" tabindex="-1" role="dialog" th:id="update+${accountShow.id}"
+                <div class="modal fade update" tabindex="-1" role="dialog" th:id="update+${accountShow.id}"
                      aria-hidden="true">
                     <div class="modal-dialog  modal-lg" role="document">
                         <div class="modal-content">
@@ -299,38 +302,56 @@
                         </div>
                     </div>
                 </div>
+
+                <!--  Total -->
+                <div class="modal fade detail" tabindex="-1" role="dialog" th:id="detail+${accountShow.id}"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="container">
+                                <div class="card-body">
+                                    <h5 class="mb-3">Information of
+                                        <th:block th:text="${accountShow.username}"></th:block>
+                                        in month
+                                    </h5>
+                                    <br/>
+                                    <div class="container">
+                                        <div class="row pr-4">
+                                            <h7>Summarize hour working in month:</h7>&ensp;
+                                            <!--                                        <h7 th:text="${totalWorkInMonth}"></h7>&ensp;-->
+                                            <h7>hours</h7>
+                                        </div>
+                                        <br/>
+                                        <div class="row pr-4">
+                                            <h7>Summarize day not working:
+                                            </h7>&ensp;
+                                            <!--                                        <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;-->
+                                            <h7>day(s)</h7>
+                                        </div>
+                                        <br/>
+                                        <div class="row pr-4">
+                                            <h7>Days work not full:</h7>&ensp;
+                                            <!--                                        <div th:if="${listDayWorkNotFull.isEmpty()}">-->
+                                            <h7>0 day</h7>
+                                        </div>
+                                        <!--                                        <div th:if="${listDayWorkNotFull.length()>0}">-->
+                                        <!--                                            <h7 th:text="${listDayWorkNotFull}"></h7>-->
+                                        <!--                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-md btn-white" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </th:block>
             </tbody>
         </table>
         <br/><br/><br/>
-        <div class="container-fluid">
-            <div class="row">
-                <h5>Information in current month:
-                </h5>
-            </div>
-            <br/>
-            <div class="row">
-                <h7>Summarize the working hours of all employees in the month:</h7>&ensp;
-                <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
-                <h7>hours</h7>
-            </div>
-            <br/>
-            <div class="row">
-                <h7>Summarize the number of non-attendance days at the company of all employees in the month:</h7>&ensp;
-                <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
-                <h7>day(s)</h7>
-            </div>
-            <br/>
-            <div class="row">
-                <h7>Statistics of less than 8 hours workdays per employeea:</h7>&ensp;
-                <div th:if="${listDayWorkNotFull.isEmpty()}">
-                    <h7>0 day</h7>
-                </div>
-                <div th:if="${listDayWorkNotFull.length()>0}">
-                    <h7 th:text="${listDayWorkNotFull}"></h7>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

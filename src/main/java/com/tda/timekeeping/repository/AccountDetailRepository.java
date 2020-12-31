@@ -17,11 +17,11 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
             "ad.workDate,ad.startTime,ad.endTime ,ad.note,ad.checkEmail) FROM AccountDetail ad";
 
     @Query(value = query + " Where  ad.username=:username ORDER BY ad.id")
-    List<AccountDetailVo> getAllByUsername(@Param("username") String username);
+    List<AccountDetailVo> getAccountDetailVosByUsername(@Param("username") String username);
 
     @Modifying
     @Query(value = query + " WHERE extract(month from ad.workDate)=:monthChoose ORDER BY ad.id")
-    List<AccountDetailVo> getAll(@Param("monthChoose") int monthChoose);
+    List<AccountDetailVo> getAccountDetailVosInMonth(@Param("monthChoose") int monthChoose);
 
     @Modifying
     @Query(value = "UPDATE  AccountDetail  a set a.startTime=:start_time, a.endTime=:end_time, a.note=:note, a.checkEmail=:send_mail WHERE a.id=:id")

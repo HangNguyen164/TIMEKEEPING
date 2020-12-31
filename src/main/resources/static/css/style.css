@@ -12,7 +12,7 @@
     overflow: overlay;
 }
 
-.navbar{
+.navbar {
     margin-bottom: 0px;
 }
 
@@ -31,10 +31,10 @@
     font-size: 12px;
     font-weight: bold;
     line-height: 1;
-    color: #fff; 
+    color: #fff;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    background-color: red; 
+    background-color: red;
     border-radius: 10px;
 }
