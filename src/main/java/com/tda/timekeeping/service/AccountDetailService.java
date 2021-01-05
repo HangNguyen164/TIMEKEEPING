@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Time;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static com.tda.timekeeping.util.Helper.checkMonthChoose;
-import static com.tda.timekeeping.util.Helper.getTypeOfDate;
 
 @Service
 public class AccountDetailService implements AccountDetailImpl {

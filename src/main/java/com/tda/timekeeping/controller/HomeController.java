@@ -2,6 +2,7 @@ package com.tda.timekeeping.controller;
 
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.service.impl.AccountDetailImpl;
+import com.tda.timekeeping.util.Helper;
 import com.tda.timekeeping.vo.AccountDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import static com.tda.timekeeping.util.Helper.*;
 public class HomeController {
     @Autowired
     private AccountDetailImpl accountDetailImpl;
+    private Helper helper;
 
     @GetMapping(value = "/home-user")
     public String getAllInfo(Model model) {
@@ -43,24 +45,12 @@ public class HomeController {
         accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthChoose);
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("getAllMonth", getAllMonth);
+        model.addAttribute("accountDetailImpl", accountDetailImpl);
+        model.addAttribute("helper", helper);
+        model.addAttribute("month", checkMonthChoose(monthChoose));
         return "homeAdmin";
     }
-//-- Tong h lam viec cua cong ty trong thang
-//    select ad.username, sum(end_time-start_time-'01:30:00')
-//    from account_detail ad
-//    where extract(month from ad.work_date)=12
-//    and send_mail =0
-//    and ad.username ='TDAV0011'
-//    group by ad.username;
-//
-//-- Tong so ngay ko di lam
-//    select ad.username, sum(end_time-start_time-'01:30:00')
-//    from account_detail ad
-//    where extract(month from ad.work_date)=12
-//    and send_mail =0
-//    and ad.username ='TDAV0011'
-//    group by ad.username
-//    having sum(end_time-start_time-'01:30:00')='00:00:00';
+
     @PostMapping("/update/{id}")
     public String save(@PathVariable("id") int id, @RequestParam("startTime") String startTimeStr, @RequestParam("endTime") String endTimeStr,
                        @RequestParam("sendMail") String sendMail,
@@ -83,6 +73,12 @@ public class HomeController {
         } else {
             System.out.println("Must full 2 time");
         }
+        return "redirect:/home-admin";
+    }
+
+    @PostMapping("/home-admin")
+    public String getTotal(@RequestParam("username") String username) {
+        System.out.println(username);
         return "redirect:/home-admin";
     }
 }

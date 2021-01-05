@@ -308,43 +308,62 @@
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <div class="container">
-                                <div class="card-body">
-                                    <h5 class="mb-3">Information of
-                                        <th:block th:text="${accountShow.username}"></th:block>
-                                        in month
-                                    </h5>
-                                    <br/>
-                                    <div class="container">
-                                        <div class="row pr-4">
-                                            <h7>Summarize hour working in month:</h7>&ensp;
-                                            <!--                                        <h7 th:text="${totalWorkInMonth}"></h7>&ensp;-->
-                                            <h7>hours</h7>
-                                        </div>
-                                        <br/>
-                                        <div class="row pr-4">
-                                            <h7>Summarize day not working:
-                                            </h7>&ensp;
-                                            <!--                                        <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;-->
-                                            <h7>day(s)</h7>
-                                        </div>
-                                        <br/>
-                                        <div class="row pr-4">
-                                            <h7>Days work not full:</h7>&ensp;
-                                            <!--                                        <div th:if="${listDayWorkNotFull.isEmpty()}">-->
-                                            <h7>0 day</h7>
-                                        </div>
-                                        <!--                                        <div th:if="${listDayWorkNotFull.length()>0}">-->
-                                        <!--                                            <h7 th:text="${listDayWorkNotFull}"></h7>-->
-                                        <!--                                        </div>-->
+                            <form th:action="@{/home-admin}">
+                                <div class="container">
+                                    <div class="card-body" id="username" th:value="${accountShow.username}">
+                                        <h5 class="mb-3" th:value="${accountShow.username}"
+                                            th:text="${accountShow.username}">
+                                        </h5>
+                                        <th:block th:with="username=${accountShow.username}">
+                                            <th:block th:with="month=${month}">
+                                                <th:block
+                                                        th:with="listAccount=${accountDetailImpl.getAccountDetailVosByUsername(username)}">
+                                                    <th:block
+                                                            th:with="totalWorkInMonth=${helper.totalNotWorkInOffice(listAccount,month)}">
+                                                        <th:block
+                                                                th:with="totalNotWorkInOffice=${helper.totalNotWorkInOffice(listAccount,month)}">
+                                                            <th:block
+                                                                    th:with="listDayWorkNotFull=${helper.listDayWorkNotFull(listAccount,month)}">
+                                                                <br/>
+<!--                                                                <div class="container">-->
+<!--                                                                    <div class="row pr-4">-->
+<!--                                                                        <h7>Summarize hour working in month:</h7>&ensp;-->
+<!--                                                                        <h7 th:text="${totalWorkInMonth}"></h7>&ensp;-->
+<!--                                                                        <h7>hours</h7>-->
+<!--                                                                    </div>-->
+<!--                                                                    <br/>-->
+<!--                                                                    <div class="row pr-4">-->
+<!--                                                                        <h7>Summarize day not working:-->
+<!--                                                                        </h7>&ensp;-->
+<!--                                                                        <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;-->
+<!--                                                                        <h7>day(s)</h7>-->
+<!--                                                                    </div>-->
+<!--                                                                    <br/>-->
+<!--                                                                    <div class="row pr-4">-->
+<!--                                                                        <h7>Days work not full:</h7>&ensp;-->
+<!--                                                                        <div th:if="${listDayWorkNotFull.isEmpty()}">-->
+<!--                                                                            <h7>0 day</h7>-->
+<!--                                                                        </div>-->
+<!--                                                                        <div th:if="${listDayWorkNotFull.length()>0}">-->
+<!--                                                                            <h7 th:text="${listDayWorkNotFull}"></h7>-->
+<!--                                                                        </div>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-md btn-white"
+                                                                            data-dismiss="modal">
+                                                                        Close
+                                                                    </button>
+                                                                </div>
+                                                            </th:block>
+                                                        </th:block>
+                                                    </th:block>
+                                                </th:block>
+                                            </th:block>
+                                        </th:block>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-md btn-white" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

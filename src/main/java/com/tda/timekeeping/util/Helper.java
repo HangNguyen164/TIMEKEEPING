@@ -17,7 +17,7 @@ public class Helper {
     private static final int MINUTES_LUNCH = 30;
     private static final int MINUTES_TO_HOUR = 60;
     private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
-    private static int currentMonth = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
+    private static int CURRENT_MONTH = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "hh:mm:ss";
 
@@ -157,9 +157,6 @@ public class Helper {
     }
 
     public static int checkMonthChoose(String monthChoose) {
-        if (monthChoose == null) {
-            return currentMonth;
-        }
-        return Integer.valueOf(monthChoose);
+        return monthChoose == null ? CURRENT_MONTH : Integer.valueOf(monthChoose);
     }
 }
