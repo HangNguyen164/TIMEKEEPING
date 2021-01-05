@@ -64,12 +64,14 @@
 
         <div class="row mt-3 mb-3">
             <div class="col-12 btn-add" id="btn-add">
-                <form>
-                    <input id="file-input" type="file"/>
+                <form th:action="@{/home-admin/add}" method="post" enctype="multipart/form-data">
+                    <input id="file-input" type="file" name="fileinput" onchange="this.form.submit()"
+                           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                    <button type="button" class="btn btn-success collapsed" id="false-input">Add data</button>
                 </form>
-                <button type="button" class="btn btn-success collapsed" id="false-input">Add data</button>
             </div>
         </div>
+
 
         <div class="row mt-3 mb-3">
             <div class="col-sm-2">

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -77,5 +78,13 @@ public class HomeController {
         model.addAttribute("getAllMonth", getAllMonth);
         model.addAttribute("month", checkMonthChoose(monthStr));
         return "homeAdmin";
+    }
+
+    @RequestMapping(value = "/home-admin/add")
+    public String addDataFromExcel(Model model, @RequestParam("fileinput") MultipartFile fileName) {
+        // add data from excel
+        System.out.println(fileName.getOriginalFilename());
+
+        return "redirect:/home-admin";
     }
 }
