@@ -1,5 +1,6 @@
 package com.tda.timekeeping.util;
 
+import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.vo.AccountDetailVo;
 
 import java.sql.Time;
@@ -121,24 +122,6 @@ public class Helper {
         return listDayNotFull.length() > 0 ? listDayNotFull.substring(0, listDayNotFull.length() - 2) : "";
     }
 
-    /**
-     * Covert String to Time.
-     *
-     * @param s: String to covert
-     * @return Time with format: hh:mm:ss
-     * @throws ParseException: When string not right format
-     */
-    public static Time convert(String s) throws ParseException {
-        int len = s.length();
-        if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
-            s = s + ":00";
-        }
-        if (len > TIME_FORMAT.length()) {
-            s = s.substring(0, TIME_FORMAT.length());
-        }
-        return java.sql.Time.valueOf(s);
-    }
-
     public static List<String> getAllMonth() {
         List<String> lists = new ArrayList<>();
         lists.add("January");
@@ -159,4 +142,42 @@ public class Helper {
     public static int checkMonthChoose(String monthChoose) {
         return monthChoose == null ? CURRENT_MONTH : Integer.valueOf(monthChoose);
     }
+
+    public static AccountDetail getAccountDetailWithNewInfo(String startTimeStr, String endTimeStr, String sendMail, String note) {
+        AccountDetail accountDetail = null;
+        if (startTimeStr.length() > 0 && endTimeStr.length() > 0) {
+            try {
+                Time startTime = convert(startTimeStr);
+                Time endTime = convert(endTimeStr);
+                accountDetail = new AccountDetail();
+                accountDetail.setStartTime(startTime);
+                accountDetail.setEndTime(endTime);
+                accountDetail.setNote(note);
+                accountDetail.setCheckEmail(Integer.valueOf(sendMail));
+                return accountDetail;
+            } catch (Exception e) {
+                e.printStackTrace(System.out);
+            }
+        }
+        return accountDetail;
+    }
+
+    /**
+     * Covert String to Time.
+     *
+     * @param s: String to covert
+     * @return Time with format: hh:mm:ss
+     * @throws ParseException: When string not right format
+     */
+    private static Time convert(String s) throws ParseException {
+        int len = s.length();
+        if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
+            s = s + ":00";
+        }
+        if (len > TIME_FORMAT.length()) {
+            s = s.substring(0, TIME_FORMAT.length());
+        }
+        return java.sql.Time.valueOf(s);
+    }
+
 }

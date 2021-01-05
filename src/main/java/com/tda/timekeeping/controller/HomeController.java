@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -49,32 +48,18 @@ public class HomeController {
     }
 
     @PostMapping("/update/{id}")
-    public String save(@PathVariable("id") int id, @RequestParam("startTime") String startTimeStr, @RequestParam("endTime") String endTimeStr,
-                       @RequestParam("sendMail") String sendMail,
-                       @RequestParam("note") String note) {
-        AccountDetail accountDetail = accountDetailImpl.getOne(id);
-        if (startTimeStr.length() > 0 && endTimeStr.length() > 0) {
-            try {
-                Time startTime = convert(startTimeStr);
-                Time endTime = convert(endTimeStr);
-                accountDetail.setStartTime(startTime);
-                accountDetail.setEndTime(endTime);
-                accountDetail.setCheckEmail(Integer.valueOf(sendMail));
-                accountDetailImpl.update(startTime, endTime, note, accountDetail.getCheckEmail(), id);
-                return "redirect:/home-admin";
-            } catch (Exception e) {
-                e.printStackTrace(System.out);
-            }
-        } else if (startTimeStr.length() == 0 && endTimeStr.length() == 0) {
-            System.out.println("Nghi");
-        } else {
-            System.out.println("Must full 2 time");
+    public String updateAccountDetail(@PathVariable("id") int id, @RequestParam("startTime") String startTimeStr, @RequestParam("endTime") String endTimeStr,
+                                      @RequestParam("sendMail") String sendMail,
+                                      @RequestParam("note") String note) {
+        AccountDetail newAccountDetail = getAccountDetailWithNewInfo(startTimeStr, endTimeStr, sendMail, note);
+        if (newAccountDetail != null) {
+            accountDetailImpl.update(newAccountDetail.getStartTime(), newAccountDetail.getEndTime(), note, newAccountDetail.getCheckEmail(), id);
         }
         return "redirect:/home-admin";
     }
 
     @GetMapping("/username/{username}/total/{monthChoose}")
-    public String delete(@PathVariable("username") String username, @PathVariable("monthChoose") String monthStr, Model model) {
+    public String totalInfoAccountDetailInMonth(@PathVariable("username") String username, @PathVariable("monthChoose") String monthStr, Model model) {
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonth(username, monthStr);
         List<String> getAllMonth = getAllMonth();
         List<AccountDetailVo> accountDetailVoList;
