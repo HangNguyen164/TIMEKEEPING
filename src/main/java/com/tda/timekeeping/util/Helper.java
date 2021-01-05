@@ -1,17 +1,22 @@
 package com.tda.timekeeping.util;
 
+import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.vo.AccountDetailVo;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.FileInputStream;
 import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+
 
 public class Helper {
     private static final int HOUR_LUNCH = 1;
@@ -180,4 +185,122 @@ public class Helper {
         return java.sql.Time.valueOf(s);
     }
 
+    public static Account getAccountFromExcel(String filePath) {
+        Account account = null;
+        try {
+            FileInputStream inputStream = new FileInputStream(filePath);
+
+            Workbook workbook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            rowIterator.next();
+            rowIterator.next();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+                Row nextRow = rowIterator.next();
+                Iterator<Cell> cellIterator = nextRow.cellIterator();
+
+                // tao xong 1 object
+                while (cellIterator.hasNext()) {
+                    Cell nextCell = cellIterator.next();
+
+                    int columnIndex = nextCell.getColumnIndex();
+                    switch (columnIndex) {
+                        case 0: {
+                            account.setUsername(nextCell.getStringCellValue());
+                            break;
+                        }
+                    }
+                }
+            }
+            account.setRoleID(1);
+            workbook.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return account;
+    }
+
+    public static AccountDetail getAccountDetailFromExcel(String filePath) {
+        AccountDetail accountDetail = null;
+        try {
+            FileInputStream inputStream = new FileInputStream(filePath);
+
+            Workbook workbook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            rowIterator.next();
+            rowIterator.next();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+                Row nextRow = rowIterator.next();
+                Iterator<Cell> cellIterator = nextRow.cellIterator();
+
+                // tao xong 1 object
+                while (cellIterator.hasNext()) {
+                    Cell nextCell = cellIterator.next();
+
+                    int columnIndex = nextCell.getColumnIndex();
+                    switch (columnIndex) {
+                        case 0: {
+                            accountDetail.setUsername(nextCell.getStringCellValue());
+                            break;
+                        }
+                        case 1: {
+                            accountDetail.setName(nextCell.getStringCellValue());
+                            break;
+                        }
+
+                        case 2: {
+                            accountDetail.setDepartment(nextCell.getStringCellValue());
+                            break;
+                        }
+
+                        case 3: {
+                            accountDetail.setPosition(nextCell.getStringCellValue());
+                            break;
+                        }
+
+                        case 4: {
+                            accountDetail.setWorkDate((java.sql.Date) nextCell.getDateCellValue());
+                            break;
+                        }
+
+                        case 6: {
+                            accountDetail.setStartTime((Time) nextCell.getDateCellValue());
+                            break;
+                        }
+
+                        case 7: {
+                            accountDetail.setEndTime((Time) nextCell.getDateCellValue());
+                            break;
+                        }
+
+                        case 9: {
+                            accountDetail.setNote(nextCell.getStringCellValue());
+                            break;
+                        }
+
+                        case 10: {
+                            accountDetail.setCheckEmail(checkMailNumber(nextCell.getStringCellValue()));
+                            break;
+                        }
+                    }
+                }
+            }
+            workbook.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return accountDetail;
+    }
+
+    private static int checkMailNumber(String email) {
+        if (email == "") {
+            return 0;
+        } else if (email.equalsIgnoreCase("Chưa mail")) {
+            return 1;
+        }
+        return 2;
+    }
 }

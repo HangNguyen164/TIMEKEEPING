@@ -4,4 +4,6 @@ import com.tda.timekeeping.entity.Account;
 
 public interface AccountImpl {
     Account getOne(String username);
+
+    void add(Account account);
 }

@@ -1,5 +1,6 @@
 package com.tda.timekeeping.controller;
 
+import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.service.impl.AccountDetailImpl;
 import com.tda.timekeeping.util.Helper;
@@ -83,8 +84,14 @@ public class HomeController {
     @RequestMapping(value = "/home-admin/add")
     public String addDataFromExcel(Model model, @RequestParam("fileinput") MultipartFile fileName) {
         // add data from excel
-        System.out.println(fileName.getOriginalFilename());
+        String pathFile = fileName.getOriginalFilename();
+        Account account = getAccountFromExcel(pathFile);
+        AccountDetail accountDetail = getAccountDetailFromExcel(pathFile);
 
+        // add Account
+
+
+        // add AccountDetail
         return "redirect:/home-admin";
     }
 }
