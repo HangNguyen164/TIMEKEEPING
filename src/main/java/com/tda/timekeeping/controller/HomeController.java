@@ -58,7 +58,7 @@ public class HomeController {
         return "redirect:/home-admin";
     }
 
-    @GetMapping("/username/{username}/total/{monthChoose}")
+    @GetMapping("/home-admin/username/{username}/total/{monthChoose}")
     public String totalInfoAccountDetailInMonth(@PathVariable("username") String username, @PathVariable("monthChoose") String monthStr, Model model) {
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonth(username, monthStr);
         List<String> getAllMonth = getAllMonth();
