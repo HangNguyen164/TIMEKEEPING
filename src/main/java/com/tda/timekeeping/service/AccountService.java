@@ -24,4 +24,5 @@ public class AccountService implements AccountImpl {
         accountRepository.save(account);
     }
 //    https://www.baeldung.com/spring-transactional-propagation-isolation
+//    https://www.slideshare.net/DucNguyenQuang3/transaction-isolation-level-vietnamese
 }
