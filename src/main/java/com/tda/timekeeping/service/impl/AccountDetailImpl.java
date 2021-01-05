@@ -11,6 +11,8 @@ public interface AccountDetailImpl {
 
     List<AccountDetailVo> getAccountDetailVosInMonth(String monthChoose);
 
+    List<AccountDetailVo> getAccountDetailVosByUsernameInMonth(String username, String monthChoose);
+
     void update(Time startTime, Time endTime, String note, int sendMail, int id);
 
     AccountDetail getOne(int id);

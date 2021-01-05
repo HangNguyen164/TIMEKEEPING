@@ -11,21 +11,21 @@
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap/bootstrap.min.css}">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="assets/css/mnd/materials.css">
-    <link rel="stylesheet" href="assets/css/mnd/common.css">
-    <link rel="stylesheet" href="assets/css/mnd/tables.css">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/mnd/materials.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/mnd/common.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/mnd/tables.css}">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin.css" rel="stylesheet">
-    <link href="css/tb-admin.css" rel="stylesheet">
+    <link th:href="@{/css/sb-admin.css}" rel="stylesheet">
+    <link th:href="@{/css/tb-admin.css}" rel="stylesheet">
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 
-    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link rel="icon" th:href="@{/images/logo.png}" type="image/x-icon">
 
     <title>Home-Admin | TDA Corporation</title>
 
@@ -47,7 +47,7 @@
     <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="login.html">
-                <img src="images/avatar.jpg" class="mr-3">
+                <img th:src="@{/images/avatar.jpg}" class="mr-3">
             </a>
         </li>
     </ul>
@@ -105,10 +105,11 @@
             <th:block th:each="accountShow,i : ${listAccountShow}">
                 <tr>
                     <td th:text="${i.count}"></td>
-                    <td><a href="#" data-target="#detail" class="total-user" data-toggle="modal"
-                           th:attr="data-target='#detail'+${accountShow.id}">
-                        <th:block th:text="${accountShow.username}"></th:block>
-                    </a></td>
+                    <td>
+                        <a th:href="@{/username/{username}/total/{monthChoose}(username=${accountShow.username},monthChoose=${month})}">
+                            <th:block th:text="${accountShow.username}"></th:block>
+
+                        </a></td>
                     <td th:text="${accountShow.name}"></td>
                     <td th:text="${accountShow.department}"></td>
                     <td th:text="${accountShow.position}"></td>
@@ -302,74 +303,40 @@
                         </div>
                     </div>
                 </div>
-
-                <!--  Total -->
-                <div class="modal fade detail" tabindex="-1" role="dialog" th:id="detail+${accountShow.id}"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <form th:action="@{/home-admin}">
-                                <div class="container">
-                                    <div class="card-body" id="username" th:value="${accountShow.username}">
-                                        <h5 class="mb-3" th:value="${accountShow.username}"
-                                            th:text="${accountShow.username}">
-                                        </h5>
-                                        <th:block th:with="username=${accountShow.username}">
-                                            <th:block th:with="month=${month}">
-                                                <th:block
-                                                        th:with="listAccount=${accountDetailImpl.getAccountDetailVosByUsername(username)}">
-                                                    <th:block
-                                                            th:with="totalWorkInMonth=${helper.totalNotWorkInOffice(listAccount,month)}">
-                                                        <th:block
-                                                                th:with="totalNotWorkInOffice=${helper.totalNotWorkInOffice(listAccount,month)}">
-                                                            <th:block
-                                                                    th:with="listDayWorkNotFull=${helper.listDayWorkNotFull(listAccount,month)}">
-                                                                <br/>
-<!--                                                                <div class="container">-->
-<!--                                                                    <div class="row pr-4">-->
-<!--                                                                        <h7>Summarize hour working in month:</h7>&ensp;-->
-<!--                                                                        <h7 th:text="${totalWorkInMonth}"></h7>&ensp;-->
-<!--                                                                        <h7>hours</h7>-->
-<!--                                                                    </div>-->
-<!--                                                                    <br/>-->
-<!--                                                                    <div class="row pr-4">-->
-<!--                                                                        <h7>Summarize day not working:-->
-<!--                                                                        </h7>&ensp;-->
-<!--                                                                        <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;-->
-<!--                                                                        <h7>day(s)</h7>-->
-<!--                                                                    </div>-->
-<!--                                                                    <br/>-->
-<!--                                                                    <div class="row pr-4">-->
-<!--                                                                        <h7>Days work not full:</h7>&ensp;-->
-<!--                                                                        <div th:if="${listDayWorkNotFull.isEmpty()}">-->
-<!--                                                                            <h7>0 day</h7>-->
-<!--                                                                        </div>-->
-<!--                                                                        <div th:if="${listDayWorkNotFull.length()>0}">-->
-<!--                                                                            <h7 th:text="${listDayWorkNotFull}"></h7>-->
-<!--                                                                        </div>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-md btn-white"
-                                                                            data-dismiss="modal">
-                                                                        Close
-                                                                    </button>
-                                                                </div>
-                                                            </th:block>
-                                                        </th:block>
-                                                    </th:block>
-                                                </th:block>
-                                            </th:block>
-                                        </th:block>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </th:block>
             </tbody>
         </table>
+        <th:block th:if="${listDayWorkNotFull!=null}">
+            <div class="container-fluid">
+                <br/>
+                <div class="row">
+                    <h5>Information in current month:
+                    </h5>
+                </div>
+                <br/>
+                <div class="row">
+                    <h7>Summarize the working hours of 1 employee in the month:</h7>&ensp;
+                    <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
+                    <h7>hours</h7>
+                </div>
+                <br/>
+                <div class="row">
+                    <h7>Summarize the number of non-attendance days at the company of 1 employee in the month:</h7>&ensp;
+                    <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
+                    <h7>day(s)</h7>
+                </div>
+                <br/>
+                <div class="row">
+                    <h7>Statistics of less than 8 hours workdays per employee:</h7>&ensp;
+                    <div th:if="${listDayWorkNotFull.isEmpty()}">
+                        <h7>0 day</h7>
+                    </div>
+                    <div th:if="${listDayWorkNotFull.length()>0}">
+                        <h7 th:text="${listDayWorkNotFull}"></h7>
+                    </div>
+                </div>
+            </div>
+        </th:block>
         <br/><br/><br/>
     </div>
 </div>
@@ -385,14 +352,14 @@
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="assets/js/bootstrap/popper.min.js"></script>
-<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+<script th:src="@{/assets/js/bootstrap/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap/bootstrap.min.js}"></script>
 <!-- Custom scripts for all pages-->
-<script src="assets/js/mnd/mnd.min.js"></script>
+<script th:src="@{/assets/js/mnd/mnd.min.js}"></script>
 <!-- Data Tables -->
-<script src="assets/js/datatables/jquery.dataTables.min.js"></script>
-<script src="assets/js/datatables/datatables.vietnamese.js"></script>
-<script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="js/table.js"></script>
+<script th:src="@{/assets/js/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/assets/js/datatables/datatables.vietnamese.js}"></script>
+<script th:src="@{/assets/js/datatables/dataTables.bootstrap4.min.js}"></script>
+<script th:src="@{/js/table.js}"></script>
 </body>
 </html>

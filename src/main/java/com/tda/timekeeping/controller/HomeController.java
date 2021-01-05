@@ -41,12 +41,9 @@ public class HomeController {
     @RequestMapping(value = "/home-admin")
     public String getAll(@RequestParam(value = "month", required = false) String monthChoose, Model model) {
         List<String> getAllMonth = getAllMonth();
-        List<AccountDetailVo> accountDetailVoList;
-        accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthChoose);
+        List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthChoose);
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("getAllMonth", getAllMonth);
-        model.addAttribute("accountDetailImpl", accountDetailImpl);
-        model.addAttribute("helper", helper);
         model.addAttribute("month", checkMonthChoose(monthChoose));
         return "homeAdmin";
     }
@@ -76,9 +73,24 @@ public class HomeController {
         return "redirect:/home-admin";
     }
 
-    @PostMapping("/home-admin")
-    public String getTotal(@RequestParam("username") String username) {
-        System.out.println(username);
-        return "redirect:/home-admin";
+    @GetMapping("/username/{username}/total/{monthChoose}")
+    public String delete(@PathVariable("username") String username, @PathVariable("monthChoose") String monthStr, Model model) {
+        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonth(username, monthStr);
+        List<String> getAllMonth = getAllMonth();
+        List<AccountDetailVo> accountDetailVoList;
+        accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthStr);
+        int month = Integer.valueOf(monthStr);
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser, month);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser, month);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser, month);
+
+        model.addAttribute("listAccountShow", accountDetailVoListByUser);
+        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
+        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
+        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
+        model.addAttribute("listAccountShow", accountDetailVoList);
+        model.addAttribute("getAllMonth", getAllMonth);
+        model.addAttribute("month", checkMonthChoose(monthStr));
+        return "homeAdmin";
     }
 }

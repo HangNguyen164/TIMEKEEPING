@@ -29,6 +29,11 @@ public class AccountDetailService implements AccountDetailImpl {
     }
 
     @Override
+    public List<AccountDetailVo> getAccountDetailVosByUsernameInMonth(String username, String monthChoose) {
+        return accountDetailRepository.getAccountDetailVosByUsernameInMonth(username, checkMonthChoose(monthChoose));
+    }
+
+    @Override
     public AccountDetail getOne(int id) {
         return accountDetailRepository.getOne(id);
     }
