@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
@@ -34,13 +35,35 @@ public class AccountDetailService implements AccountDetailImpl {
     }
 
     @Override
-    public AccountDetail getOne(int id) {
-        return accountDetailRepository.getOne(id);
-    }
-
-    @Override
     @Transactional
     public void update(Time startTime, Time endTime, String note, int sendMail, int id) {
         accountDetailRepository.update(startTime, endTime, note, sendMail, id);
+    }
+
+    @Override
+    public void updateFullInfoAccountDetail(AccountDetail accountDetail) {
+        AccountDetail ad = accountDetailRepository.getOneByUsernameAndDate(accountDetail.getUsername(), accountDetail.getWorkDate());
+        ad.setName(accountDetail.getName());
+        ad.setPosition(accountDetail.getPosition());
+        ad.setDepartment(accountDetail.getDepartment());
+        ad.setStartTime(accountDetail.getStartTime());
+        ad.setEndTime(accountDetail.getEndTime());
+        ad.setNote(accountDetail.getNote());
+        ad.setCheckEmail(accountDetail.getCheckEmail());
+        accountDetailRepository.save(ad);
+
+    }
+
+    @Override
+    public void addNewAccountDetail(List<AccountDetail> lists) {
+        for (AccountDetail ad : lists) {
+            AccountDetail accountDetail = accountDetailRepository.getOneByUsernameAndDate(ad.getUsername(), ad.getWorkDate());
+            if (accountDetail == null) {
+                accountDetailRepository.save(ad);
+            } else {
+                // update
+                updateFullInfoAccountDetail(accountDetail);
+            }
+        }
     }
 }

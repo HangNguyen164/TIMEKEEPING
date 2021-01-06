@@ -5,8 +5,8 @@ import com.tda.timekeeping.repository.AccountRepository;
 import com.tda.timekeeping.service.impl.AccountImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class AccountService implements AccountImpl {
@@ -14,15 +14,18 @@ public class AccountService implements AccountImpl {
     private AccountRepository accountRepository;
 
     @Override
-    public Account getOne(String username) {
-        return accountRepository.getOne(username);
+    public List<Account> getAll() {
+        return accountRepository.findAll();
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED)
-    public void add(Account account) {
-        accountRepository.save(account);
+    public void addNewAccount(List<Account> listAccount) {
+        for (Account account : listAccount) {
+            Account getAccount = accountRepository.getOneAccountByUsername(account.getUsername());
+            if (getAccount == null) {
+                accountRepository.save(account);
+            }
+        }
     }
-//    https://www.baeldung.com/spring-transactional-propagation-isolation
-//    https://www.slideshare.net/DucNguyenQuang3/transaction-isolation-level-vietnamese
+
 }

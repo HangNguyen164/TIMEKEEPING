@@ -3,25 +3,33 @@ package com.tda.timekeeping.controller;
 import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.service.impl.AccountDetailImpl;
-import com.tda.timekeeping.util.Helper;
+import com.tda.timekeeping.service.impl.AccountImpl;
 import com.tda.timekeeping.vo.AccountDetailVo;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountDetailFromExcel;
+import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountFromExcel;
 import static com.tda.timekeeping.util.Helper.*;
 
 @Controller
 public class HomeController {
     @Autowired
     private AccountDetailImpl accountDetailImpl;
-    private Helper helper;
+
+    @Autowired
+    private AccountImpl accountImpl;
 
     @GetMapping(value = "/home-user")
     public String getAllInfo(Model model) {
@@ -81,17 +89,21 @@ public class HomeController {
         return "homeAdmin";
     }
 
-    @RequestMapping(value = "/home-admin/add")
-    public String addDataFromExcel(Model model, @RequestParam("fileinput") MultipartFile fileName) {
-        // add data from excel
-        String pathFile = fileName.getOriginalFilename();
-        Account account = getAccountFromExcel(pathFile);
-        AccountDetail accountDetail = getAccountDetailFromExcel(pathFile);
+    @PostMapping(value = "/home-admin/add")
+    public String addDataFromExcel(@RequestParam("fileinput") MultipartFile fileName) throws IOException {
+        List<Account> listAccount = new ArrayList<>();
+        List<AccountDetail> listAccountDetail = new ArrayList<>();
 
-        // add Account
+        XSSFWorkbook workbook = new XSSFWorkbook(fileName.getInputStream());
+        XSSFSheet worksheet = workbook.getSheetAt(0);
 
+        for (int i = 3; i < worksheet.getPhysicalNumberOfRows(); i++) {
+            listAccountDetail.add(getAccountDetailFromExcel(worksheet, i));
+            listAccount.add(getAccountFromExcel(worksheet, i));
+        }
+        accountImpl.addNewAccount(listAccount);
+        accountDetailImpl.addNewAccountDetail(listAccountDetail);
 
-        // add AccountDetail
         return "redirect:/home-admin";
     }
 }

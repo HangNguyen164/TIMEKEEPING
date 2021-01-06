@@ -29,7 +29,8 @@ import static com.tda.timekeeping.util.Helper.TIME_FORMAT;
 @ToString
 public class AccountDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
 
     @Column
