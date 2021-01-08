@@ -14,6 +14,10 @@ $('#custom-table').dataTable({
     "scrollX": true
 });
 
+// $('#custom-table').dataTable({
+//
+// });
+
 $(document).ready(function () {
     const url = new URL(document.location);
     const params = url.searchParams;

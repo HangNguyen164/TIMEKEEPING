@@ -10,12 +10,14 @@ table.dataTable {
 table.dataTable th {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
+    text-align: center;
 }
 
 table.dataTable td {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     font-weight: normal;
+    text-align: center;
 }
 
 table.dataTable td.dataTables_empty,

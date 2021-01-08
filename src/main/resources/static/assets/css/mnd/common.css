@@ -316,8 +316,9 @@ body {
  * ========== Bootstrap component custom css ==========
  */
 
-a {
+#user-code {
     color: #3bac47;
+    text-decoration: underline;
 }
 
 a:hover {

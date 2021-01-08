@@ -20,6 +20,7 @@ public class Helper {
     private static final int MINUTES_TO_HOUR = 60;
     private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
     private static int CURRENT_MONTH = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
+    private static int CURRENT_YEAR = getTypeOfDate(new Date(), Calendar.YEAR);
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "hh:mm:ss";
 
@@ -143,7 +144,9 @@ public class Helper {
     public static int checkMonthChoose(String monthChoose) {
         return monthChoose == null ? CURRENT_MONTH : Integer.valueOf(monthChoose);
     }
-
+    public static int checkYearChoose(String yearChoose) {
+        return yearChoose == null ? CURRENT_YEAR : Integer.valueOf(yearChoose);
+    }
     public static AccountDetail getAccountDetailWithNewInfo(String startTimeStr, String endTimeStr, String sendMail, String note) {
         AccountDetail accountDetail = null;
         if (startTimeStr.length() > 0 && endTimeStr.length() > 0) {
@@ -179,5 +182,10 @@ public class Helper {
             s = s.substring(0, TIME_FORMAT.length());
         }
         return java.sql.Time.valueOf(s);
+    }
+    public static List<String> getAllYear() {
+        List<String> lists = new ArrayList<>();
+
+        return lists;
     }
 }

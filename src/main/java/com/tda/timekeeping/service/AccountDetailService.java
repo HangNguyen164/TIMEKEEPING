@@ -12,6 +12,7 @@ import java.sql.Time;
 import java.util.List;
 
 import static com.tda.timekeeping.util.Helper.checkMonthChoose;
+import static com.tda.timekeeping.util.Helper.checkYearChoose;
 
 @Service
 public class AccountDetailService implements AccountDetailImpl {
@@ -24,13 +25,13 @@ public class AccountDetailService implements AccountDetailImpl {
     }
 
     @Override
-    public List<AccountDetailVo> getAccountDetailVosInMonth(String monthChoose) {
-        return accountDetailRepository.getAccountDetailVosInMonth(checkMonthChoose(monthChoose));
+    public List<AccountDetailVo> getAccountDetailVosInMonth(String monthChoose, String yearChoose) {
+        return accountDetailRepository.getAccountDetailVosInMonth(checkMonthChoose(monthChoose), checkYearChoose(yearChoose));
     }
 
     @Override
-    public List<AccountDetailVo> getAccountDetailVosByUsernameInMonth(String username, String monthChoose) {
-        return accountDetailRepository.getAccountDetailVosByUsernameInMonth(username, checkMonthChoose(monthChoose));
+    public List<AccountDetailVo> getAccountDetailVosByUsernameInMonth(String username, String monthChoose, String yearChoose) {
+        return accountDetailRepository.getAccountDetailVosByUsernameInMonth(username, checkMonthChoose(monthChoose), checkYearChoose(yearChoose));
     }
 
     @Override
