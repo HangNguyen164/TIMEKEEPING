@@ -21,7 +21,7 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
     List<AccountDetailVo> getAccountDetailVosByUsername(@Param("username") String username);
 
     @Query(value = query + " WHERE  extract(month from ad.workDate)=:monthChoose AND extract(year from ad.workDate)=:yearChoose AND ad.username=:username ORDER BY ad.id")
-    List<AccountDetailVo> getAccountDetailVosByUsernameInMonth(@Param("username") String username, @Param("monthChoose") int monthChoose, @Param("yearChoose") int yearChoose);
+    List<AccountDetailVo> getAccountDetailVosByUsernameInMonthInYear(@Param("username") String username, @Param("monthChoose") int monthChoose, @Param("yearChoose") int yearChoose);
 
     @Modifying
     @Query(value = query + " WHERE extract(month from ad.workDate)=:monthChoose AND extract(year from ad.workDate)=:yearChoose ORDER BY ad.id")

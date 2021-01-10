@@ -7,6 +7,9 @@ $(document).ready(function () {
     $('#file-input').change(function () {
         $('#selected_filename').text($('#file-input')[0].files[0].name);
     });
+    getModalCenter();
+    getMonthForCombobox();
+    getYearForCombobox();
 })
 
 $('#custom-table').dataTable({
@@ -14,25 +17,9 @@ $('#custom-table').dataTable({
     "scrollX": true
 });
 
-// $('#custom-table').dataTable({
-//
-// });
 
-$(document).ready(function () {
-    const url = new URL(document.location);
-    const params = url.searchParams;
-    const month = params.get("month");
-    const currentMonth = new Date().getMonth() + 1;
-    if (month !== null) {
-        $("#month").val(month);
-    } else {
-        $("#month").val(currentMonth);
-    }
-});
-
-$(document).ready(function () {
-
-    /* Centering the modal vertically */
+/* Centering the modal vertically */
+function getModalCenter() {
     function alignModal() {
         const modalDialog = $(this).find(".modal-dialog");
         modalDialog.css("margin-top", Math.max(0,
@@ -45,4 +32,34 @@ $(document).ready(function () {
     $(window).on("resize", function () {
         $(".modal:visible").each(alignModal);
     });
-});
+}
+
+/**
+ * Get Month for combobox select
+ */
+function getMonthForCombobox() {
+    const url = new URL(document.location);
+    const params = url.searchParams;
+    const month = params.get("month");
+    const currentMonth = new Date().getMonth() + 1;
+    if (month !== null) {
+        $("#month").val(month);
+    } else {
+        $("#month").val(currentMonth);
+    }
+}
+
+/**
+ * Get Year for combobox select
+ */
+function getYearForCombobox() {
+    const url = new URL(document.location);
+    const params = url.searchParams;
+    const year = params.get("year");
+    const currentYear = new Date().getFullYear();
+    if (year !== null) {
+        $("#year").val(year);
+    } else {
+        $("#year").val(currentYear);
+    }
+}

@@ -74,26 +74,26 @@
 
 
         <div class="row mt-3 mb-3">
-            <div class="col-sm-2">
-                <h5>Month</h5>
-                <form th:action="@{/home-admin}">
-                    <select name="month" class="form-control" data-role="select-dropdown" id="month"
-                            onchange="this.form.submit()">
-                        <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
-                                th:text="${month}"></option>
-                    </select>
-                </form>
-            </div>
-            <div class="col-sm-2">
-                <h5>Year</h5>
-                <form th:action="@{/home-admin}">
-                    <select name="month" class="form-control" data-role="select-dropdown" id="year"
-                            onchange="this.form.submit()">
-                        <option th:each="year : ${getAllYear}" th:value="${year}"
-                                th:text="${year}"></option>
-                    </select>
-                </form>
-            </div>
+            <form th:action="@{/home-admin}">
+                <div class="row" id="combobox">
+                    <div class="col-md-7">
+                        <h5>Month</h5>
+                        <select name="month" class="form-control" data-role="select-dropdown" id="month"
+                                onchange="this.form.submit()">
+                            <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
+                                    th:text="${month}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <h5>Year</h5>
+                        <select name="year" class="form-control" data-role="select-dropdown" id="year"
+                                onchange="this.form.submit()">
+                            <option th:each="year : ${getAllYear}" th:value="${year}"
+                                    th:text="${year}"></option>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </div>
         <table id="custom-table" class="table table-bordered w-100" cellspacing="0">
             <thead>
@@ -120,7 +120,7 @@
                     <td th:text="${i.count}"></td>
                     <td>
                         <a id="user-code"
-                           th:href="@{/home-admin/username/{username}/total/{monthChoose}(username=${accountShow.username},monthChoose=${month})}">
+                           th:href="@{/home-admin/username/{username}/total/{monthChoose}/{yearChoose}(username=${accountShow.username},monthChoose=${month},yearChoose=${year})}">
                             <th:block th:text="${accountShow.username}"></th:block>
                         </a></td>
                     <td th:text="${accountShow.name}"></td>

@@ -56,13 +56,15 @@ public class Helper {
      *
      * @param lists:        List time work of employee in current month.
      * @param currentMonth: current month in year.
+     * @param currentYear:  current year
      * @return number is total not work in office of employee.
      */
-    public static int totalNotWorkInOffice(List<AccountDetailVo> lists, int currentMonth) {
+    public static int totalNotWorkInOffice(List<AccountDetailVo> lists, int currentMonth, int currentYear) {
         int total = 0;
         for (AccountDetailVo accountDetailVo : lists) {
             int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
-            if (month == currentMonth && accountDetailVo.getSendEmail() != 0) {
+            int year = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.YEAR);
+            if (month == currentMonth && year == currentYear && accountDetailVo.getSendEmail() != 0) {
                 if (!accountDetailVo.hourIsEmpty()) {
                     long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                     if (hour == 0) {
@@ -79,15 +81,17 @@ public class Helper {
      *
      * @param lists:        List time work of employee in current month.
      * @param currentMonth: current month in year.
+     * @param currentYear:  current year.
      * @return number is total  work in office of employee.
      */
-    public static String totalWorkInMonth(List<AccountDetailVo> lists, int currentMonth) {
+    public static String totalWorkInMonth(List<AccountDetailVo> lists, int currentMonth, int currentYear) {
         double hour = 0;
         double minutes = 0;
         NumberFormat formatNumber = new DecimalFormat("#0.00");
         for (AccountDetailVo accountDetailVo : lists) {
             int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
-            if (month == currentMonth) {
+            int year = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.YEAR);
+            if (month == currentMonth && year == currentYear) {
                 if (!accountDetailVo.hourIsEmpty()) {
                     hour += Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                     minutes += Long.valueOf(accountDetailVo.getHour().split(":")[1]);
@@ -102,16 +106,18 @@ public class Helper {
      *
      * @param lists:        List time work of employee in current month.
      * @param currentMonth: current month in year.
+     * @param currentYear:  current year.
      * @return String is list day work not full of employee.
      */
-    public static String listDayWorkNotFull(List<AccountDetailVo> lists, int currentMonth) {
+    public static String listDayWorkNotFull(List<AccountDetailVo> lists, int currentMonth, int currentYear) {
         String listDayNotFull = "";
         if (lists.isEmpty()) {
             return listDayNotFull;
         } else {
             for (AccountDetailVo accountDetailVo : lists) {
                 int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
-                if (month == currentMonth) {
+                int year = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.YEAR);
+                if (month == currentMonth && year == currentYear) {
                     if (!accountDetailVo.hourIsEmpty()) {
                         long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
                         if (hour < 8) {
@@ -124,29 +130,6 @@ public class Helper {
         return listDayNotFull.length() > 0 ? listDayNotFull.substring(0, listDayNotFull.length() - 2) : "";
     }
 
-    public static List<String> getAllMonth() {
-        List<String> lists = new ArrayList<>();
-        lists.add("January");
-        lists.add("February");
-        lists.add("March");
-        lists.add("April");
-        lists.add("May");
-        lists.add("June");
-        lists.add("July");
-        lists.add("August");
-        lists.add("September");
-        lists.add("October");
-        lists.add("November");
-        lists.add("December");
-        return lists;
-    }
-
-    public static int checkMonthChoose(String monthChoose) {
-        return monthChoose == null ? CURRENT_MONTH : Integer.valueOf(monthChoose);
-    }
-    public static int checkYearChoose(String yearChoose) {
-        return yearChoose == null ? CURRENT_YEAR : Integer.valueOf(yearChoose);
-    }
     public static AccountDetail getAccountDetailWithNewInfo(String startTimeStr, String endTimeStr, String sendMail, String note) {
         AccountDetail accountDetail = null;
         if (startTimeStr.length() > 0 && endTimeStr.length() > 0) {
@@ -183,9 +166,37 @@ public class Helper {
         }
         return java.sql.Time.valueOf(s);
     }
+
+    public static int checkMonthChoose(String monthChoose) {
+        return monthChoose == null ? CURRENT_MONTH : Integer.valueOf(monthChoose);
+    }
+
+    public static int checkYearChoose(String yearChoose) {
+        return yearChoose == null ? CURRENT_YEAR : Integer.valueOf(yearChoose);
+    }
+
+    public static List<String> getAllMonth() {
+        List<String> lists = new ArrayList<>();
+        lists.add("January");
+        lists.add("February");
+        lists.add("March");
+        lists.add("April");
+        lists.add("May");
+        lists.add("June");
+        lists.add("July");
+        lists.add("August");
+        lists.add("September");
+        lists.add("October");
+        lists.add("November");
+        lists.add("December");
+        return lists;
+    }
+
     public static List<String> getAllYear() {
         List<String> lists = new ArrayList<>();
-
+        for (int i = 1976; i < 3000; i++) {
+            lists.add(String.valueOf(i));
+        }
         return lists;
     }
 }

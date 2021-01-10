@@ -62,7 +62,28 @@
                 </p>
             </div>
         </div>
-
+        <div class="row mt-3 mb-3">
+            <form th:action="@{/home-user}">
+                <div class="row" id="combobox">
+                    <div class="col-md-7">
+                        <h5>Month</h5>
+                        <select name="month" class="form-control" data-role="select-dropdown" id="month"
+                                onchange="this.form.submit()">
+                            <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
+                                    th:text="${month}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <h5>Year</h5>
+                        <select name="year" class="form-control" data-role="select-dropdown" id="year"
+                                onchange="this.form.submit()">
+                            <option th:each="year : ${getAllYear}" th:value="${year}"
+                                    th:text="${year}"></option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
         <table id="custom-table" class="table table-bordered w-100" cellspacing="0"
                width="100%">
             <thead>

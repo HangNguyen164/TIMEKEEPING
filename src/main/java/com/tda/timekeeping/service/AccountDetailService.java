@@ -20,18 +20,13 @@ public class AccountDetailService implements AccountDetailImpl {
     private AccountDetailRepository accountDetailRepository;
 
     @Override
-    public List<AccountDetailVo> getAccountDetailVosByUsername(String username) {
-        return accountDetailRepository.getAccountDetailVosByUsername(username);
-    }
-
-    @Override
     public List<AccountDetailVo> getAccountDetailVosInMonth(String monthChoose, String yearChoose) {
         return accountDetailRepository.getAccountDetailVosInMonth(checkMonthChoose(monthChoose), checkYearChoose(yearChoose));
     }
 
     @Override
-    public List<AccountDetailVo> getAccountDetailVosByUsernameInMonth(String username, String monthChoose, String yearChoose) {
-        return accountDetailRepository.getAccountDetailVosByUsernameInMonth(username, checkMonthChoose(monthChoose), checkYearChoose(yearChoose));
+    public List<AccountDetailVo> getAccountDetailVosByUsernameInMonthInYear(String username, String monthChoose, String yearChoose) {
+        return accountDetailRepository.getAccountDetailVosByUsernameInMonthInYear(username, checkMonthChoose(monthChoose), checkYearChoose(yearChoose));
     }
 
     @Override
