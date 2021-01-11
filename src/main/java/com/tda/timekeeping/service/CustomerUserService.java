@@ -1,4 +1,4 @@
-package com.tda.timekeeping.service.impl;
+package com.tda.timekeeping.service;
 
 import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.repository.AccountRepository;
@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService {
+public class CustomerUserService implements UserDetailsService {
 
     @Autowired
     private AccountRepository userRepository;
@@ -23,6 +23,4 @@ public class UserService implements UserDetailsService {
         }
         return new CustomUserDetails(user);
     }
-
-
 }

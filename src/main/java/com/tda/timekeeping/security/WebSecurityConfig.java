@@ -1,8 +1,9 @@
 package com.tda.timekeeping.security;
 
-import com.tda.timekeeping.service.impl.UserService;
+import com.tda.timekeeping.service.CustomerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserService userService;
+    private CustomerUserService customerUserService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -22,10 +23,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(customerUserService);
+        auth.setPasswordEncoder(passwordEncoder());
+        return auth;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(userService) // Cung cáp userservice cho spring security
+        auth.userDetailsService(customerUserService) // Cung cáp userservice cho spring security
                 .passwordEncoder(passwordEncoder()); // cung cấp password encoder
     }
 
@@ -33,16 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
-                .antMatchers("/home-user").hasRole("USER")
-                .antMatchers("/home-admin").hasRole("ADMIN")
-                .antMatchers("/login").hasRole("ADMIN")
+                .antMatchers("/index/**").permitAll()
+                .antMatchers("/home-user/**").permitAll()
+                .antMatchers("/home-admin/**").hasRole("ADMIN")
                 .and()
-//                .formLogin() // Cho phép người dùng xác thực bằng form login
-//                .defaultSuccessUrl("/hello")
-//                .permitAll() // Tất cả đều được truy cập vào địa chỉ này
-//                .and()
-                .logout() // Cho phép logout
-                .permitAll();
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .permitAll(false)
+                .and()
+                .logout();
     }
 }

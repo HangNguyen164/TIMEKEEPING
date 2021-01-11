@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,10 +33,11 @@ public class HomeController {
     private AccountImpl accountImpl;
 
     @RequestMapping(value = "/home-user")
-    public String getAllInfo(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model) {
+    public String getAllInfo(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model, HttpSession session) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
-        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear("TDAV0005", monthChoose, yearChoose);
+        String username = (String) session.getAttribute("username");
+        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(username, monthChoose, yearChoose);
 
         int month = checkMonthChoose(monthChoose);
         int year = checkYearChoose(yearChoose);

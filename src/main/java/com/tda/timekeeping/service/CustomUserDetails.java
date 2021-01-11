@@ -1,7 +1,6 @@
-package com.tda.timekeeping.service.impl;
+package com.tda.timekeeping.service;
 
 import com.tda.timekeeping.entity.Account;
-import com.tda.timekeeping.entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,30 +10,28 @@ import java.util.Collection;
 import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
-    private Account user;
 
-    public CustomUserDetails(Account user) {
-        this.user = user;
+    private Account account;
+
+    public CustomUserDetails(Account account) {
+        this.account = account;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Role role = user.getRole();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(new SimpleGrantedAuthority(role.getName()));
-
+        authorities.add(new SimpleGrantedAuthority(account.getRole()));
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return account.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return account.getUsername();
     }
 
     @Override
