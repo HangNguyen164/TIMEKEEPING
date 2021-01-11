@@ -32,13 +32,13 @@ public class HomeController {
     private AccountImpl accountImpl;
 
     @RequestMapping(value = "/home-user")
-    public String getAllInfo(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose,Model model) {
+    public String getAllInfo(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
-        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear("TDAV0006",monthChoose, yearChoose);
+        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear("TDAV0005", monthChoose, yearChoose);
 
         int month = checkMonthChoose(monthChoose);
-        int year = checkMonthChoose(yearChoose);
+        int year = checkYearChoose(yearChoose);
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser, month, year);
         String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser, month, year);
         String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser, month, year);
