@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
 
-    @Query(value = "SELECT new com.tda.timekeeping.entity.Account(a.username,a.roleID,a.password) FROM Account  a WHERE a.username=:username")
+    @Query(value = "SELECT new com.tda.timekeeping.entity.Account(a.username,a.password) FROM Account  a WHERE a.username=:username")
     Account getOneAccountByUsername(@Param("username") String username);
 
 }

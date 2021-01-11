@@ -1,15 +1,8 @@
 package com.tda.timekeeping.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -22,8 +15,16 @@ public class Account {
     @Id
     private String username;
 
-    @Column(name = "role_id")
-    private int roleID;
-
     private String password;
+    // Many to One Có nhiều người ở 1 địa điểm.
+    @ManyToOne
+    @JoinColumn(name = "role_id") // thông qua khóa ngoại address_id
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Role role;
+
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

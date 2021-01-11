@@ -2,6 +2,7 @@ package com.tda.timekeeping.io;
 
 import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.entity.AccountDetail;
+import com.tda.timekeeping.entity.Role;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
@@ -13,7 +14,9 @@ public class ImportDataFromExcel {
         Account account = new Account();
         XSSFRow row = worksheet.getRow(index);
         account.setUsername(row.getCell(0).getStringCellValue());
-        account.setRoleID(1);
+        Role role= new Role();
+        role.setId(1);
+        account.setRole(role);
         return account;
     }
 
