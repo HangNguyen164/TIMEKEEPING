@@ -19,6 +19,11 @@ public class AccountService implements AccountImpl {
     }
 
     @Override
+    public Account login(String username, String password) {
+        return accountRepository.login(username,password);
+    }
+
+    @Override
     public void addNewAccount(List<Account> listAccount) {
         for (Account account : listAccount) {
             Account getAccount = accountRepository.getOneAccountByUsername(account.getUsername());
