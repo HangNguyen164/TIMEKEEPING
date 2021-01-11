@@ -8,6 +8,7 @@ import com.tda.timekeeping.vo.AccountDetailVo;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountDetailFromExcel;
@@ -36,8 +35,8 @@ public class HomeController {
     public String getAllInfo(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model, HttpSession session) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
-        String username = (String) session.getAttribute("username");
-        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(username, monthChoose, yearChoose);
+        UserDetails account = (UserDetails) session.getAttribute("account");
+        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(account.getUsername(), monthChoose, yearChoose);
 
         int month = checkMonthChoose(monthChoose);
         int year = checkYearChoose(yearChoose);

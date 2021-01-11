@@ -83,9 +83,10 @@ h6 {
     text-decoration: none;
 }
 
-.logo p{
+.logo p {
     font-size: 35px;
 }
+
 .col {
     padding-left: 0;
     padding-right: 0;
@@ -173,7 +174,7 @@ input[type=checkbox] {
     opacity: 0;
 }
 
-.custom-control-input:checked~.custom-control-indicator {
+.custom-control-input:checked ~ .custom-control-indicator {
     color: #fff;
     background-color: #ffed00;
 }
@@ -262,19 +263,24 @@ input[type=checkbox] {
     .signin {
         background-color: #3bac47 !important;
     }
+
     .signin .login-panel {
         width: calc(100%) !important;
     }
+
     .signup {
         background-color: #3bac47 !important;
     }
+
     .signup .login-panel {
         overflow-y: scroll;
         width: calc(100%) !important;
     }
+
     .reminder-password {
         background-color: #3bac47 !important;
     }
+
     .reminder-password .login-panel {
         width: calc(100%) !important;
     }
@@ -315,6 +321,6 @@ footer p a:focus {
     color: #B6B6B6;
 }
 
-.footer p{
+.footer p {
     text-align: center;
 }

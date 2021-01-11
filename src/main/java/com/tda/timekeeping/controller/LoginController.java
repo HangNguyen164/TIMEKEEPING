@@ -1,6 +1,5 @@
 package com.tda.timekeeping.controller;
 
-import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.service.CustomerUserService;
 import com.tda.timekeeping.service.impl.AccountImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
@@ -30,24 +28,27 @@ public class LoginController {
     @PostMapping(value = {"/index/type-account"})
     public String decentralization(@RequestParam("username") String username, @RequestParam("role") String role, HttpSession session) {
         UserDetails accountExist = customerUserService.loadUserByUsername(username);
-        session.setAttribute("username", accountExist.getUsername());
+        session.setAttribute("account", accountExist);
         if (role.equalsIgnoreCase("USER")) {
             return "redirect:/home-user";
         }
         return "redirect:/home-admin";
     }
 
-    @RequestMapping(value = {"/login"})
-    public String login(@RequestParam(value = "password", required = false) String password, HttpSession session) {
-        if (password != null) {
-            String username = (String) session.getAttribute("username");
-            Account account = accountImpl.login(username, password);
-            if (account != null) {
-                return "redirect:/home-admin";
-            }
-        }
-
+    @GetMapping(value = "/login")
+    public String login() {
         return "login";
     }
+
+//    @PostMapping(value = "/login")
+//    public String login(@RequestParam(value = "password", required = false) String password, HttpSession session) {
+//        UserDetails userDetail = (UserDetails) session.getAttribute("account");
+//        Account account = accountImpl.login(userDetail.getUsername(), password);
+//        System.out.println(account);
+//        if (account != null) {
+//            return "redirect:/home-admin";
+//        }
+//        return "login";
+//    }
 
 }

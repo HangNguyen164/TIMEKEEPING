@@ -1,19 +1,12 @@
 package com.tda.timekeeping.vo;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.tda.timekeeping.util.Helper.TIME_FORMAT;
-import static com.tda.timekeeping.util.Helper.DATE_FORMAT;
-import static com.tda.timekeeping.util.Helper.getTypeOfDate;
-import static com.tda.timekeeping.util.Helper.setTimeWorkInDay;
+import static com.tda.timekeeping.util.Helper.*;
 
 @Getter
 @Setter
