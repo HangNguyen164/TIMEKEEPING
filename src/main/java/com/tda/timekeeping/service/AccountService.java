@@ -14,17 +14,9 @@ public class AccountService implements AccountImpl {
     @Autowired
     private AccountRepository accountRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public List<Account> getAll() {
         return accountRepository.findAll();
-    }
-
-    @Override
-    public Account login(String username, String password) {
-        return accountRepository.login(username, passwordEncoder.encode(password));
     }
 
     @Override

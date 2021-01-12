@@ -8,6 +8,4 @@ public interface AccountImpl {
     void addNewAccount(List<Account> listAccount);
 
     List<Account> getAll();
-
-    Account login(String username, String password);
 }

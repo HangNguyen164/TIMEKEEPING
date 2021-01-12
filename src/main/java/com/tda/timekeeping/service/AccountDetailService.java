@@ -46,7 +46,6 @@ public class AccountDetailService implements AccountDetailImpl {
         ad.setNote(accountDetail.getNote());
         ad.setCheckEmail(accountDetail.getCheckEmail());
         accountDetailRepository.save(ad);
-
     }
 
     @Override

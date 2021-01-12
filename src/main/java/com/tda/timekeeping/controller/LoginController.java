@@ -1,14 +1,18 @@
 package com.tda.timekeeping.controller;
 
 import com.tda.timekeeping.service.CustomerUserService;
-import com.tda.timekeeping.service.impl.AccountImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -16,9 +20,6 @@ public class LoginController {
 
     @Autowired
     private CustomerUserService customerUserService;
-
-    @Autowired
-    private AccountImpl accountImpl;
 
     @GetMapping(value = {"/", "/index"})
     public String indexHome() {
@@ -32,7 +33,7 @@ public class LoginController {
         if (role.equalsIgnoreCase("USER")) {
             return "redirect:/home-user";
         }
-        return "redirect:/home-admin";
+        return "index";
     }
 
     @GetMapping(value = "/login")
@@ -40,15 +41,12 @@ public class LoginController {
         return "login";
     }
 
-//    @PostMapping(value = "/login")
-//    public String login(@RequestParam(value = "password", required = false) String password, HttpSession session) {
-//        UserDetails userDetail = (UserDetails) session.getAttribute("account");
-//        Account account = accountImpl.login(userDetail.getUsername(), password);
-//        System.out.println(account);
-//        if (account != null) {
-//            return "redirect:/home-admin";
-//        }
-//        return "login";
-//    }
-
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/index";
+    }
 }
