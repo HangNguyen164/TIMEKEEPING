@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
@@ -23,7 +23,6 @@
 </head>
 
 <body>
-
 <div id="intro">
     <div class="middle signin">
         <div class="login-panel">
@@ -32,8 +31,7 @@
                     <p>Timekeeping</p>
                 </a><br/><br/>
             </div>
-            <form th:action="@{/login}"
-                  method="post" novalidate="novalidate">
+            <form th:action="@{/login}" method="post">
                 <div class="form-group">
                     <label>
                         <i class="fas fa-user fa-fw"></i>
