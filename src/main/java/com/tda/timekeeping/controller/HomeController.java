@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +51,6 @@ public class HomeController {
         model.addAttribute("getAllMonth", getAllMonth);
         model.addAttribute("getAllYear", getAllYear);
         model.addAttribute("listAccountShow", accountDetailVoListByUser);
-
         return "home";
     }
 
@@ -103,7 +101,6 @@ public class HomeController {
         model.addAttribute("getAllYear", getAllYear);
         model.addAttribute("month", checkMonthChoose(monthStr));
         model.addAttribute("year", checkYearChoose(yearChoose));
-//        return "redirect:/home-admin?month="+monthStr+"&year="+yearChoose;
         return "homeAdmin";
     }
 

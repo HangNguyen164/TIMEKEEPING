@@ -35,16 +35,10 @@ public class ImportDataFromExcel {
     }
 
     private static int checkMailNumber(String email) {
-        if (email == "") {
-            return 0;
-        } else if (email.equalsIgnoreCase("Chưa mail")) {
-            return 1;
-        }
-        return 2;
+        return email == "" ? 0 : email.equalsIgnoreCase("Chưa mail") ? 1 : 2;
     }
 
     private static Time covertDateToTime(Date date) {
         return date != null ? new Time(date.getTime()) : null;
     }
-
 }

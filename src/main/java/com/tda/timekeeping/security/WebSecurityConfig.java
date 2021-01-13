@@ -1,6 +1,5 @@
 package com.tda.timekeeping.security;
 
-import com.tda.timekeeping.service.CustomerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Password encoder, để Spring Security sử dụng mã hóa mật khẩu người dùng
         return new BCryptPasswordEncoder();
     }
 
@@ -36,8 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(customerUserService) // Cung cáp userservice cho spring security
-                .passwordEncoder(passwordEncoder()); // cung cấp password encoder
+        auth.userDetailsService(customerUserService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override

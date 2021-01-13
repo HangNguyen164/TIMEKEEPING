@@ -199,4 +199,8 @@ public class Helper {
         }
         return lists;
     }
+
+    public static String dispatcher(String role, String pageFirst, String pageSecond) {
+        return role.equalsIgnoreCase("USER") ? pageFirst : pageSecond;
+    }
 }

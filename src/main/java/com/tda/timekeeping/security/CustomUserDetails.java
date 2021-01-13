@@ -1,4 +1,4 @@
-package com.tda.timekeeping.service;
+package com.tda.timekeeping.security;
 
 import com.tda.timekeeping.entity.Account;
 import org.springframework.security.core.GrantedAuthority;
