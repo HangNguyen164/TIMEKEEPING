@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
 public class Helper {
     private static final int HOUR_LUNCH = 1;
     private static final int MINUTES_LUNCH = 30;
