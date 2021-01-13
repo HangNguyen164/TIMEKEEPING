@@ -46,7 +46,7 @@ public class Helper {
                 hour--;
                 minutes = MINUTES_TO_HOUR - Math.abs(minutes);
             }
-            return String.format("%02d:%02d", hour, minutes);
+            return hour > 0 ? String.format("%02d:%02d", hour, minutes) : "00:00";
         }
         return "";
     }

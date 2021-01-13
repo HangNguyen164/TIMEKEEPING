@@ -55,7 +55,6 @@ public class AccountDetailService implements AccountDetailImpl {
             if (accountDetail == null) {
                 accountDetailRepository.save(ad);
             } else {
-                // update
                 updateFullInfoAccountDetail(accountDetail);
             }
         }

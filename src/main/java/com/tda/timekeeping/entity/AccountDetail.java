@@ -1,9 +1,20 @@
 package com.tda.timekeeping.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 

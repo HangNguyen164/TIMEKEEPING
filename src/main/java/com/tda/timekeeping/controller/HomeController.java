@@ -67,14 +67,12 @@ public class HomeController {
         return "homeAdmin";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/home-admin/update/{id}")
     public String updateAccountDetail(@PathVariable("id") int id, @RequestParam("startTime") String startTimeStr, @RequestParam("endTime") String endTimeStr,
                                       @RequestParam("sendMail") String sendMail,
                                       @RequestParam("note") String note) {
         AccountDetail newAccountDetail = getAccountDetailWithNewInfo(startTimeStr, endTimeStr, sendMail, note);
-        if (newAccountDetail != null) {
-            accountDetailImpl.update(newAccountDetail.getStartTime(), newAccountDetail.getEndTime(), note, newAccountDetail.getCheckEmail(), id);
-        }
+        accountDetailImpl.update(newAccountDetail.getStartTime(), newAccountDetail.getEndTime(), note, newAccountDetail.getCheckEmail(), id);
         return "redirect:/home-admin";
     }
 
@@ -85,6 +83,7 @@ public class HomeController {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
         List<AccountDetailVo> accountDetailVoList;
+
         accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthStr, yearChoose);
         int month = Integer.valueOf(monthStr);
         int year = Integer.valueOf(yearChoose);
