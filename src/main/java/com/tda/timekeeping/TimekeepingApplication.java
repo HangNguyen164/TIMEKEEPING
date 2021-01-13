@@ -1,4 +1,4 @@
-package com.timekeeping;
+package com.tda.timekeeping;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
