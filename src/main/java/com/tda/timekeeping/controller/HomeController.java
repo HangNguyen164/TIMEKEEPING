@@ -1,5 +1,6 @@
 package com.tda.timekeeping.controller;
 
+import com.google.gson.Gson;
 import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.service.impl.AccountDetailImpl;
@@ -48,6 +49,8 @@ public class HomeController {
         List<String> getAllYear = getAllYear();
         UserDetails account = (UserDetails) session.getAttribute("account");
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(account.getUsername(), monthChoose, yearChoose);
+
+        String listShow=new Gson().toJson(accountDetailVoListByUser);
 
         int month = checkMonthChoose(monthChoose);
         int year = checkYearChoose(yearChoose);

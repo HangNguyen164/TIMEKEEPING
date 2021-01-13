@@ -17,7 +17,6 @@ $('#custom-table').dataTable({
     "scrollX": true
 });
 
-
 /* Centering the modal vertically */
 function getModalCenter() {
     function alignModal() {
@@ -62,4 +61,28 @@ function getYearForCombobox() {
     } else {
         $("#year").val(currentYear);
     }
+}
+
+function a() {
+    const table = $('#custom-table').DataTable();
+    const dataOfTable = table
+        .rows()
+        .data();
+
+    $('#form-user').onsubmit(e => {
+        console.log("1"),
+
+            e.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: "home-user",
+            data: dataOfTable,
+            success: function (data) {
+                alert(data);
+                console.log(dataOfTable)
+
+            }
+        });
+        e.preventDefault();
+    });
 }
