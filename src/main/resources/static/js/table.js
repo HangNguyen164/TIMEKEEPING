@@ -10,6 +10,7 @@ $(document).ready(function () {
     getModalCenter();
     getMonthForCombobox();
     getYearForCombobox();
+    a();
 })
 
 $('#custom-table').dataTable({
@@ -68,21 +69,19 @@ function a() {
     const dataOfTable = table
         .rows()
         .data();
+    console.log(JSON.stringify(dataOfTable))
 
-    $('#form-user').onsubmit(e => {
-        console.log("1"),
-
-            e.preventDefault();
+    $('#form-user').change(function () {
+        console.log("1")
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "home-user",
-            data: dataOfTable,
+            dataType: 'json',
+            data: JSON.stringify(dataOfTable),
             success: function (data) {
                 alert(data);
                 console.log(dataOfTable)
-
             }
         });
-        e.preventDefault();
     });
 }
