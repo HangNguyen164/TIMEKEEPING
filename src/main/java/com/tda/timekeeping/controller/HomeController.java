@@ -50,13 +50,9 @@ public class HomeController {
         UserDetails account = (UserDetails) session.getAttribute("account");
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(account.getUsername(), monthChoose, yearChoose);
 
-        String listShow=new Gson().toJson(accountDetailVoListByUser);
-
-        int month = checkMonthChoose(monthChoose);
-        int year = checkYearChoose(yearChoose);
-        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser, month, year);
-        String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser, month, year);
-        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser, month, year);
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser);
 
         model.addAttribute("listAccountShow", accountDetailVoListByUser);
         model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
@@ -99,11 +95,9 @@ public class HomeController {
         List<AccountDetailVo> accountDetailVoList;
 
         accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthStr, yearChoose);
-        int month = Integer.valueOf(monthStr);
-        int year = Integer.valueOf(yearChoose);
-        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser, month, year);
-        String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser, month, year);
-        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser, month, year);
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser);
 
         model.addAttribute("listAccountShow", accountDetailVoListByUser);
         model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);

@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Helper {
-    private static final int HOUR_LUNCH = 1;
-    private static final int MINUTES_LUNCH = 30;
+    private static final long TIME_LUNCH = 5400000;
     private static final int MINUTES_TO_HOUR = 60;
     private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
     private static int CURRENT_MONTH = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
@@ -34,41 +33,49 @@ public class Helper {
      *
      * @param startTime: Time start work in day in live office.
      * @param endTime:   Time stop work in day in live office.
-     * @return String by format of time of of employee's working.
+     * @return int by format of time of of employee's working.
      */
-    public static String setTimeWorkInDay(Date startTime, Date endTime) {
+    private static long setTimeWorkInDay(Date startTime, Date endTime) {
+        long diff = 0;
         if (startTime != null && endTime != null) {
-            long diff = endTime.getTime() - startTime.getTime();
-            long hour = TimeUnit.MILLISECONDS.toHours(diff) - HOUR_LUNCH;
-            long minutes = (TimeUnit.MILLISECONDS.toMinutes(diff) % MINUTES_TO_HOUR) - MINUTES_LUNCH;
-            if (minutes < 0) {
-                hour--;
-                minutes = MINUTES_TO_HOUR - Math.abs(minutes);
+            int startHour = startTime.getHours();
+            int endHour = endTime.getHours();
+            int endMinutes = endTime.getMinutes();
+            int startMinutes = startTime.getMinutes();
+            if (startHour < 12) {
+                if (endHour <= 12) {
+                    diff = endTime.getTime() - startTime.getTime();
+                } else if (endHour < 12 && endHour >= 13 && endMinutes >= 0 && endMinutes <= 30) {
+                    endTime.setHours(12);
+                    endTime.setMinutes(00);
+                    diff = endTime.getTime() - startTime.getTime();
+                } else {
+                    diff = endTime.getTime() - startTime.getTime() - TIME_LUNCH;
+                }
+            } else if (startHour >= 12 && startHour <= 13 && startMinutes >= 0 && startMinutes <= 30) {
+                startTime.setHours(13);
+                startTime.setMinutes(30);
+                diff = endTime.getTime() - startTime.getTime();
+            } else {
+                diff = endTime.getTime() - startTime.getTime();
             }
-            return hour > 0 ? String.format("%02d:%02d", hour, minutes) : "";
         }
-        return "";
+        return diff;
     }
 
     /**
      * Total not work in office of employee in current month.
      *
-     * @param lists:        List time work of employee in current month.
-     * @param currentMonth: current month in year.
-     * @param currentYear:  current year
+     * @param lists: List time work of employee in current month.
      * @return number is total not work in office of employee.
      */
-    public static int totalNotWorkInOffice(List<AccountDetailVo> lists, int currentMonth, int currentYear) {
+    public static int totalNotWorkInOffice(List<AccountDetailVo> lists) {
         int total = 0;
         for (AccountDetailVo accountDetailVo : lists) {
-            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
-            int year = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.YEAR);
-            if (month == currentMonth && year == currentYear && accountDetailVo.getSendEmail() != 0) {
-                if (!accountDetailVo.hourIsEmpty()) {
-                    long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
-                    if (hour == 0) {
-                        total++;
-                    }
+            if (!accountDetailVo.hourIsEmpty()) {
+                long time = setTimeWorkInDay(accountDetailVo.getStartTime(), accountDetailVo.getEndTime());
+                if (time == 0) {
+                    total++;
                 }
             }
         }
@@ -78,50 +85,33 @@ public class Helper {
     /**
      * Total  work in office of employee in current month.
      *
-     * @param lists:        List time work of employee in current month.
-     * @param currentMonth: current month in year.
-     * @param currentYear:  current year.
+     * @param lists: List time work of employee in current month.
      * @return number is total  work in office of employee.
      */
-    public static String totalWorkInMonth(List<AccountDetailVo> lists, int currentMonth, int currentYear) {
-        double hour = 0;
-        double minutes = 0;
-        NumberFormat formatNumber = new DecimalFormat("#0.00");
+    public static String totalWorkInMonth(List<AccountDetailVo> lists) {
+        long total = 0;
         for (AccountDetailVo accountDetailVo : lists) {
-            int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
-            int year = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.YEAR);
-            if (month == currentMonth && year == currentYear) {
-                if (!accountDetailVo.hourIsEmpty()) {
-                    hour += Long.valueOf(accountDetailVo.getHour().split(":")[0]);
-                    minutes += Long.valueOf(accountDetailVo.getHour().split(":")[1]);
-                }
-            }
+            total += setTimeWorkInDay(accountDetailVo.getStartTime(), accountDetailVo.getEndTime());
         }
-        return formatNumber.format(hour + minutes / MINUTES_TO_HOUR);
+        return formatTotalTime(total);
     }
 
     /**
      * List Day Work but full 8 hour in current month.
      *
-     * @param lists:        List time work of employee in current month.
-     * @param currentMonth: current month in year.
-     * @param currentYear:  current year.
+     * @param lists: List time work of employee in current month.
      * @return String is list day work not full of employee.
      */
-    public static String listDayWorkNotFull(List<AccountDetailVo> lists, int currentMonth, int currentYear) {
+    public static String listDayWorkNotFull(List<AccountDetailVo> lists) {
         String listDayNotFull = "";
         if (lists.isEmpty()) {
             return listDayNotFull;
         } else {
             for (AccountDetailVo accountDetailVo : lists) {
-                int month = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.MONTH) + 1;
-                int year = getTypeOfDate(accountDetailVo.getWorkDate(), Calendar.YEAR);
-                if (month == currentMonth && year == currentYear) {
-                    if (!accountDetailVo.hourIsEmpty()) {
-                        long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
-                        if (hour < 8) {
-                            listDayNotFull += accountDetailVo.getWorkDate() + ", ";
-                        }
+                if (!accountDetailVo.hourIsEmpty()) {
+                    long hour = Long.valueOf(accountDetailVo.getHour().split(":")[0]);
+                    if (hour < 8) {
+                        listDayNotFull += accountDetailVo.getWorkDate() + ", ";
                     }
                 }
             }
@@ -155,7 +145,7 @@ public class Helper {
      * @return Time with format: hh:mm:ss
      * @throws ParseException: When string not right format
      */
-    private static Time convert(String s) throws ParseException {
+    private static Time convert(String s) {
         int len = s.length();
         if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
             s = s + ":00";
@@ -193,7 +183,7 @@ public class Helper {
 
     public static List<String> getAllYear() {
         List<String> lists = new ArrayList<>();
-        for (int i = 1976; i < 3000; i++) {
+        for (int i = CURRENT_YEAR - 5; i < CURRENT_YEAR + 5; i++) {
             lists.add(String.valueOf(i));
         }
         return lists;
@@ -201,5 +191,19 @@ public class Helper {
 
     public static String dispatcher(String role, String pageFirst, String pageSecond) {
         return role.equalsIgnoreCase("USER") ? pageFirst : pageSecond;
+    }
+
+    public static String formatTime(Date startTime, Date endTime) {
+        long time = setTimeWorkInDay(startTime, endTime);
+        long hour = TimeUnit.MILLISECONDS.toHours(time);
+        long minutes = (TimeUnit.MILLISECONDS.toMinutes(time) % MINUTES_TO_HOUR);
+        return time > 0 ? String.format("%02d:%02d", hour, minutes) : "";
+    }
+
+    private static String formatTotalTime(long time) {
+        NumberFormat formatNumber = new DecimalFormat("#0.00");
+        long hour = TimeUnit.MILLISECONDS.toHours(time);
+        long minutes = (TimeUnit.MILLISECONDS.toMinutes(time) % MINUTES_TO_HOUR);
+        return formatNumber.format(hour + (double) minutes / MINUTES_TO_HOUR);
     }
 }
