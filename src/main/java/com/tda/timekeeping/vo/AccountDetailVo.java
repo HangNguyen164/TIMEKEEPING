@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static com.tda.timekeeping.util.Helper.*;
 
@@ -48,4 +49,5 @@ public class AccountDetailVo {
     public boolean hourIsEmpty() {
         return getHour().isEmpty() || getHour() == null;
     }
+
 }

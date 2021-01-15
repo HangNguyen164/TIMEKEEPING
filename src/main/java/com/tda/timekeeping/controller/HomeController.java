@@ -1,10 +1,10 @@
 package com.tda.timekeeping.controller;
 
-import com.google.gson.Gson;
 import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.entity.AccountDetail;
 import com.tda.timekeeping.service.impl.AccountDetailImpl;
 import com.tda.timekeeping.service.impl.AccountImpl;
+import com.tda.timekeeping.util.Helper;
 import com.tda.timekeeping.vo.AccountDetailVo;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -12,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -26,14 +25,7 @@ import java.util.List;
 
 import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountDetailFromExcel;
 import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountFromExcel;
-import static com.tda.timekeeping.util.Helper.getAllMonth;
-import static com.tda.timekeeping.util.Helper.getAllYear;
-import static com.tda.timekeeping.util.Helper.checkMonthChoose;
-import static com.tda.timekeeping.util.Helper.checkYearChoose;
-import static com.tda.timekeeping.util.Helper.totalNotWorkInOffice;
-import static com.tda.timekeeping.util.Helper.totalWorkInMonth;
-import static com.tda.timekeeping.util.Helper.listDayWorkNotFull;
-import static com.tda.timekeeping.util.Helper.getAccountDetailWithNewInfo;
+import static com.tda.timekeeping.util.Helper.*;
 
 @Controller
 public class HomeController {
@@ -65,15 +57,21 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/home-admin")
-    public String getAll(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model) {
+    public String getAll(@RequestParam(value = "month", required = false) String monthChoose,
+                         @RequestParam(value = "year", required = false) String yearChoose, Model model) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
+
         List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthChoose, yearChoose);
+
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("getAllMonth", getAllMonth);
         model.addAttribute("getAllYear", getAllYear);
         model.addAttribute("month", checkMonthChoose(monthChoose));
         model.addAttribute("year", checkYearChoose(yearChoose));
+        model.addAttribute("accountDetailImpl", accountDetailImpl);
+        model.addAttribute("helper", new Helper());
+
         return "homeAdmin";
     }
 
@@ -84,31 +82,6 @@ public class HomeController {
         AccountDetail newAccountDetail = getAccountDetailWithNewInfo(startTimeStr, endTimeStr, sendMail, note);
         accountDetailImpl.update(newAccountDetail.getStartTime(), newAccountDetail.getEndTime(), note, newAccountDetail.getCheckEmail(), id);
         return "redirect:/home-admin";
-    }
-
-    @GetMapping("/home-admin/username/{username}/total/{monthChoose}/{yearChoose}")
-    public String totalInfoAccountDetailInMonth(@PathVariable("username") String username, @PathVariable("monthChoose") String monthStr,
-                                                @PathVariable("yearChoose") String yearChoose, Model model) {
-        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(username, monthStr, yearChoose);
-        List<String> getAllMonth = getAllMonth();
-        List<String> getAllYear = getAllYear();
-        List<AccountDetailVo> accountDetailVoList;
-
-        accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthStr, yearChoose);
-        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
-        String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser);
-        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser);
-
-        model.addAttribute("listAccountShow", accountDetailVoListByUser);
-        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
-        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
-        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
-        model.addAttribute("listAccountShow", accountDetailVoList);
-        model.addAttribute("getAllMonth", getAllMonth);
-        model.addAttribute("getAllYear", getAllYear);
-        model.addAttribute("month", checkMonthChoose(monthStr));
-        model.addAttribute("year", checkYearChoose(yearChoose));
-        return "homeAdmin";
     }
 
     @PostMapping(value = "/home-admin/add")

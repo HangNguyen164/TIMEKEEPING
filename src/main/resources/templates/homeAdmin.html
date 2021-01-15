@@ -72,20 +72,22 @@
             </div>
         </div>
 
-
         <div class="row mt-3 mb-3">
-            <form th:action="@{/home-admin}">
-                <div class="row" id="combobox">
-                    <div class="col-md-7">
-                        <h5>Month</h5>
+            <form th:action="@{/home-admin}" id="form-admin">
+                <div class="row" id="cb-month">
+                    <div class="col-md-4">Tháng</div>
+                    <div class="col-md-8">
                         <select name="month" class="form-control" data-role="select-dropdown" id="month"
                                 onchange="this.form.submit()">
                             <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
                                     th:text="${month}"></option>
                         </select>
                     </div>
-                    <div class="col-md-5">
-                        <h5>Year</h5>
+                </div>
+                <br/>
+                <div class="row" id="cb-year">
+                    <div class="col-md-4">Năm</div>
+                    <div class="col-md-8">
                         <select name="year" class="form-control" data-role="select-dropdown" id="year"
                                 onchange="this.form.submit()">
                             <option th:each="year : ${getAllYear}" th:value="${year}"
@@ -95,14 +97,15 @@
                 </div>
             </form>
         </div>
+
+        <br/>
+
         <table id="custom-table" class="table table-bordered w-100" cellspacing="0">
             <thead>
             <tr>
                 <th>No</th>
                 <th>Username</th>
                 <th>Name</th>
-                <th>Department</th>
-                <th>Position</th>
                 <th>Date</th>
                 <th>Day</th>
                 <th>In</th>
@@ -120,12 +123,13 @@
                     <td th:text="${i.count}"></td>
                     <td>
                         <a id="user-code"
-                           th:href="@{/home-admin/username/{username}/total/{monthChoose}/{yearChoose}(username=${accountShow.username},monthChoose=${month},yearChoose=${year})}">
-                            <th:block th:text="${accountShow.username}"></th:block>
-                        </a></td>
+                           data-target="#detail" href="#" name="username"
+                           data-toggle="modal" th:attr="data-target='#detail'+${accountShow.id}"
+                           title="Detail">
+                            <th:block th:text="${accountShow.username}" name="username"></th:block>
+                        </a>
+                    </td>
                     <td th:text="${accountShow.name}"></td>
-                    <td th:text="${accountShow.department}"></td>
-                    <td th:text="${accountShow.position}"></td>
                     <td th:text="${accountShow.workDate}"></td>
 
                     <td th:switch="${accountShow.getDay()}">
@@ -164,8 +168,10 @@
                     <div class="modal-dialog  modal-lg" role="document">
                         <div class="modal-content">
                             <div class="card">
+                                <div class="card-header"><h5 id="header-update">Chỉnh sửa thông tin check-in
+                                    check-out</h5>
+                                </div>
                                 <div class="card-body">
-                                    <h5 class="mb-3">Update</h5>
                                     <form action="#" method="post"
                                           th:action="@{/home-admin/update/{id}(id=${accountShow.id})}"
                                           enctype="multipart/form-data" acceptcharset="UTF-8">
@@ -174,21 +180,21 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <label>Employee Code</label>
-                                                        <span class="form-control"
+                                                        <span class="form-control background-span"
                                                               th:text="${accountShow.username}"> </span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <label>Name </label>
-                                                        <span class="form-control"
+                                                        <span class="form-control background-span"
                                                               th:text="${accountShow.name}"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <label>Date</label>
-                                                        <span class="form-control"
+                                                        <span class="form-control background-span"
                                                               th:text="${accountShow.workDate}"> </span>
 
                                                     </div>
@@ -207,14 +213,14 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <label>Department </label>
-                                                        <span class="form-control"
+                                                        <span class="form-control background-span"
                                                               th:text="${accountShow.department}"> </span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <label>Position </label>
-                                                        <span class="form-control"
+                                                        <span class="form-control background-span"
                                                               th:text="${accountShow.position}"> </span>
                                                     </div>
                                                 </div>
@@ -228,7 +234,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-12">
                                                         <label>Note</label>
-                                                        <input type='text' id="note"
+                                                        <input type='text' id="note" required="true"
                                                                class="form-control" name="note"
                                                                th:value="${accountShow.note}"/>
                                                     </div>
@@ -317,40 +323,116 @@
                         </div>
                     </div>
                 </div>
+                <!--  Detail-->
+                <div class="modal fade update" tabindex="-1" role="dialog" th:id="detail+${accountShow.id}"
+                     aria-hidden="true">
+                    <div class="modal-dialog  modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="card">
+                                <div class="card-header"><h5 id="header-detail">Thông tin làm việc của nhân viên trong
+                                    tháng</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form action="#" method="post">
+                                        <div class="row">
+                                            <div class="col-6 pr-4">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Employee Code</label>
+                                                        <span class="form-control background-span"
+                                                              th:text="${accountShow.username}"> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Name </label>
+                                                        <span class="form-control background-span"
+                                                              th:text="${accountShow.name}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 pr-4">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Department </label>
+                                                        <span class="form-control background-span"
+                                                              th:text="${accountShow.department}"> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label>Position </label>
+                                                        <span class="form-control background-span"
+                                                              th:text="${accountShow.position}"> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <th:block th:with="month=${month}">
+                                            <th:block th:with="year=${year}">
+                                                <th:block th:with="username=${accountShow.username}">
+                                                    <th:block
+                                                            th:with="listAccountWorkByUser=${accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(username,month,year)}">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-12">
+                                                                        <label>Tổng số giờ làm việc trong tháng:</label>
+                                                                        <span th:text="${helper.totalWorkInMonth(listAccountWorkByUser)}"></span>
+                                                                        <span>giờ</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-12">
+                                                                        <label>Tổng số ngày không đi làm trong
+                                                                            tháng: </label>
+                                                                        <span th:text="${helper.totalNotWorkInOffice(listAccountWorkByUser)}"></span>
+                                                                        <span>ngày</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-12">
+                                                                        <label>Những ngày làm việc dưới 8 tiếng trong
+                                                                            tháng:</label>
+                                                                       <th:block th:if="${helper.listDayWorkNotFull(listAccountWorkByUser).isEmpty()}">
+                                                                           <span> 0 ngày</span>
+                                                                       </th:block>
+                                                                        <th:block th:if="${!helper.listDayWorkNotFull(listAccountWorkByUser).isEmpty()}">
+                                                                            <span th:text="${helper.listDayWorkNotFull(listAccountWorkByUser)}"></span>
+                                                                       </th:block>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </th:block>
+                                                </th:block>
+                                            </th:block>
+                                        </th:block>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-md btn-white" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </th:block>
             </tbody>
         </table>
-        <th:block th:if="${listDayWorkNotFull!=null}">
-            <div class="container-fluid">
-                <br/>
-                <div class="row">
-                    <h5>Information in current month:
-                    </h5>
-                </div>
-                <br/>
-                <div class="row">
-                    <h7>Summarize the working hours of 1 employee in the month:</h7>&ensp;
-                    <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
-                    <h7>hours</h7>
-                </div>
-                <br/>
-                <div class="row">
-                    <h7>Summarize the number of non-attendance days at the company of 1 employee in the month:</h7>&ensp;
-                    <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
-                    <h7>day(s)</h7>
-                </div>
-                <br/>
-                <div class="row">
-                    <h7>Statistics of less than 8 hours workdays per employee:</h7>&ensp;
-                    <div th:if="${listDayWorkNotFull.isEmpty()}">
-                        <h7>0 day</h7>
-                    </div>
-                    <div th:if="${listDayWorkNotFull.length()>0}">
-                        <h7 th:text="${listDayWorkNotFull}"></h7>
-                    </div>
-                </div>
-            </div>
-        </th:block>
         <br/><br/><br/>
     </div>
 </div>

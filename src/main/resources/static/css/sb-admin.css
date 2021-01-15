@@ -381,3 +381,17 @@ body.sidebar-toggled footer.sticky-footer {
     }
 }
 
+#header-update{
+    text-align: center;
+    padding-bottom: 0;
+    vertical-align: middle;
+}
+#header-detail{
+    text-align: center;
+    padding-bottom: 0;
+    vertical-align: middle;
+}
+.background-span{
+    background-color: #ccd1d9;
+    color: black;
+}
