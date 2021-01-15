@@ -223,7 +223,7 @@
                                                     <div class="col-sm-12"><label>Check-out</label>
                                                     </div>
                                                     <input type='time'
-                                                           class="form-control" id="endTime" name="endTime"
+                                                           class="form-control" id="endTime" name="endTime" th:max="${accountShow.startTime}"
                                                            th:value="${accountShow.endTime}"/>
                                                 </div>
                                                 <div class="form-group row">
