@@ -14,7 +14,7 @@ $(document).ready(function () {
 })
 
 $('#custom-table').dataTable({
-    "scrollY": "350",
+    "scrollY": "480",
     "scrollX": true
 });
 
