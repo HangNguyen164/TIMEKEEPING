@@ -97,16 +97,15 @@ h7 {
     color: black;
 }
 
-#cb-year {
-    margin: auto;
-    text-align: center;
-    vertical-align: middle;
+#cb-month {
     font-size: 20px;
 }
 
-#cb-month {
-    margin: auto;
-    text-align: center;
-    vertical-align: middle;
+#cb-year {
     font-size: 20px;
+    margin-left: 10px;
+}
+
+.red-span{
+    color: red;
 }
