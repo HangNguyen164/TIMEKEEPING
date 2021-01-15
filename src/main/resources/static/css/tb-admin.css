@@ -97,6 +97,16 @@ h7 {
     color: black;
 }
 
-#combobox {
+#cb-year {
     margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+#cb-month {
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
 }

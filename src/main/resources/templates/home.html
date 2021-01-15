@@ -54,7 +54,6 @@
 
 <div class="content-body">
     <div class="container-fluid">
-        <!-- Page Title -->
         <div class="row title">
             <div class="col-12">
                 <p id="title-content">
@@ -63,18 +62,21 @@
             </div>
         </div>
         <div class="row mt-3 mb-3">
-            <form th:action="@{/home-user}" id="form-user" >
-                <div class="row" id="combobox">
-                    <div class="col-md-7">
-                        <h5>Month</h5>
+            <form th:action="@{/home-user}" id="form-user">
+                <div class="row" id="cb-month">
+                    <div class="col-md-4">Tháng</div>
+                    <div class="col-md-8">
                         <select name="month" class="form-control" data-role="select-dropdown" id="month"
                                 onchange="this.form.submit()">
                             <option th:each="month,i : ${getAllMonth}" th:value="${i.count}"
                                     th:text="${month}"></option>
                         </select>
                     </div>
-                    <div class="col-md-5">
-                        <h5>Year</h5>
+                </div>
+                <br/>
+                <div class="row" id="cb-year">
+                    <div class="col-md-4">Năm</div>
+                    <div class="col-md-8">
                         <select name="year" class="form-control" data-role="select-dropdown" id="year"
                                 onchange="this.form.submit()">
                             <option th:each="year : ${getAllYear}" th:value="${year}"
@@ -84,6 +86,9 @@
                 </div>
             </form>
         </div>
+
+        <br/>
+
         <table id="custom-table" class="table table-bordered w-100" cellspacing="0"
                width="100%">
             <thead>
@@ -140,26 +145,26 @@
         <div class="container-fluid">
             <br/>
             <div class="row">
-                <h5>Information in current month:
+                <h5>Thông tin làm việc của nhân viên trong tháng:
                 </h5>
             </div>
             <br/>
             <div class="row">
-                <h7>Summarize the working hours of 1 employee in the month:</h7>&ensp;
+                <h7>Tổng số giờ làm việc trong tháng:</h7>&ensp;
                 <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
-                <h7>hours</h7>
+                <h7>giờ</h7>
             </div>
             <br/>
             <div class="row">
-                <h7>Summarize the number of non-attendance days at the company of 1 employee in the month:</h7>&ensp;
+                <h7>Tổng số ngày không đi làm trong tháng:</h7>&ensp;
                 <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
-                <h7>day(s)</h7>
+                <h7>ngày</h7>
             </div>
             <br/>
             <div class="row">
-                <h7>Statistics of less than 8 hours workdays per employee:</h7>&ensp;
+                <h7>Những ngày làm việc dưới 8 tiếng trong tháng:</h7>&ensp;
                 <div th:if="${listDayWorkNotFull.isEmpty()}">
-                    <h7>0 day</h7>
+                    <h7>0 ngày</h7>
                 </div>
                 <div th:if="${listDayWorkNotFull.length()>0}">
                     <h7 th:text="${listDayWorkNotFull}"></h7>

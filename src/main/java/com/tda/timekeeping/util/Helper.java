@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Helper {
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String TIME_FORMAT = "hh:mm:ss";
     private static final long TIME_LUNCH = 5400000;
     private static final int MINUTES_TO_HOUR = 60;
     private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
     private static int CURRENT_MONTH = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
     private static int CURRENT_YEAR = getTypeOfDate(new Date(), Calendar.YEAR);
-    public static final String DATE_FORMAT = "yyyy-MM-dd";
-    public static final String TIME_FORMAT = "hh:mm:ss";
 
     public static int getTypeOfDate(Date date, int type) {
         Calendar cal = Calendar.getInstance();
@@ -35,30 +35,35 @@ public class Helper {
      * @param endTime:   Time stop work in day in live office.
      * @return int by format of time of of employee's working.
      */
-    private static long setTimeWorkInDay(Date startTime, Date endTime) {
+    private static long timeWorkADay(Date startTime, Date endTime) {
         long diff = 0;
         if (startTime != null && endTime != null) {
+
             int startHour = startTime.getHours();
             int endHour = endTime.getHours();
+            int startMinutes = endTime.getMinutes();
             int endMinutes = endTime.getMinutes();
-            int startMinutes = startTime.getMinutes();
+
             if (startHour < 12) {
-                if (endHour <= 12) {
+                if (endHour < 12) {
                     diff = endTime.getTime() - startTime.getTime();
-                } else if (endHour < 12 && endHour >= 13 && endMinutes >= 0 && endMinutes <= 30) {
+                } else if (endHour >= 12 && endHour <= 13) {
                     endTime.setHours(12);
                     endTime.setMinutes(00);
                     diff = endTime.getTime() - startTime.getTime();
                 } else {
                     diff = endTime.getTime() - startTime.getTime() - TIME_LUNCH;
                 }
-            } else if (startHour >= 12 && startHour <= 13 && startMinutes >= 0 && startMinutes <= 30) {
+            } else if (startHour >= 12 && startHour <= 13) {
                 startTime.setHours(13);
                 startTime.setMinutes(30);
                 diff = endTime.getTime() - startTime.getTime();
             } else {
                 diff = endTime.getTime() - startTime.getTime();
             }
+
+            setTimeAgain(startTime, startHour, startMinutes);
+            setTimeAgain(endTime, endHour, endMinutes);
         }
         return diff;
     }
@@ -72,11 +77,8 @@ public class Helper {
     public static int totalNotWorkInOffice(List<AccountDetailVo> lists) {
         int total = 0;
         for (AccountDetailVo accountDetailVo : lists) {
-            if (!accountDetailVo.hourIsEmpty()) {
-                long time = setTimeWorkInDay(accountDetailVo.getStartTime(), accountDetailVo.getEndTime());
-                if (time == 0) {
-                    total++;
-                }
+            if (accountDetailVo.hourIsEmpty()) {
+                total++;
             }
         }
         return total;
@@ -91,7 +93,7 @@ public class Helper {
     public static String totalWorkInMonth(List<AccountDetailVo> lists) {
         long total = 0;
         for (AccountDetailVo accountDetailVo : lists) {
-            total += setTimeWorkInDay(accountDetailVo.getStartTime(), accountDetailVo.getEndTime());
+            total += timeWorkADay(accountDetailVo.getStartTime(), accountDetailVo.getEndTime());
         }
         return formatTotalTime(total);
     }
@@ -138,24 +140,6 @@ public class Helper {
         return accountDetail;
     }
 
-    /**
-     * Covert String to Time.
-     *
-     * @param s: String to covert
-     * @return Time with format: hh:mm:ss
-     * @throws ParseException: When string not right format
-     */
-    private static Time convert(String s) {
-        int len = s.length();
-        if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
-            s = s + ":00";
-        }
-        if (len > TIME_FORMAT.length()) {
-            s = s.substring(0, TIME_FORMAT.length());
-        }
-        return java.sql.Time.valueOf(s);
-    }
-
     public static int checkMonthChoose(String monthChoose) {
         return monthChoose == null ? CURRENT_MONTH : Integer.valueOf(monthChoose);
     }
@@ -194,10 +178,28 @@ public class Helper {
     }
 
     public static String formatTime(Date startTime, Date endTime) {
-        long time = setTimeWorkInDay(startTime, endTime);
+        long time = timeWorkADay(startTime, endTime);
         long hour = TimeUnit.MILLISECONDS.toHours(time);
         long minutes = (TimeUnit.MILLISECONDS.toMinutes(time) % MINUTES_TO_HOUR);
         return time > 0 ? String.format("%02d:%02d", hour, minutes) : "";
+    }
+
+    /**
+     * Covert String to Time.
+     *
+     * @param s: String to covert
+     * @return Time with format: hh:mm:ss
+     * @throws ParseException: When string not right format
+     */
+    private static Time convert(String s) {
+        int len = s.length();
+        if (len == TIME_WITHOUT_SEC_PATTERN_LEN) {
+            s = s + ":00";
+        }
+        if (len > TIME_FORMAT.length()) {
+            s = s.substring(0, TIME_FORMAT.length());
+        }
+        return java.sql.Time.valueOf(s);
     }
 
     private static String formatTotalTime(long time) {
@@ -205,5 +207,10 @@ public class Helper {
         long hour = TimeUnit.MILLISECONDS.toHours(time);
         long minutes = (TimeUnit.MILLISECONDS.toMinutes(time) % MINUTES_TO_HOUR);
         return formatNumber.format(hour + (double) minutes / MINUTES_TO_HOUR);
+    }
+
+    private static void setTimeAgain(Date time, int currentHour, int currentMinutes) {
+        time.setHours(currentHour);
+        time.setMinutes(currentMinutes);
     }
 }
