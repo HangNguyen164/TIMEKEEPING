@@ -24,7 +24,11 @@ public class LoginController {
     private CustomerUserService customerUserService;
 
     @GetMapping(value = {"/", "/index"})
-    public String indexHome() {
+    public String indexHome(HttpServletRequest request, HttpSession session) {
+        String test = request.getHeader("Referer");
+        UserDetails account = (UserDetails) session.getAttribute("account");
+        System.out.println(account);
+        System.out.println(test);
         return "index";
     }
 
@@ -36,7 +40,10 @@ public class LoginController {
     }
 
     @GetMapping(value = "/login")
-    public String login() {
+    public String login(Authentication authentication) {
+        if (authentication != null) {
+            return "redirect:/home-admin";
+        }
         return "login";
     }
 

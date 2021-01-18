@@ -10,7 +10,7 @@ $(document).ready(function () {
     getModalCenter();
     getMonthForCombobox();
     getYearForCombobox();
-    loadDataTable();
+   // loadDataTable();
 })
 
 $('#custom-table').dataTable({
@@ -65,22 +65,22 @@ function getYearForCombobox() {
 }
 
 
-function loadDataTable() {
-    const rows = JSON.stringify(convertTableToArrayObject());
-
-    $('#form-user').submit(function () {
-        console.log("1")
-        $.ajax({
-            type: "POST",
-            url: "home-user",
-            dataType: 'json',
-            data: rows,
-            success: function (data) {
-                $('#custom-table').innerHTML(data);
-            }
-        });
-    });
-}
+// function loadDataTable() {
+//     const rows = JSON.stringify(convertTableToArrayObject());
+//
+//     $('#form-user').submit(function () {
+//         console.log("1")
+//         $.ajax({
+//             type: "POST",
+//             url: "home-user",
+//             dataType: 'json',
+//             data: rows,
+//             success: function (data) {
+//                 $('#custom-table').innerHTML(data);
+//             }
+//         });
+//     });
+// }
 
 function convertTableToArrayObject() {
 
@@ -96,5 +96,3 @@ function convertTableToArrayObject() {
 
     return employeeObjects;
 }
-
-

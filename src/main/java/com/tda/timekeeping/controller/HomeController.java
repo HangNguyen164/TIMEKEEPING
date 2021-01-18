@@ -9,6 +9,7 @@ import com.tda.timekeeping.vo.AccountDetailVo;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +44,6 @@ public class HomeController {
         List<String> getAllYear = getAllYear();
         UserDetails account = (UserDetails) session.getAttribute("account");
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(account.getUsername(), monthChoose, yearChoose);
-        accountDetailVoListByUser.forEach(s-> System.out.println(s));
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
         String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser);
         String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser);
@@ -58,14 +59,12 @@ public class HomeController {
 
     @RequestMapping(value = "/home-admin")
     public String getAllEmployeeInOffice(@RequestParam(value = "month", required = false) String monthChoose,
-                         @RequestParam(value = "year", required = false) String yearChoose,
-                         @RequestParam(value = "mess", required = false) String mess, Model model) {
+                                         @RequestParam(value = "year", required = false) String yearChoose,
+                                         @RequestParam(value = "mess", required = false) String mess, Model model) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
 
         List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonthYear(monthChoose, yearChoose);
-
-        accountDetailVoList.forEach(s-> System.out.println(s));
 
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("getAllMonth", getAllMonth);
@@ -75,7 +74,6 @@ public class HomeController {
         model.addAttribute("accountDetailImpl", accountDetailImpl);
         model.addAttribute("mess", mess);
         model.addAttribute("helper", new Helper());
-
         return "homeAdmin";
     }
 
