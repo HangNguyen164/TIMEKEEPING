@@ -57,19 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                                        Authentication authentication) throws IOException {
-                        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                        if (userDetails != null) {
-                            response.sendRedirect("/home-admin");
-                        } else {
-                            response.sendRedirect(request.getContextPath());
-                        }
-
-                    }
-                })
+                .defaultSuccessUrl("/home-admin")
                 .failureUrl("/login?error")
                 .and()
                 .logout().invalidateHttpSession(true).permitAll();
