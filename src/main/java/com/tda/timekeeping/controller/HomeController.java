@@ -37,12 +37,12 @@ public class HomeController {
     private AccountImpl accountImpl;
 
     @RequestMapping(value = "/home-user")
-    public String getAllInfo(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model, HttpSession session) {
+    public String getAllInfoOfAUser(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model, HttpSession session) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
         UserDetails account = (UserDetails) session.getAttribute("account");
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(account.getUsername(), monthChoose, yearChoose);
-
+        accountDetailVoListByUser.forEach(s-> System.out.println(s));
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
         String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser);
         String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser);
@@ -53,18 +53,19 @@ public class HomeController {
         model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
         model.addAttribute("getAllMonth", getAllMonth);
         model.addAttribute("getAllYear", getAllYear);
-        model.addAttribute("listAccountShow", accountDetailVoListByUser);
         return "home";
     }
 
     @RequestMapping(value = "/home-admin")
-    public String getAll(@RequestParam(value = "month", required = false) String monthChoose,
+    public String getAllEmployeeInOffice(@RequestParam(value = "month", required = false) String monthChoose,
                          @RequestParam(value = "year", required = false) String yearChoose,
                          @RequestParam(value = "mess", required = false) String mess, Model model) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
 
-        List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonth(monthChoose, yearChoose);
+        List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonthYear(monthChoose, yearChoose);
+
+        accountDetailVoList.forEach(s-> System.out.println(s));
 
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("getAllMonth", getAllMonth);

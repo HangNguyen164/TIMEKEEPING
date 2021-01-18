@@ -20,13 +20,14 @@ public class AccountService implements AccountImpl {
 
     @Override
     public boolean addNewAccount(List<Account> listAccount) {
+        boolean isAdd = false;
         for (Account account : listAccount) {
             Account getAccount = accountRepository.getOneAccountByUsername(account.getUsername());
             if (getAccount == null) {
                 accountRepository.save(account);
             }
-            return true;
+            isAdd = true;
         }
-        return false;
+        return isAdd;
     }
 }

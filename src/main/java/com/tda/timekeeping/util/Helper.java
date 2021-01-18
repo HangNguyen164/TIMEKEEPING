@@ -41,7 +41,7 @@ public class Helper {
 
             int startHour = startTime.getHours();
             int endHour = endTime.getHours();
-            int startMinutes = endTime.getMinutes();
+            int startMinutes = startTime.getMinutes();
             int endMinutes = endTime.getMinutes();
 
             if (startHour < 12) {

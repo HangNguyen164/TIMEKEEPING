@@ -20,8 +20,8 @@ public class AccountDetailService implements AccountDetailImpl {
     private AccountDetailRepository accountDetailRepository;
 
     @Override
-    public List<AccountDetailVo> getAccountDetailVosInMonth(String monthChoose, String yearChoose) {
-        return accountDetailRepository.getAccountDetailVosInMonth(checkMonthChoose(monthChoose), checkYearChoose(yearChoose));
+    public List<AccountDetailVo> getAccountDetailVosInMonthYear(String monthChoose, String yearChoose) {
+        return accountDetailRepository.getAccountDetailVosInMonthYear(checkMonthChoose(monthChoose), checkYearChoose(yearChoose));
     }
 
     @Override
@@ -49,6 +49,7 @@ public class AccountDetailService implements AccountDetailImpl {
 
     @Override
     public boolean addNewAccountDetail(List<AccountDetail> lists) {
+        boolean isAdd = false;
         for (AccountDetail ad : lists) {
             AccountDetail accountDetail = accountDetailRepository.getOneByUsernameAndDate(ad.getUsername(), ad.getWorkDate());
             if (accountDetail == null) {
@@ -56,8 +57,8 @@ public class AccountDetailService implements AccountDetailImpl {
             } else {
                 updateFullInfoAccountDetail(accountDetail, ad);
             }
-            return true;
+            isAdd = true;
         }
-        return false;
+        return isAdd;
     }
 }

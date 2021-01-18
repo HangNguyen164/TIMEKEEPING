@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AccountDetailImpl {
 
-    List<AccountDetailVo> getAccountDetailVosInMonth(String monthChoose, String yearChoose);
+    List<AccountDetailVo> getAccountDetailVosInMonthYear(String monthChoose, String yearChoose);
 
     List<AccountDetailVo> getAccountDetailVosByUsernameInMonthInYear(String username, String monthChoose, String yearChoose);
 

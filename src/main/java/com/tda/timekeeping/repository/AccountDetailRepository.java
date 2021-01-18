@@ -17,12 +17,12 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
     String query = "SELECT new com.tda.timekeeping.vo.AccountDetailVo(ad.id,ad.username,ad.name,ad.department,ad.position," +
             "ad.workDate,ad.startTime,ad.endTime ,ad.note,ad.checkEmail) FROM AccountDetail ad";
 
-    @Query(value = query + " WHERE  extract(month from ad.workDate)=:monthChoose AND extract(year from ad.workDate)=:yearChoose AND ad.username=:username ORDER BY ad.id")
+    @Query(value = query + " WHERE ad.username=:username AND extract(month from ad.workDate)=:monthChoose AND extract(year from ad.workDate)=:yearChoose  ORDER BY ad.id")
     List<AccountDetailVo> getAccountDetailVosByUsernameInMonthInYear(@Param("username") String username, @Param("monthChoose") int monthChoose, @Param("yearChoose") int yearChoose);
 
     @Modifying
     @Query(value = query + " WHERE extract(month from ad.workDate)=:monthChoose AND extract(year from ad.workDate)=:yearChoose ORDER BY ad.id")
-    List<AccountDetailVo> getAccountDetailVosInMonth(@Param("monthChoose") int monthChoose, @Param("yearChoose") int yearChoose);
+    List<AccountDetailVo> getAccountDetailVosInMonthYear(@Param("monthChoose") int monthChoose, @Param("yearChoose") int yearChoose);
 
     @Modifying
     @Query(value = "UPDATE  AccountDetail  a SET a.startTime=:start_time, a.endTime=:end_time, a.note=:note, a.checkEmail=:send_mail WHERE a.id=:id")
