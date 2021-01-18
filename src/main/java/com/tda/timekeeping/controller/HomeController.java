@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -58,7 +59,8 @@ public class HomeController {
 
     @RequestMapping(value = "/home-admin")
     public String getAll(@RequestParam(value = "month", required = false) String monthChoose,
-                         @RequestParam(value = "year", required = false) String yearChoose, Model model) {
+                         @RequestParam(value = "year", required = false) String yearChoose,
+                         @RequestParam(value = "mess", required = false) String mess, Model model) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
 
@@ -70,6 +72,7 @@ public class HomeController {
         model.addAttribute("month", checkMonthChoose(monthChoose));
         model.addAttribute("year", checkYearChoose(yearChoose));
         model.addAttribute("accountDetailImpl", accountDetailImpl);
+        model.addAttribute("mess", mess);
         model.addAttribute("helper", new Helper());
 
         return "homeAdmin";
@@ -85,7 +88,7 @@ public class HomeController {
     }
 
     @PostMapping(value = "/home-admin/add")
-    public String addDataFromExcel(@RequestParam("fileinput") MultipartFile fileName) throws IOException {
+    public String addDataFromExcel(@RequestParam("fileinput") MultipartFile fileName, RedirectAttributes redirectAttributes) throws IOException {
         List<Account> listAccount = new ArrayList<>();
         List<AccountDetail> listAccountDetail = new ArrayList<>();
 
@@ -96,8 +99,13 @@ public class HomeController {
             listAccountDetail.add(getAccountDetailFromExcel(worksheet, i));
             listAccount.add(getAccountFromExcel(worksheet, i));
         }
-        accountImpl.addNewAccount(listAccount);
-        accountDetailImpl.addNewAccountDetail(listAccountDetail);
+        String mess = "";
+        boolean addAccount = accountImpl.addNewAccount(listAccount);
+        if (addAccount) {
+            boolean addAccountDetail = accountDetailImpl.addNewAccountDetail(listAccountDetail);
+            mess = addAccountDetail ? "Status : Add Success" : "Status : Add fail";
+        }
+        redirectAttributes.addAttribute("mess", mess);
 
         return "redirect:/home-admin";
     }

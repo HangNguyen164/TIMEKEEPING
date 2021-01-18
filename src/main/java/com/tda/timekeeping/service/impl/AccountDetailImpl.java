@@ -14,7 +14,7 @@ public interface AccountDetailImpl {
 
     void update(Time startTime, Time endTime, String note, int sendMail, int id);
 
-    void addNewAccountDetail(List<AccountDetail> lists);
+    boolean addNewAccountDetail(List<AccountDetail> lists);
 
     void updateFullInfoAccountDetail(AccountDetail accountDetailOld, AccountDetail accountDetailNew);
 }

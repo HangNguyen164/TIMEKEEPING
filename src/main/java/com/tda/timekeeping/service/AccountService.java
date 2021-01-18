@@ -19,12 +19,14 @@ public class AccountService implements AccountImpl {
     }
 
     @Override
-    public void addNewAccount(List<Account> listAccount) {
+    public boolean addNewAccount(List<Account> listAccount) {
         for (Account account : listAccount) {
             Account getAccount = accountRepository.getOneAccountByUsername(account.getUsername());
             if (getAccount == null) {
                 accountRepository.save(account);
             }
+            return true;
         }
+        return false;
     }
 }

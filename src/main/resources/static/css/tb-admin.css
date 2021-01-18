@@ -106,6 +106,12 @@ h7 {
     margin-left: 10px;
 }
 
-.red-span{
+.red-span {
     color: red;
+}
+
+.status {
+    color: black;
+    padding-top: 20px;
+    font-size: 15px;
 }

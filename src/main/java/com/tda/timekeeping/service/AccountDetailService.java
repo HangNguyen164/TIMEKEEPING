@@ -48,7 +48,7 @@ public class AccountDetailService implements AccountDetailImpl {
     }
 
     @Override
-    public void addNewAccountDetail(List<AccountDetail> lists) {
+    public boolean addNewAccountDetail(List<AccountDetail> lists) {
         for (AccountDetail ad : lists) {
             AccountDetail accountDetail = accountDetailRepository.getOneByUsernameAndDate(ad.getUsername(), ad.getWorkDate());
             if (accountDetail == null) {
@@ -56,6 +56,8 @@ public class AccountDetailService implements AccountDetailImpl {
             } else {
                 updateFullInfoAccountDetail(accountDetail, ad);
             }
+            return true;
         }
+        return false;
     }
 }
