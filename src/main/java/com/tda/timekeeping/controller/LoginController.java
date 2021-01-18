@@ -24,11 +24,7 @@ public class LoginController {
     private CustomerUserService customerUserService;
 
     @GetMapping(value = {"/", "/index"})
-    public String indexHome(HttpServletRequest request, HttpSession session) {
-        String test = request.getHeader("Referer");
-        UserDetails account = (UserDetails) session.getAttribute("account");
-        System.out.println(account);
-        System.out.println(test);
+    public String indexHome() {
         return "index";
     }
 
