@@ -36,16 +36,15 @@ public class AccountDetailService implements AccountDetailImpl {
     }
 
     @Override
-    public void updateFullInfoAccountDetail(AccountDetail accountDetail) {
-        AccountDetail ad = accountDetailRepository.getOneByUsernameAndDate(accountDetail.getUsername(), accountDetail.getWorkDate());
-        ad.setName(accountDetail.getName());
-        ad.setPosition(accountDetail.getPosition());
-        ad.setDepartment(accountDetail.getDepartment());
-        ad.setStartTime(accountDetail.getStartTime());
-        ad.setEndTime(accountDetail.getEndTime());
-        ad.setNote(accountDetail.getNote());
-        ad.setCheckEmail(accountDetail.getCheckEmail());
-        accountDetailRepository.save(ad);
+    public void updateFullInfoAccountDetail(AccountDetail accountDetailOld, AccountDetail accountDetailNew) {
+        accountDetailOld.setName(accountDetailNew.getName());
+        accountDetailOld.setPosition(accountDetailNew.getPosition());
+        accountDetailOld.setDepartment(accountDetailNew.getDepartment());
+        accountDetailOld.setStartTime(accountDetailNew.getStartTime());
+        accountDetailOld.setEndTime(accountDetailNew.getEndTime());
+        accountDetailOld.setNote(accountDetailNew.getNote());
+        accountDetailOld.setCheckEmail(accountDetailNew.getCheckEmail());
+        accountDetailRepository.save(accountDetailOld);
     }
 
     @Override
@@ -55,7 +54,7 @@ public class AccountDetailService implements AccountDetailImpl {
             if (accountDetail == null) {
                 accountDetailRepository.save(ad);
             } else {
-                updateFullInfoAccountDetail(accountDetail);
+                updateFullInfoAccountDetail(accountDetail, ad);
             }
         }
     }

@@ -16,5 +16,5 @@ public interface AccountDetailImpl {
 
     void addNewAccountDetail(List<AccountDetail> lists);
 
-    void updateFullInfoAccountDetail(AccountDetail accountDetail);
+    void updateFullInfoAccountDetail(AccountDetail accountDetailOld, AccountDetail accountDetailNew);
 }
