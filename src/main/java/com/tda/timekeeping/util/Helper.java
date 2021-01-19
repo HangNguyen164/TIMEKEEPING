@@ -19,8 +19,8 @@ public class Helper {
     private static final long TIME_LUNCH = 5400000;
     private static final int MINUTES_TO_HOUR = 60;
     private static final int TIME_WITHOUT_SEC_PATTERN_LEN = "hh:mm".length();
-    private static int CURRENT_MONTH = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
-    private static int CURRENT_YEAR = getTypeOfDate(new Date(), Calendar.YEAR);
+    public static int CURRENT_MONTH = getTypeOfDate(new Date(), Calendar.MONTH) + 1;
+    public static int CURRENT_YEAR = getTypeOfDate(new Date(), Calendar.YEAR);
 
     public static int getTypeOfDate(Date date, int type) {
         Calendar cal = Calendar.getInstance();

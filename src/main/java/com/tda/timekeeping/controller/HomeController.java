@@ -2,6 +2,7 @@ package com.tda.timekeeping.controller;
 
 import com.tda.timekeeping.entity.Account;
 import com.tda.timekeeping.entity.AccountDetail;
+import com.tda.timekeeping.entity.AjaxResponseBody;
 import com.tda.timekeeping.service.impl.AccountDetailImpl;
 import com.tda.timekeeping.service.impl.AccountImpl;
 import com.tda.timekeeping.util.Helper;
@@ -9,20 +10,21 @@ import com.tda.timekeeping.vo.AccountDetailVo;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountDetailFromExcel;
 import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountFromExcel;
@@ -37,11 +39,12 @@ public class HomeController {
     private AccountImpl accountImpl;
 
     @RequestMapping(value = "/home-user")
-    public String getAllInfoOfAUser(@RequestParam(value = "month", required = false) String monthChoose, @RequestParam(value = "year", required = false) String yearChoose, Model model, HttpSession session) {
+    public String getAllInfoOfAUser(Model model, HttpSession session) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
         UserDetails account = (UserDetails) session.getAttribute("account");
-        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear(account.getUsername(), monthChoose, yearChoose);
+        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear
+                (account.getUsername(), String.valueOf(CURRENT_MONTH), String.valueOf(CURRENT_YEAR));
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
         String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser);
         String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser);
@@ -55,24 +58,62 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = "/home-admin")
-    public String getAllEmployeeInOffice(@RequestParam(value = "month", required = false) String monthChoose,
-                                         @RequestParam(value = "year", required = false) String yearChoose,
-                                         @RequestParam(value = "mess", required = false) String mess, Model model) {
+    @PostMapping(value = "/home-user/search")
+    public ResponseEntity<?> getAllInfoOfAUser1(@Valid @RequestBody String monthChoose,
+                                                @Valid @RequestBody String yearChoose, Errors errors, HttpSession session) {
+        AjaxResponseBody result = new AjaxResponseBody();
+
+        UserDetails account = (UserDetails) session.getAttribute("account");
+        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear
+                (account.getUsername(), monthChoose, yearChoose);
+
+        //If error, just return a 400 bad request, along with the error message
+        if (errors.hasErrors()) {
+
+            result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
+            return ResponseEntity.badRequest().body(result);
+
+        }
+        result.setResult(accountDetailVoListByUser);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/home-admin")
+    public String getAllEmployeeInOffice(
+            @RequestParam(value = "mess", required = false) String mess, Model model) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
 
-        List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonthYear(monthChoose, yearChoose);
+        List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonthYear(String.valueOf(CURRENT_MONTH), String.valueOf(CURRENT_YEAR));
 
         model.addAttribute("listAccountShow", accountDetailVoList);
         model.addAttribute("getAllMonth", getAllMonth);
         model.addAttribute("getAllYear", getAllYear);
-        model.addAttribute("month", checkMonthChoose(monthChoose));
-        model.addAttribute("year", checkYearChoose(yearChoose));
+        model.addAttribute("month", checkMonthChoose(String.valueOf(CURRENT_MONTH)));
+        model.addAttribute("year", checkYearChoose(String.valueOf(CURRENT_YEAR)));
         model.addAttribute("accountDetailImpl", accountDetailImpl);
         model.addAttribute("mess", mess);
         model.addAttribute("helper", new Helper());
         return "homeAdmin";
+    }
+
+    @PostMapping(value = "/home-admin/search")
+    public ResponseEntity<?> getAllEmployeeInOffice(@RequestBody @RequestParam(value = "month") String monthChoose,
+                                                    @RequestBody @RequestParam(value = "year") String yearChoose, Errors errors) {
+        AjaxResponseBody result = new AjaxResponseBody();
+
+
+        List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonthYear(monthChoose, yearChoose);
+
+        //If error, just return a 400 bad request, along with the error message
+        if (errors.hasErrors()) {
+
+            result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
+            return ResponseEntity.badRequest().body(result);
+
+        }
+        result.setResult(accountDetailVoList);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/home-admin/update/{id}")
