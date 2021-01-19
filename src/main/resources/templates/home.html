@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <form id="form-user">
+        <form id="form-user" acceptcharset="UTF-8">
             <div class="row">
                 <div class="col-md-1" id="cb-month">Tháng</div>
                 <div class="col-md-2">
@@ -78,7 +78,6 @@
                                 th:text="${year}"></option>
                     </select>
                 </div>
-                <p th:hidden="true" th:text="${session.account.getUsername()}" id="username"></p>
             </div>
         </form>
 
@@ -101,7 +100,7 @@
                 <th>Email</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody">
             <th:block th:each="accountShow,i : ${listAccountShow}">
                 <tr>
                     <td th:text="${i.count}"></td>
@@ -145,13 +144,13 @@
             <br/>
             <div class="row">
                 <h7>Tổng số giờ làm việc trong tháng:</h7>&ensp;
-                <h7 th:text="${totalWorkInMonth}"></h7>&ensp;
+                <h7 id="total-work-in-month" th:text="${totalWorkInMonth}"></h7>&ensp;
                 <h7>giờ</h7>
             </div>
             <br/>
             <div class="row">
                 <h7>Tổng số ngày không đi làm trong tháng:</h7>&ensp;
-                <h7 th:text="${totalNotWorkInOffice}"></h7>&ensp;
+                <h7 id="total-not-work-in-office" th:text="${totalNotWorkInOffice}"></h7>&ensp;
                 <h7>ngày</h7>
             </div>
             <br/>
@@ -161,7 +160,7 @@
                     <h7>0 ngày</h7>
                 </div>
                 <div th:if="${listDayWorkNotFull.length()>0}">
-                    <h7 th:text="${listDayWorkNotFull}"></h7>
+                    <h7  id="list-day-work-not-full" th:text="${listDayWorkNotFull}"></h7>
                 </div>
             </div>
         </div>

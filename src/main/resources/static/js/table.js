@@ -13,14 +13,14 @@ $(document).ready(function () {
    // loadDataTable();
 })
 
-// $('#custom-table').dataTable({
-//     "scrollY": "400",
-//     "scrollX": true
-// });
+$('#custom-table').dataTable({
+    "scrollY": "400",
+    "scrollX": true
+});
 
 /* Centering the modal vertically */
 function getModalCenter() {
-    function alignModal() {
+    function alignModal() {J
         const modalDialog = $(this).find(".modal-dialog");
         modalDialog.css("margin-top", Math.max(0,
             ($(window).height() - modalDialog.height()) / 2));
@@ -62,37 +62,4 @@ function getYearForCombobox() {
     } else {
         $("#year").val(currentYear);
     }
-}
-
-
-// function loadDataTable() {
-//     const rows = JSON.stringify(convertTableToArrayObject());
-//
-//     $('#form-user').submit(function () {
-//         console.log("1")
-//         $.ajax({
-//             type: "POST",
-//             url: "home-user",
-//             dataType: 'json',
-//             data: rows,
-//             success: function (data) {
-//                 $('#custom-table').innerHTML(data);
-//             }
-//         });
-//     });
-// }
-
-function convertTableToArrayObject() {
-
-    const employeeObjects = [];
-    const table = $('#custom-table').DataTable();
-    const dataOfTable = table
-        .rows()
-        .data();
-
-    for (let i = 0; i < dataOfTable.length; i++) {
-        employeeObjects.push(dataOfTable[i]);
-    }
-
-    return employeeObjects;
 }

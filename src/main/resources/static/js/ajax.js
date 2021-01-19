@@ -4,66 +4,49 @@ $("#form-user").change(function (event) {
 
     fire_ajax_submit();
 
+    event.preventDefault();
 });
 
 function fire_ajax_submit() {
 
     let search = {
-        month: $("#month").val(),
-        year: $("#year").val(),
+        month:$("#month").val().trim(),
+        year:$("#year").val().trim()
     }
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "user/list",
-        data: JSON.stringify(search),
+        data: JSON.stringify(search).trim(),
         dataType: 'json',
+        cache: false,
 
         success: function (result) {
-            let columnDefs = [];
-            for(let k in result[0]){
-                if(columnDefs.indexOf(k) === -1){
-                    columnDefs.push({title: result[0][k]});
-                }
+            const {accountDetailVoListByUser, listDayWorkNotFull, totalNotWorkInOffice, totalWorkInMonth} = result;
+            let html = '';
+            for (let i = 0; i < accountDetailVoListByUser.length; i++) {
+                let index = i + 1;
+                html += `<tr><td>${index}</td>
+                        <td>${accountDetailVoListByUser[i].username}</td>
+                        <td>${accountDetailVoListByUser[i].name}</td>
+                        <td>${accountDetailVoListByUser[i].department}</td>
+                        <td>${accountDetailVoListByUser[i].position}</td>
+                        <td>${accountDetailVoListByUser[i].workDate}</td>
+                        <td>${accountDetailVoListByUser[i].day}</td>
+                        <td>${accountDetailVoListByUser[i].startTime}</td>
+                        <td>${accountDetailVoListByUser[i].endTime}</td>
+                        <td>${accountDetailVoListByUser[i].hour}</td>
+                        <td>${accountDetailVoListByUser[i].note}</td>
+                        <td>${accountDetailVoListByUser[i].sendEmail}</td></tr>`
             }
-            let data = [];
-            for(let j of result){
-                let arr = [];
-                for(let k in j){
-                    if(columnDefs.indexOf(k) === -1){
-                        arr.push(j[k]);
-                    }
-                }
-                data.push(arr);
-            }
-
-            $('#custom-table').dataTable({
-                data: data,
-                columns: columnDefs
-            });
+            $('#tbody').html(html);
+            $('#total-not-work-in-office').text(listDayWorkNotFull);
+            $('#total-work-in-month').text(totalNotWorkInOffice);
+            $('#list-day-work-not-full').text(totalWorkInMonth);
         },
         error: function (e) {
-            console.log(e.responseText)
+            alert("fail"),
+                console.log(e.responseText)
         }
     });
-
-    function populateDataTable(data) {
-
-        $("#custom-table").DataTable({
-            "data": data,
-            columns: [
-                {data: "username"},
-                {data: "name"},
-                {data: "department"},
-                {data: "position"},
-                {data: "workDate"},
-                {data: "day"},
-                {data: "startTime"},
-                {data: "endTime"},
-                {data: "hour"},
-                {data: "note"},
-                {data: "sendEmail"},
-            ]
-        })
-    }
 }
