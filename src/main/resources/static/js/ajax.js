@@ -20,15 +20,15 @@ function fire_ajax_submit() {
         dataType: 'json',
 
         success: function (result) {
-            var columnDefs = [];
+            let columnDefs = [];
             for(let k in result[0]){
                 if(columnDefs.indexOf(k) === -1){
                     columnDefs.push({title: result[0][k]});
                 }
             }
-            var data = [];
+            let data = [];
             for(let j of result){
-                var arr = [];
+                let arr = [];
                 for(let k in j){
                     if(columnDefs.indexOf(k) === -1){
                         arr.push(j[k]);
@@ -37,9 +37,7 @@ function fire_ajax_submit() {
                 data.push(arr);
             }
 
-
-            var myTable = $('#custom-table').DataTable({
-                "sPaginationType": "full_numbers",
+            $('#custom-table').dataTable({
                 data: data,
                 columns: columnDefs
             });

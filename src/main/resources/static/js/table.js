@@ -13,10 +13,10 @@ $(document).ready(function () {
    // loadDataTable();
 })
 
-$('#custom-table').dataTable({
-    "scrollY": "400",
-    "scrollX": true
-});
+// $('#custom-table').dataTable({
+//     "scrollY": "400",
+//     "scrollX": true
+// });
 
 /* Centering the modal vertically */
 function getModalCenter() {
