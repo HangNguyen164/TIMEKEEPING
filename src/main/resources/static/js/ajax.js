@@ -6,7 +6,6 @@ $("#form-user").change(function (event) {
 
 });
 
-
 function fire_ajax_submit() {
 
     let search = {
@@ -21,7 +20,29 @@ function fire_ajax_submit() {
         dataType: 'json',
 
         success: function (result) {
-           populateDataTable(result);
+            var columnDefs = [];
+            for(let k in result[0]){
+                if(columnDefs.indexOf(k) === -1){
+                    columnDefs.push({title: result[0][k]});
+                }
+            }
+            var data = [];
+            for(let j of result){
+                var arr = [];
+                for(let k in j){
+                    if(columnDefs.indexOf(k) === -1){
+                        arr.push(j[k]);
+                    }
+                }
+                data.push(arr);
+            }
+
+
+            var myTable = $('#custom-table').DataTable({
+                "sPaginationType": "full_numbers",
+                data: data,
+                columns: columnDefs
+            });
         },
         error: function (e) {
             console.log(e.responseText)
@@ -31,19 +52,19 @@ function fire_ajax_submit() {
     function populateDataTable(data) {
 
         $("#custom-table").DataTable({
-            "data":data,
+            "data": data,
             columns: [
-                { title: "username" },
-                { title: "name" },
-                { title: "department" },
-                { title: "position" },
-                { title: "workDate" },
-                { title: "day" },
-                { title: "startTime" },
-                { title: "endTime" },
-                { title: "hour" },
-                { title: "note" },
-                { title: "sendEmail" },
+                {data: "username"},
+                {data: "name"},
+                {data: "department"},
+                {data: "position"},
+                {data: "workDate"},
+                {data: "day"},
+                {data: "startTime"},
+                {data: "endTime"},
+                {data: "hour"},
+                {data: "note"},
+                {data: "sendEmail"},
             ]
         })
     }
