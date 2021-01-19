@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/index/**", "/").permitAll()
                 .antMatchers("/home-user/**").permitAll()
+                .antMatchers("/user/list/**").permitAll()
                 .antMatchers("/home-admin/**").hasAuthority("ADMIN")
                 .and()
                 .formLogin()
@@ -60,6 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/home-admin")
                 .failureUrl("/login?error")
                 .and()
-                .logout().invalidateHttpSession(true).permitAll();
+                .logout().invalidateHttpSession(true).permitAll().and().csrf().disable().cors();
     }
 }

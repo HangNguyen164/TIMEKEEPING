@@ -61,7 +61,8 @@
                 </p>
             </div>
         </div>
-        <form  id="form-user">
+
+        <form id="form-user">
             <div class="row">
                 <div class="col-md-1" id="cb-month">Tháng</div>
                 <div class="col-md-2">
@@ -77,13 +78,7 @@
                                 th:text="${year}"></option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" id="bth-search1"
-                            class="btn btn-primary btn-lg">Search
-                    </button>
-                </div>
+                <p th:hidden="true" th:text="${session.account.getUsername()}" id="username"></p>
             </div>
         </form>
 

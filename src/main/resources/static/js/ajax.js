@@ -1,46 +1,50 @@
-$(document).ready(function () {
+$("#form-user").change(function (event) {
 
-    $("#form-user").submit(function (event) {
+    event.preventDefault();
 
-        //stop submit the form, we will post it manually.
-        event.preventDefault();
-
-        fire_ajax_submit();
-
-    });
+    fire_ajax_submit();
 
 });
 
+
 function fire_ajax_submit() {
 
-    const search = {}
-    search["month"] = $("#month").val();
-    search["year"] = $("#year").val();
-    console.log(search)
-
-    $("#btn-search1").prop("disabled", true);
-
+    let search = {
+        month: $("#month").val(),
+        year: $("#year").val(),
+    }
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/home-user/search",
+        url: "user/list",
         data: JSON.stringify(search),
         dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-            let json = JSON.stringify(data, null, 4);
-            $('#custom-table1').html(json);
-            $("#btn-search1").prop("disabled", false);
 
+        success: function (result) {
+           populateDataTable(result);
         },
         error: function (e) {
-            let json = e.responseText;
-            console.log("ERROR : ", json);
-            $('#custom-table').html(json);
-            $("#btn-search1").prop("disabled", false);
-
+            console.log(e.responseText)
         }
     });
 
+    function populateDataTable(data) {
+
+        $("#custom-table").DataTable({
+            "data":data,
+            columns: [
+                { title: "username" },
+                { title: "name" },
+                { title: "department" },
+                { title: "position" },
+                { title: "workDate" },
+                { title: "day" },
+                { title: "startTime" },
+                { title: "endTime" },
+                { title: "hour" },
+                { title: "note" },
+                { title: "sendEmail" },
+            ]
+        })
+    }
 }
