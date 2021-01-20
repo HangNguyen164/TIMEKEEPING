@@ -9,13 +9,13 @@ import com.tda.timekeeping.vo.AccountDetailVo;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,7 +23,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountDetailFromExcel;
 import static com.tda.timekeeping.io.ImportDataFromExcel.getAccountFromExcel;
@@ -74,6 +73,19 @@ public class HomeController {
         model.addAttribute("mess", mess);
         model.addAttribute("helper", new Helper());
         return "homeAdmin";
+    }
+
+    @GetMapping(value = "/home-admin/search")
+    public String getAllEmployeeInOfficeSearch(@RequestParam String month, @RequestParam String year, Model model) {
+
+        List<AccountDetailVo> accountDetailVoList = accountDetailImpl.getAccountDetailVosInMonthYear(month, year);
+
+        model.addAttribute("listAccountShow", accountDetailVoList);
+        model.addAttribute("month", checkMonthChoose(month));
+        model.addAttribute("year", checkYearChoose(year));
+        model.addAttribute("accountDetailImpl", accountDetailImpl);
+        model.addAttribute("helper", new Helper());
+        return "tableAdmin";
     }
 
     @PostMapping("/home-admin/update/{id}")

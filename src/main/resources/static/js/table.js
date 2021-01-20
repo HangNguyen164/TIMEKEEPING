@@ -10,7 +10,6 @@ $(document).ready(function () {
     getModalCenter();
     getMonthForCombobox();
     getYearForCombobox();
-   // loadDataTable();
 })
 
 $('#custom-table').dataTable({
@@ -20,7 +19,7 @@ $('#custom-table').dataTable({
 
 /* Centering the modal vertically */
 function getModalCenter() {
-    function alignModal() {J
+    function alignModal() {
         const modalDialog = $(this).find(".modal-dialog");
         modalDialog.css("margin-top", Math.max(0,
             ($(window).height() - modalDialog.height()) / 2));
