@@ -56,6 +56,24 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping(value = "/home-user/search")
+    public String getAllInfoOfAUserSearch(@RequestParam String month, @RequestParam String year, Model model, HttpSession session) {
+
+        UserDetails account = (UserDetails) session.getAttribute("account");
+        List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear
+                (account.getUsername(), month, year);
+
+        int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
+        String totalWorkInMonth = totalWorkInMonth(accountDetailVoListByUser);
+        String listDayWorkNotFull = listDayWorkNotFull(accountDetailVoListByUser);
+
+        model.addAttribute("listAccountShow", accountDetailVoListByUser);
+        model.addAttribute("totalNotWorkInOffice", totalNotWorkInOffice);
+        model.addAttribute("totalWorkInMonth", totalWorkInMonth);
+        model.addAttribute("listDayWorkNotFull", listDayWorkNotFull);
+        return "tableUser";
+    }
+
     @GetMapping(value = "/home-admin")
     public String getAllEmployeeInOffice(
             @RequestParam(value = "mess", required = false) String mess, Model model) {

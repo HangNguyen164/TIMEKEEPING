@@ -1,0 +1,107 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<table id="custom-table" class="table table-bordered w-100" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Date</th>
+        <th>Day</th>
+        <th>In</th>
+        <th>Out</th>
+        <th>Hour</th>
+        <th>Note</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <th:block th:each="accountShow,i : ${listAccountShow}">
+        <tr>
+            <td th:text="${i.count}"></td>
+            <td th:text="${accountShow.username}"></td>
+            <td th:text="${accountShow.name}"></td>
+            <td th:text="${accountShow.department}"></td>
+            <td th:text="${accountShow.position}"></td>
+            <td th:text="${accountShow.workDate}"></td>
+
+            <td th:switch="${accountShow.getDay()}">
+                <h7 th:case="2">Monday</h7>
+                <h7 th:case="3">Tuesday</h7>
+                <h7 th:case="4">Wednesday</h7>
+                <h7 th:case="5">Thursday</h7>
+                <h7 th:case="6">Friday</h7>
+                <h7 th:case="7">Saturday</h7>
+                <h7 th:case="1">Sunday</h7>
+            </td>
+
+            <td th:text="${accountShow.getStartTime()}"></td>
+            <td th:text="${accountShow.getEndTime()}"></td>
+            <td th:text="${accountShow.getHour()}"></td>
+            <td th:text="${accountShow.note}"></td>
+
+            <td th:switch="${accountShow.sendEmail}">
+                <h7 th:case="0"></h7>
+                <h7 th:case="1">Chưa mail</h7>
+                <h7 th:case="2">Đã mail</h7>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<div class="container-fluid">
+    <br/>
+    <div class="row">
+        <h5>Thông tin làm việc của nhân viên trong tháng:
+        </h5>
+    </div>
+    <br/>
+    <div class="row">
+        <h7>Tổng số giờ làm việc trong tháng:</h7>&ensp;
+        <h7 id="total-work-in-month" th:text="${totalWorkInMonth}"></h7>&ensp;
+        <h7>giờ</h7>
+    </div>
+    <br/>
+    <div class="row">
+        <h7>Tổng số ngày không đi làm trong tháng:</h7>&ensp;
+        <h7 id="total-not-work-in-office" th:text="${totalNotWorkInOffice}"></h7>&ensp;
+        <h7>ngày</h7>
+    </div>
+    <br/>
+    <div class="row">
+        <h7>Những ngày làm việc dưới 8 tiếng trong tháng:</h7>&ensp;
+        <div th:if="${listDayWorkNotFull.isEmpty()}">
+            <h7>0 ngày</h7>
+        </div>
+        <div th:if="${listDayWorkNotFull.length()>0}">
+            <h7 id="list-day-work-not-full" th:text="${listDayWorkNotFull}"></h7>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+    $('#custom-table').dataTable({
+        "scrollY": "400",
+        "scrollX": true
+    });
+    $(document).ready(function () {
+        function alignModal() {
+            const modalDialog = $(this).find(".modal-dialog");
+            modalDialog.css("margin-top", Math.max(0,
+                ($(window).height() - modalDialog.height()) / 2));
+        }
+
+        $(".modal").on("shown.bs.modal", alignModal);
+
+        /* Resizing the modal according the screen size */
+        $(window).on("resize", function () {
+            $(".modal:visible").each(alignModal);
+        });
+    })
+</script>
+</html>
+
+
+
+
