@@ -174,7 +174,7 @@ public class Helper {
 
     public static List<String> getAllYear() {
         List<String> lists = new ArrayList<>();
-        for (int i = 2019; i < CURRENT_YEAR + 3; i++) {
+        for (int i = 2019; i < CURRENT_YEAR + 5; i++) {
             lists.add(String.valueOf(i));
         }
         return lists;
