@@ -8,4 +8,6 @@ public interface AccountImpl {
     boolean addNewAccount(List<Account> listAccount);
 
     List<Account> getAll();
+
+    Account checkAccountExist(String username);
 }

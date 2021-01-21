@@ -19,6 +19,11 @@ public class AccountService implements AccountImpl {
     }
 
     @Override
+    public Account checkAccountExist(String username) {
+        return accountRepository.getOneAccountByUsername(username);
+    }
+
+    @Override
     public boolean addNewAccount(List<Account> listAccount) {
         boolean isAdd = false;
         for (Account account : listAccount) {

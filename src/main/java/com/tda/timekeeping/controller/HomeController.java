@@ -9,7 +9,6 @@ import com.tda.timekeeping.vo.AccountDetailVo;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +39,7 @@ public class HomeController {
     public String getAllInfoOfAUser(Model model, HttpSession session) {
         List<String> getAllMonth = getAllMonth();
         List<String> getAllYear = getAllYear();
-        UserDetails account = (UserDetails) session.getAttribute("account");
+        Account account = (Account) session.getAttribute("account");
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear
                 (account.getUsername(), String.valueOf(CURRENT_MONTH), String.valueOf(CURRENT_YEAR));
         int totalNotWorkInOffice = totalNotWorkInOffice(accountDetailVoListByUser);
@@ -59,7 +58,7 @@ public class HomeController {
     @GetMapping(value = "/home-user/search")
     public String getAllInfoOfAUserSearch(@RequestParam String month, @RequestParam String year, Model model, HttpSession session) {
 
-        UserDetails account = (UserDetails) session.getAttribute("account");
+        Account account = (Account) session.getAttribute("account");
         List<AccountDetailVo> accountDetailVoListByUser = accountDetailImpl.getAccountDetailVosByUsernameInMonthInYear
                 (account.getUsername(), month, year);
 
